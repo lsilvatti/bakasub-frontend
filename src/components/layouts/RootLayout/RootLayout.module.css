@@ -2,6 +2,7 @@
     height: 100vh;
 }
 
-.mainContent { 
-    
+header { 
+    background-color: var(--header-bg);
+    padding: var(--space-3) var(--space-3);
 }
