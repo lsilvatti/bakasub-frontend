@@ -12,7 +12,7 @@
   --primary-900: #55142f;
   --primary-950: #3c0d21;
 
-  --secondary-50: #fff3d8;
+  --secondary-50: #fffcf7;
   --secondary-100: #ffe8b5;
   --secondary-200: #ffecb2;
   --secondary-300: #ffe293;
@@ -60,17 +60,17 @@
   --header-bg: var(--primary-300);
 
   --text-color: var(--gray-600);
-  --text-color: var(var(--gray-500));
+  --text-muted: var(var(--gray-500));
 }
 
 :root[data-theme='dark'] {
-  --primary-color: var(--primary-300);
+  --primary: var(--primary-300);
   --primary-hover: var(--primary-400);
   --secondary: var(--secondary-300);
   --secondary-hover: var(--secondary-400);
 
-  --background-color: var(--primary-600);
-  --header-bg: var(--secondary-950);
+  --background-color: var(--gray-700);
+  --header-bg: var(--primary-950);
 
   --text-color: var(--gray-100);
   --text-muted: var(var(--gray-300));
