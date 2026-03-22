@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styles from './RootLayout.module.css';
-import Typography from "@/components/atoms/Typography/Typography";
-import ThemeToggle from "@/components/atoms/ThemeToggle";
+import { Typography, ThemeToggle } from "@/components/atoms";
 
 export function RootLayout() {
     return (

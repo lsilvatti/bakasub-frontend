@@ -12,7 +12,7 @@ interface TypographyProps<C extends React.ElementType> {
 
 type Props<C extends React.ElementType> = TypographyProps<C> & Omit<React.ComponentPropsWithoutRef<C>, keyof TypographyProps<C>>
 
-export default function Typography<C extends React.ElementType = 'p'>({variant = 'body', as, children, className, ...props}:Props<C>) {
+export function Typography<C extends React.ElementType = 'p'>({variant = 'body', as, children, className, ...props}:Props<C>) {
 
     const Component = ( as || 'p') as React.ElementType;
     return (    
