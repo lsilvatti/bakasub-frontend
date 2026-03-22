@@ -1,3 +1,4 @@
+import LocalStorage from '@/lib/storage';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 type themes = 'light' | 'dark';
@@ -16,9 +17,19 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 function ThemeProvider({ children} : ThemeProviderProps) { 
 
-    const [theme, setTheme] = useState<themes>('light');
+    const { getItem, setItem } = LocalStorage();
 
-    const toggleTheme = () => setTheme((prev) => prev === 'light' ? 'dark' : 'light');
+    const storageTheme = getItem('theme') || 'light';
+
+    const [theme, setTheme] = useState<themes>(storageTheme);
+
+    const toggleTheme = () => {
+        setTheme((prev) => {
+            const next = prev === 'light' ? 'dark' : 'light';
+            setItem('theme', next);
+            return next 
+        });
+    }
 
     useEffect(() => { 
         const root = window.document.documentElement;
