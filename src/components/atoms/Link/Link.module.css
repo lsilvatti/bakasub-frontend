@@ -1,0 +1,61 @@
+.base {
+  text-underline-offset: 4px;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.base:hover {
+  text-decoration: underline;
+}
+
+.default {
+  color: var(--text-color); 
+}
+
+.primary {
+  color: var(--primary);
+}
+.primary:hover {
+  color: var(--primary-hover);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+.muted:hover {
+  color: var(--text-color);
+}
+.nav {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: capitalize;
+  transition: all 0.3s ease-in-out;
+  display: inline-block; 
+}
+
+.nav:hover {
+  text-decoration: none;
+  color: var(--primary);
+  filter: drop-shadow(0 0 6px var(--primary));
+}
+
+.nav:active {
+  transform: scale(0.95);
+}
+
+.nav[data-active="true"] {
+  color: var(--secondary);
+  filter: drop-shadow(0 0 8px var(--secondary));
+}
+
+.unstyled {
+  color: inherit;
+  text-decoration: none;
+}
+.unstyled:hover {
+  text-decoration: none;
+}

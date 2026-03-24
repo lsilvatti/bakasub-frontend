@@ -1,0 +1,17 @@
+.logo {
+    display: flex; 
+    font-size: 3em;
+    text-shadow: rgba(0, 0, 0, 0.16) 1px 1px 8px;
+}
+
+p.mainLogo {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+p.subLogo {
+    color: var(--secondary);
+    font-weight: 900;
+    font-size: 0.5em;
+    font-family: var(--font-mono);
+}
