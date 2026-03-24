@@ -1,6 +1,6 @@
 import { Navigation } from '@/components/molecules';
 import styles from './SideBar.module.css';
-import { BakaSubLogo } from '@/assets/svg/BakaSubLogo';
+import { Logo } from '@/components/atoms';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -9,7 +9,7 @@ interface SidebarProps {
 export const SideBar = ({ isOpen }: SidebarProps) => (
   <aside className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ''}`}>
     <div className={styles.logo}>
-      <BakaSubLogo />
+      <Logo />
     </div>
     <Navigation />
   </aside>

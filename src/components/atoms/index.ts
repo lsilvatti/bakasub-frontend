@@ -3,3 +3,7 @@ export { Typography } from './Typography';
 export { IconButton } from './IconButton';
 export { Overlay } from './Overlay';
 export { NavItem } from './NavItem';
+export { Link } from './Link';
+export { Button } from './Button';
+export { Icon } from './Icon';
+export { Logo } from './Logo';

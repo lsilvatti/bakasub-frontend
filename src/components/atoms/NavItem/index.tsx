@@ -2,13 +2,14 @@ import { Link } from 'react-router-dom';
 import styles from './NavItem.module.css';
 
 interface NavItemProps {
-  href: string;
+  to: string;
   children: React.ReactNode;
+  'data-active'?: boolean;
 }
 
-export function NavItem({ href, children }: NavItemProps) {
+export function NavItem({ to, children, 'data-active': dataActive }: NavItemProps) {
     return (
-        <Link className={styles.navItem} to={href}>
+        <Link className={styles.navItem} to={to} data-active={dataActive ? "true" : "false"}>
             {children}
         </Link>
     )

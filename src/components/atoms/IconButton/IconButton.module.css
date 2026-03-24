@@ -1,0 +1,14 @@
+.base {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.base svg { 
+    stroke: var(--text-color)
+}
+
+.base:hover svg { 
+    stroke: var(--primary)
+}

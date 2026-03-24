@@ -1,8 +1,0 @@
-.toggle {
-    background-color: transparent;
-    border: none;
-}
-
-.toggle svg { 
-    stroke: var(--text-color)
-}

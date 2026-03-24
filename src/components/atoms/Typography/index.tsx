@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import styles from './Typography.module.css'
 
-type TypographyVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'span' | 'body' | 'muted';
+type TypographyVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'span' | 'body' | 'muted' | 'monospace';
 
 interface TypographyProps<C extends React.ElementType> { 
     variant?: TypographyVariants;
