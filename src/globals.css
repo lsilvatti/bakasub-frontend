@@ -57,12 +57,16 @@
   --secondary-hover: var(--secondary-600);
 
   --background-color: var(--secondary-50);
-
+  
   --header-border: var(--gray-200);
   --header-bg: var(--gray-100);
 
   --text-color: var(--gray-600);
   --text-muted: var(--gray-500);
+
+  --primary-foreground: var(--secondary-50);
+  --border: var(--gray-200);
+  --surface-hover: var(--primary-50);
 }
 
 :root[data-theme='dark'] {
@@ -78,6 +82,10 @@
 
   --text-color: var(--gray-100);
   --text-muted: var(--gray-300);
+
+  --primary-foreground: var(--gray-700);
+  --border: var(--gray-500); 
+  --surface-hover: var(--gray-600); 
 }
 
 body {
