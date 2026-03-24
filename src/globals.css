@@ -57,10 +57,12 @@
   --secondary-hover: var(--secondary-600);
 
   --background-color: var(--secondary-50);
-  --header-bg: var(--primary-300);
+
+  --header-border: var(--gray-200);
+  --header-bg: var(--gray-100);
 
   --text-color: var(--gray-600);
-  --text-muted: var(var(--gray-500));
+  --text-muted: var(--gray-500);
 }
 
 :root[data-theme='dark'] {
@@ -70,10 +72,12 @@
   --secondary-hover: var(--secondary-400);
 
   --background-color: var(--gray-700);
-  --header-bg: var(--primary-950);
+  
+  --header-border: var(--gray-500);
+  --header-bg: var(--gray-600);
 
   --text-color: var(--gray-100);
-  --text-muted: var(var(--gray-300));
+  --text-muted: var(--gray-300);
 }
 
 body {
