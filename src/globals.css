@@ -33,6 +33,20 @@
   --gray-600: #1e1e1e;
   --gray-700: #111111;
 
+  --success-50: #e6f9f0;
+  --success-100: #b3f0c9;
+  --success-200: #80e7a2;
+  --success-300: #4de079;
+  --success-400: #1ad84f;
+  --success-500: #00b836;
+
+  --error-50: #ffe6e6;
+  --error-100: #ffb3b3;
+  --error-200: #ff8080;
+  --error-300: #ff4d4d;
+  --error-400: #ff1a1a;
+  --error-500: #e60000;
+
   --space-0: 0px;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -67,6 +81,23 @@
   --primary-foreground: var(--secondary-50);
   --border: var(--gray-200);
   --surface-hover: var(--primary-50);
+
+  --tooltip-bg: var(--gray-600);
+  --tooltip-text: var(--gray-100);
+  --tooltip-bg-primary: var(--primary-500);
+  --tooltip-text-primary: var(--gray-700);
+  --tooltip-bg-secondary: var(--secondary-500);
+  --tooltip-text-secondary: var(--gray-700);
+  --tooltip-bg-error: var(--error-500);
+  --tooltip-text-error: var(--gray-700);
+  --tooltip-bg-success: var(--success-500);
+  --tooltip-text-success: var(--gray-700);
+  --tooltip-bg-default: var(--gray-600);
+  --tooltip-text-default: var(--gray-100);
+
+  --dropdown-bg: var(--gray-50);
+  --dropdown-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --item-selected-bg: var(--primary-100);
 }
 
 :root[data-theme='dark'] {
@@ -86,6 +117,21 @@
   --primary-foreground: var(--gray-700);
   --border: var(--gray-500); 
   --surface-hover: var(--gray-600); 
+
+  --tooltip-bg-primary: var(--primary-300);
+  --tooltip-text-primary: var(--gray-700);
+  --tooltip-bg-secondary: var(--secondary-300);
+  --tooltip-text-secondary: var(--gray-700);
+  --tooltip-bg-error: var(--error-300);
+  --tooltip-text-error: var(--gray-700);
+  --tooltip-bg-success: var(--success-300);
+  --tooltip-text-success: var(--gray-700);
+  --tooltip-bg-default: var(--gray-700);
+  --tooltip-text-default: var(--gray-100);
+
+  --dropdown-bg: var(--gray-600); 
+  --dropdown-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --item-selected-bg: var(--primary-950);
 }
 
 body {
