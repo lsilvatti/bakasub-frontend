@@ -1,0 +1,103 @@
+.groupWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.groupLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: var(--space-1);
+}
+
+.optionsContainer {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.optionsContainer.column {
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.groupError {
+  font-size: 12px;
+  color: var(--error-500);
+  margin-top: var(--space-1);
+}
+
+.radioContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  position: relative;
+}
+
+.radioContainer.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.circle {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.radioContainer:hover:not(.disabled) .circle {
+  border-color: var(--primary-hover);
+}
+
+.input:checked + .circle {
+  border-color: var(--primary);
+}
+
+.input:checked + .circle .dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.input:focus-visible + .circle {
+  box-shadow: 0 0 0 2px var(--background-color), 0 0 0 4px var(--primary);
+}
+
+.input.error + .circle {
+  border-color: var(--error-500);
+}
+
+.label {
+  font-size: 14px;
+  color: var(--text-color);
+  user-select: none;
+}
