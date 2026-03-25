@@ -22,41 +22,41 @@ export interface AppRoute {
 export const APP_ROUTES: AppRoute[] = [
   {
     path: '/',
-    title: 'Início',
+    title: 'pages.home.title',
     element: <Home />,
     showInSidebar: true,
     icon: HomeIcon
   },
   {
     path: '/extract',
-    title: 'Extrair',
+    title: 'pages.extract.title',
     element: <Extract />,
     showInSidebar: true,
     icon: PackageOpen
   },
   {
     path: '/translate',
-    title: 'Traduzir',
+    title: 'pages.translate.title',
     element: <Translate />,
     showInSidebar: true,
     icon: Languages
   },
   {
     path: '/merge',
-    title: 'Mesclar',
+    title: 'pages.merge.title',
     element: <Merge />,
     showInSidebar: true,
     icon: MergeIcon
   },
   {
     path: '/config',
-    title: 'Configurações',
+    title: 'pages.settings.title',
     element: <Config />,
     showInSidebar: false,
   },
   {
     path: '/logs',
-    title: 'Logs',
+    title: 'pages.logs.title',
     element: <Logs />,
     showInSidebar: true,
     icon: BookOpenText
