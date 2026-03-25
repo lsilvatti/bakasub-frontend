@@ -1,14 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { apiClient } from '@/services';
-
-interface TranslatePayload {
-  filePath: string;
-  targetLang: string;
-  preset: string;
-  model: string;
-  removeSDH: boolean;
-  context?: string;
-}
+import type { TranslatePayload } from '@/types';
 
 export function useTranslate() {
   const translate = useMutation({

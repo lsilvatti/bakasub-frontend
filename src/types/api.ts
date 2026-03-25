@@ -51,3 +51,26 @@ export interface SSEEvent {
   message: string;
   data?: any;
 }
+
+export interface GetLogsParams {
+  limit?: number;
+  page?: number;
+  level?: string;
+  module?: string;
+}
+
+export interface LogsResponse {
+  logs: SystemLog[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+export interface TranslatePayload {
+  filePath: string;
+  targetLang: string;
+  preset: string;
+  model: string;
+  removeSDH: boolean;
+  context?: string;
+}

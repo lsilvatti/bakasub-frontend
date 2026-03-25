@@ -1,20 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/services/api/apiClient';
-import { type SystemLog } from '@/types/api';
+import { type GetLogsParams, type LogsResponse } from '@/types';
 
-interface GetLogsParams {
-  limit?: number;
-  page?: number;
-  level?: string;
-  module?: string;
-}
 
-interface LogsResponse {
-  logs: SystemLog[];
-  total: number;
-  page: number;
-  limit: number;
-}
 
 export function useLogs(params: GetLogsParams) {
   const getLogs = useQuery<LogsResponse>({
@@ -24,7 +12,7 @@ export function useLogs(params: GetLogsParams) {
       Object.entries(params).forEach(([key, value]) => {
         if (value) searchParams.append(key, String(value));
       });
-      return apiClient.get(`/logs?${searchParams.toString()}`);
+      return apiClient.get<LogsResponse>(`/logs?${searchParams.toString()}`);
     },
     placeholderData: (previousData) => previousData, 
   });
