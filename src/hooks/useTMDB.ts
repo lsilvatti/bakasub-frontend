@@ -24,7 +24,7 @@ export function useTMDB() {
         return media;
       },
       enabled: enabled && !!query && !!import.meta.env.VITE_TMDB_ACCESS_TOKEN,
-      staleTime: 1000 * 60 * 60 * 24, // 24h de cache
+      staleTime: 1000 * 60 * 60 * 24,
       retry: 1,
     });
   };

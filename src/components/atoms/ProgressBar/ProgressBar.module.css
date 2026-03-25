@@ -66,6 +66,5 @@
   100% { transform: translateX(200%) skewX(-20deg); }
 }
 
-/* Variantes para Erro ou Sucesso */
 .fill.success { background-color: var(--success-500); }
 .fill.error { background-color: var(--error-500); }

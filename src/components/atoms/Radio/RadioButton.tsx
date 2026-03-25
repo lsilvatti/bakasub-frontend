@@ -4,7 +4,7 @@ import styles from './Radio.module.css';
 
 export interface RadioButtonProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
   label: React.ReactNode;
-  error?: boolean; // Booleano simples, pois a mensagem de erro fica no RadioGroup
+  error?: boolean;
 }
 
 export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(

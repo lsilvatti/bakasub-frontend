@@ -5,7 +5,6 @@
   justify-content: center;
 }
 
-/* Variáveis locais definidas na base */
 .text {
   --tooltip-bg: var(--tooltip-bg-default, #1e1e1e);
   --tooltip-color: var(--tooltip-text-default, #ffffff);
@@ -34,7 +33,6 @@
   border-style: solid;
 }
 
-/* VARIANTES DE COR (Apenas atualizam as variáveis) */
 .primary {
   --tooltip-bg: var(--tooltip-bg-primary);
   --tooltip-color: var(--tooltip-text-primary);
@@ -60,7 +58,6 @@
   --tooltip-color: var(--tooltip-text-default, #ffffff);
 }
 
-/* POSICIONAMENTO E SETAS (Consomem a --tooltip-bg automaticamente) */
 .top {
   bottom: 100%;
   left: 50%;

@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import styles from './ProgressBar.module.css';
 
 export interface ProgressBarProps {
-  progress: number; // 0 a 100
+  progress: number;
   label?: string;
   showValue?: boolean;
   status?: 'active' | 'success' | 'error';
@@ -18,7 +18,6 @@ export function ProgressBar({
   animated = true,
   className 
 }: ProgressBarProps) {
-  // Garante que o progresso fique entre 0 e 100
   const clampedProgress = Math.min(100, Math.max(0, progress));
 
   return (

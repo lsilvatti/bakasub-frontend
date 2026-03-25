@@ -44,18 +44,17 @@
   opacity: 0.7;
 }
 
-/* O select nativo */
 .baseSelect {
   flex: 1;
   width: 100%;
   background: transparent;
   border: none;
   color: var(--text-color);
-  padding: 10px 36px 10px 12px; /* Espaço extra na direita para a seta */
+  padding: 10px 36px 10px 12px; 
   font-size: 14px;
   font-family: inherit;
   outline: none;
-  appearance: none; /* Remove a seta padrão do SO */
+  appearance: none; 
   -webkit-appearance: none;
   cursor: pointer;
 }
@@ -64,7 +63,6 @@
   cursor: not-allowed;
 }
 
-/* Ajuste da cor do placeholder (primeira option desabilitada) */
 .baseSelect:invalid,
 .baseSelect option[value=""][disabled] {
   color: var(--text-muted);
@@ -75,13 +73,12 @@
   color: var(--text-color);
 }
 
-/* A seta customizada */
 .iconContainer {
   position: absolute;
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none; /* O clique passa direto para o select */
+  pointer-events: none; 
   color: var(--text-muted);
   display: flex;
   align-items: center;

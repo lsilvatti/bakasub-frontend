@@ -6,7 +6,6 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 20;
-  /* Animação suave ao aparecer */
   animation: fadeIn 0.2s ease-in-out;
 }
 
