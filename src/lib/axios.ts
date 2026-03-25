@@ -1,8 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1/',
-    headers: { 
-        'Content-Type': 'application/json'
-    }
+  baseURL: 'http://localhost:8080/api/v1',
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
+
+api.interceptors.response.use(
+  (response) => response.data.data,
+  (error) => Promise.reject(error.response?.data?.message || error.message)
+);

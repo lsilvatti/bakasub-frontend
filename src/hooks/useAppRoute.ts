@@ -1,4 +1,3 @@
-// src/hooks/useAppRoute.ts
 import { useLocation } from "react-router-dom";
 import { APP_ROUTES } from "@/config/routes";
 

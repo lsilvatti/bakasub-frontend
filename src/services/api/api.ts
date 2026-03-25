@@ -10,7 +10,7 @@ interface BaseAPIService {
     post<T>(url: string, data?: any, config?: HttpRequestConfig): Promise<T>;
     put<T>(url: string, data?: any, config?: HttpRequestConfig): Promise<T>;
     patch<T>(url: string, data?: any, config?: HttpRequestConfig): Promise<T>;
-    delete<T>(url: string, config?: HttpRequestConfig): Promise<T>;
+    delete<T>(url: string, data?: any, config?: HttpRequestConfig): Promise<T>;
 }
 
 export class AppError extends Error {
@@ -78,8 +78,8 @@ export function BaseAPI(client: AxiosInstance): BaseAPIService {
         return request<T>(() => client.patch(url, data, config));
     }
 
-    async function remove<T>(url: string, config?: HttpRequestConfig) {
-        return request<T>(() => client.delete(url, config));
+    async function remove<T>(url: string, data?: any, config?: HttpRequestConfig) {
+        return request<T>(() => client.delete(url, { ...config, data }));
     }
 
     return { 
