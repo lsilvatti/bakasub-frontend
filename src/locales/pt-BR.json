@@ -1,0 +1,22 @@
+{    
+    "pages": { 
+        "home" : {
+            "title": "Início"
+        },
+        "extract": {
+            "title": "Extrair"
+        },
+         "translate": {
+            "title": "Traduzir"
+        },
+        "merge": {
+            "title": "Mesclar"
+        },
+        "settings": {
+            "title": "Configurações"
+        },
+        "logs": {
+            "title": "Registros"
+        }
+    }
+}

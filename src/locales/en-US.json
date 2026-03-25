@@ -1,0 +1,22 @@
+{
+    "pages": { 
+        "home" : {
+            "title": "Home"
+        },
+        "extract": {
+            "title": "Extract"
+        },
+         "translate": {
+            "title": "Translate"
+        },
+        "merge": {
+            "title": "Merge"
+        },
+        "settings": {
+            "title": "Settings"
+        },
+        "logs": {
+            "title": "Logs"
+        }
+    }
+}
