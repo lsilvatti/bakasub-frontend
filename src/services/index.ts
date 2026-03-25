@@ -1,2 +1,2 @@
 export { apiClient } from './api/apiClient';
-export { omdbClient } from './api/omdbClient';
+export { tmdbClient } from './api/tmdbClient';
