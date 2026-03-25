@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import { RootLayout } from '@/components/templates';
 import { ErrorBoundary } from '@/components/organisms';
 import { APP_ROUTES } from '@/config/routes';
