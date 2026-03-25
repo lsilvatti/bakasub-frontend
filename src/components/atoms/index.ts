@@ -7,3 +7,7 @@ export { Link } from './Link';
 export { Button } from './Button';
 export { Icon } from './Icon';
 export { Logo } from './Logo';
+export { Dropdown, DropdownItem } from './Dropdown';
+export { LanguageSwitcher } from './LanguageSwitcher';
+export { Tooltip } from './Tooltip';
+export { PageTitle } from './PageTitle';
