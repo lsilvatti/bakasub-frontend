@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { Input } from '@/components/atoms';
 import { useDebounce } from '@/hooks';
 import styles from './AsyncSearch.module.css';
-import { useTranslation } from 'node_modules/react-i18next';
+import { useTranslation } from 'react-i18next';
 
 export interface AsyncSearchProps<T> {
   label?: string;

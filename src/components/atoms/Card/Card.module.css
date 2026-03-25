@@ -1,56 +1,79 @@
-/* Container Base */
 .card {
-  border-radius: 8px;
-  color: var(--text-color);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  background-color: var(--background-color);
+  border: 1px solid var(--border);
+  border-radius: 12px;
   overflow: hidden;
-}
-
-.default {
-  background-color: var(--background-color);
-  border: 1px solid var(--border);
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-}
-
-.elevated {
-  background-color: var(--background-color);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  border: 1px solid transparent; 
-}
-
-.outline {
-  background-color: transparent;
-  border: 1px solid var(--border);
-}
-
-.header {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 24px 24px 0 24px;
+  font-family: var(--font-sans);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.default { }
+
+.primary {
+  border-color: var(--primary);
+  background-color: rgba(255, 90, 159, 0.05);
+}
+
+.secondary {
+  border-color: var(--secondary);
+  background-color: rgba(234, 185, 90, 0.05); 
+}
+
+.success {
+  border-color: var(--success-500);
+  background-color: rgba(0, 184, 54, 0.05);
+}
+
+.error {
+  border-color: var(--error-500);
+  background-color: rgba(230, 0, 0, 0.05);
+}
+
+.hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: var(--text-muted);
+}
+.primary.hoverable:hover { border-color: var(--primary-hover); }
+.secondary.hoverable:hover { border-color: var(--secondary-hover); }
+
+
+.header {
+  padding: var(--space-4) var(--space-4) var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .title {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 18px;
   font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: -0.025em;
+  color: var(--text-color);
   margin: 0;
+  font-family: var(--font-heading);
 }
 
 .description {
-  font-size: 0.875rem;
+  font-size: 14px;
   color: var(--text-muted);
   margin: 0;
 }
 
 .content {
-  padding: 24px;
+  padding: var(--space-2) var(--space-4) var(--space-4);
+  flex: 1;
+  color: var(--text-color);
+  font-size: 14px;
 }
 
 .footer {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--header-bg);
+  border-top: 1px solid var(--border);
   display: flex;
   align-items: center;
-  padding: 0 24px 24px 24px;
+  justify-content: flex-end;
+  gap: var(--space-2);
 }
