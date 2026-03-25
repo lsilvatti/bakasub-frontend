@@ -18,5 +18,21 @@
         "logs": {
             "title": "Logs"
         }
+    },
+    
+    "components": {
+        "asyncSearch": {
+            "loading": "Searching...",
+            "noResults": "No results found."
+        },
+
+        "fileBrowser": {
+            "up": "Go up",
+            "empty": "Empty folder"
+        },
+
+        "fileViewer": {
+            "noFiles": "No media files found in this folder."
+        }
     }
 }

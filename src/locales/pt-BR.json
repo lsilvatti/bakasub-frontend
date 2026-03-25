@@ -18,5 +18,21 @@
         "logs": {
             "title": "Registros"
         }
+    },
+
+    "components": {
+        "asyncSearch": {
+            "loading": "Buscando...",
+            "noResults": "Nenhum resultado encontrado."
+        },
+
+        "fileBrowser": {
+            "up": "Subir um nível",
+            "empty": "Pasta vazia"
+        },
+
+        "fileViewer": {
+            "noFiles": "Nenhum arquivo de mídia encontrado nesta pasta."
+        }
     }
 }
