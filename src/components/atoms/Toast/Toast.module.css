@@ -1,0 +1,83 @@
+.viewport {
+  position: fixed;
+  display: flex;
+  gap: var(--space-2);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.top-right { top: 24px; right: 24px; flex-direction: column; align-items: flex-end; }
+.bottom-right { bottom: 24px; right: 24px; flex-direction: column-reverse; align-items: flex-end; }
+.top-left { top: 24px; left: 24px; flex-direction: column; align-items: flex-start; }
+.bottom-left { bottom: 24px; left: 24px; flex-direction: column-reverse; align-items: flex-start; }
+.top-center { top: 24px; left: 50%; transform: translateX(-50%); flex-direction: column; align-items: center; }
+.bottom-center { bottom: 24px; left: 50%; transform: translateX(-50%); flex-direction: column-reverse; align-items: center; }
+
+.toast {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 320px;
+  padding: var(--space-3);
+  background-color: var(--header-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-family: var(--font-sans);
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.top-right .toast, .bottom-right .toast { animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.top-left .toast, .bottom-left .toast { animation: slideInLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.top-center .toast { animation: slideInTop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.bottom-center .toast { animation: slideInBottom 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+.toast.closing {
+  animation: fadeOut 0.2s ease forwards !important; /* Sobrescreve a animação de entrada */
+}
+
+.toast::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.success::before { background-color: var(--success-500); }
+.error::before { background-color: var(--error-500); }
+.info::before { background-color: var(--primary); }
+
+.icon { flex-shrink: 0; margin-top: 2px; }
+.success .icon { color: var(--success-500); }
+.error .icon { color: var(--error-500); }
+.info .icon { color: var(--primary); }
+
+.content { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.title { font-size: 14px; font-weight: 600; color: var(--text-color); }
+.message { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+
+.closeButton {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  margin-top: -4px;
+  margin-right: -4px;
+}
+.closeButton:hover { background-color: var(--surface-hover); color: var(--text-color); }
+
+@keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes slideInLeft { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes slideInTop { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes slideInBottom { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: scale(0.95); } }
