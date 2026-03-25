@@ -13,8 +13,6 @@ export {
 
 
 export { 
-    type OMDBMedia,
-    type OMDBEpisode,
-    type OMDBResponse,
-    type OMDBSearchParams
-} from './omdb'
+    type TMDBResult,
+    type TMDBEpisode
+} from './tmdb'

@@ -10,4 +10,4 @@ export {
 } from './api';
 
 export { useAppRoute } from './useAppRoute';
-export { useOMDB } from './useOMDB';
+export { useTMDB } from './useTMDB';
