@@ -19,3 +19,6 @@ export { Switch } from './Switch';
 export { Badge } from './Badge';
 export { ProgressBar } from './ProgressBar';
 export { Select } from './Select';
+export { Table } from './Table';
+export { PentagramLoader } from './PentagramLoader';
+export { Spinner } from './Spinner';

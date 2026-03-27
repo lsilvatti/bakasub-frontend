@@ -31,6 +31,8 @@
   opacity: 0.5;
 }
 
+/* --- Variantes de Cor --- */
+
 .primary {
   background-color: var(--primary);
   color: var(--primary-foreground);
@@ -39,6 +41,36 @@
 
 .primary:hover {
   background-color: var(--primary-hover);
+}
+
+.secondary {
+  background-color: var(--secondary);
+  color: var(--primary-foreground);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.secondary:hover {
+  background-color: var(--secondary-hover);
+}
+
+.success {
+  background-color: var(--success-500);
+  color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.success:hover {
+  background-color: var(--success-600, #00a02f); /* Fallback numérico se não existir a var 600 */
+}
+
+.error {
+  background-color: var(--error-500);
+  color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.error:hover {
+  background-color: var(--error-600, #cc0000); /* Fallback numérico se não existir a var 600 */
 }
 
 .outline {
@@ -59,6 +91,8 @@
 .ghost:hover {
   background-color: var(--surface-hover);
 }
+
+/* --- Tamanhos --- */
 
 .sm {
   height: 32px;
