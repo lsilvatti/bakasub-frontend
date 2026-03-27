@@ -1,19 +1,26 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import '@/lib/i18n';
-
-import { router } from '@/app/router'
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider } from 'react-router-dom'
 
+import '@/lib/i18n';
+import { router } from '@/app/router'
 import './globals.css'
 import ThemeProvider from './contexts/ThemeContext'
-import { ToastProvider } from './components/atoms/Toast';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { ToastProvider } from './contexts';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+})
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ToastProvider position='top-right'>
+    <ToastProvider>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <RouterProvider router={router} />

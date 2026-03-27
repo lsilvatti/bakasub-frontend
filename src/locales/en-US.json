@@ -1,4 +1,4 @@
-{
+{    
     "pages": { 
         "home" : {
             "title": "Home"
@@ -16,23 +16,40 @@
             "title": "Settings"
         },
         "logs": {
-            "title": "Logs"
+            "title": "Logs",
+            "error": "Error loading logs.",
+            "columns": {
+                "date": "Date",
+                "level": "Level",
+                "module": "Module",
+                "message": "Message",
+                "expand": "Expand"
+            }
         }
     },
-    
+
     "components": {
         "asyncSearch": {
-            "loading": "Searching...",
+            "loading": "Loading...",
             "noResults": "No results found."
         },
 
         "fileBrowser": {
-            "up": "Go up",
+            "up": "Go up one level",
             "empty": "Empty folder"
         },
 
         "fileViewer": {
             "noFiles": "No media files found in this folder."
+        },
+
+        "table": {
+            "syncing": "Syncing...",
+            "limitLabel": "Row limit:",
+            "previous": "Previous",
+            "next": "Next",
+            "page": "Page",
+            "showing": "Showing {{start}}-{{end}} of {{total}} records"
         }
     }
 }

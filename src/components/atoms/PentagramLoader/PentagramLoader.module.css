@@ -1,0 +1,59 @@
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes drawStroke {
+  0% { stroke-dashoffset: 300; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -300; }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 4px var(--primary-300, #ffc1d9))
+            drop-shadow(0 0 8px var(--primary-500, #ff8fbb));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px var(--primary-300, #ffc1d9))
+            drop-shadow(0 0 18px var(--primary-500, #ff8fbb))
+            drop-shadow(0 0 25px rgba(255, 255, 255, 0.4));
+  }
+}
+
+@keyframes sparkPulse {
+  0%, 100% { opacity: 0.5; filter: drop-shadow(0 0 2px var(--primary-300, #ffc1d9)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 6px var(--primary-500, #ff8fbb)); }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  height: 100%;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  animation: spin 5s linear infinite, glowPulse 3s ease-in-out infinite;
+}
+
+.path {
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  
+  stroke-dasharray: 300; 
+  stroke-dashoffset: 0;
+  
+  animation: drawStroke 4s ease-in-out infinite;
+}
+
+.spark {
+  fill: #ffffff;
+  stroke: none;
+  animation: sparkPulse 2s ease-in-out infinite;
+}

@@ -16,7 +16,15 @@
             "title": "Configurações"
         },
         "logs": {
-            "title": "Registros"
+            "title": "Registros",
+            "error": "Erro ao carregar logs.",
+            "columns": {
+                "date": "Data",
+                "level": "Nível",
+                "module": "Módulo",
+                "message": "Mensagem",
+                "expand": "Expandir"
+            }
         }
     },
 
@@ -33,6 +41,15 @@
 
         "fileViewer": {
             "noFiles": "Nenhum arquivo de mídia encontrado nesta pasta."
+        },
+
+        "table": {
+            "syncing": "Sincronizando...",
+            "limitLabel": "Limite de linhas:",
+            "previous": "Anterior",
+            "next": "Próximo",
+            "page": "Página",
+            "showing": "Mostrando {{start}}-{{end}} de {{total}} registros"
         }
     }
 }

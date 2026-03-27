@@ -1,10 +1,13 @@
-import React, { type ElementType, type ComponentPropsWithoutRef } from "react";
+import { type ElementType, type ComponentPropsWithoutRef } from "react";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 import styles from "./Button.module.css";
 
 const variantStyles = {
   primary: styles.primary,
+  secondary: styles.secondary,
+  success: styles.success,
+  error: styles.error,
   outline: styles.outline,
   ghost: styles.ghost,
 } as const;
