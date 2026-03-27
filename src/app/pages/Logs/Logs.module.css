@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 150px); 
+  gap: var(--space-4);
+  padding: 0 var(--space-6) var(--space-6) var(--space-6);
+  overflow: hidden;
+}
+
+.header {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-2);
+}
+
+.tableWrapper {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilo para o JSON nos metadados */
+.metadataPre {
+  margin: 0;
+  padding: var(--space-3);
+  background-color: var(--header-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-color);
+  line-height: 1.4;
+}

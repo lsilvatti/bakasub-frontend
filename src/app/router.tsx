@@ -3,6 +3,7 @@ import { RootLayout } from '@/components/templates';
 import { ErrorBoundary } from '@/components/organisms';
 import { APP_ROUTES } from '@/config/routes';
 import { Suspense } from 'react';
+import Loading from './pages/Loading';
 
 export const router = createBrowserRouter([
     {
@@ -12,7 +13,7 @@ export const router = createBrowserRouter([
         children: [
             ...APP_ROUTES.map(route => ({
                 path: route.path,
-                element: <Suspense fallback={<div>Loading...</div>}>{route.element}</Suspense>,
+                element: <Suspense fallback={<Loading />}>{route.element}</Suspense>,
             }))
         ],
     },
