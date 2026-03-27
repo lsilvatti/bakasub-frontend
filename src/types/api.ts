@@ -39,10 +39,11 @@ export interface SubtitleTrack {
 export interface SystemLog {
   id: number;
   level: string;
+  event_type?: string;
   module: string;
   message: string;
-  details: string;
-  created_at: string;
+  metadata?: Record<string, any>;
+  timestamp: string;
 }
 
 export interface SSEEvent {

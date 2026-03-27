@@ -8,8 +8,3 @@ export const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-api.interceptors.response.use(
-  (response) => response.data.data,
-  (error) => Promise.reject(error.response?.data?.message || error.message)
-);
