@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import styles from './Table.module.css';
 import { Typography, Button } from '@/components/atoms';
 import { useTranslation } from 'react-i18next';
+import { clsx } from 'clsx';
 
 interface TableProps {
   children: ReactNode;
@@ -28,6 +29,14 @@ Table.Body = ({ children }: { children: ReactNode }) => (
   <tbody className={styles.tbody}>{children}</tbody>
 );
 
+Table.Row = ({ children, className, ...props }: { children: ReactNode; className?: string; [key: string]: any }) => (
+  <tr 
+    className={clsx(styles.tr, className)} 
+    {...props}
+  >
+    {children}
+  </tr>
+);
 Table.Cell = ({ children }: { children: ReactNode }) => (
   <td className={styles.td}>{children}</td>
 );
