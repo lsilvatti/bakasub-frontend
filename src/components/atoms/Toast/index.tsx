@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useCallback, type ReactNode, useEffect } from 'react';
 import clsx from 'clsx';
-import styles from '../components/atoms/Toast/Toast.module.css';
+import styles from './Toast.module.css';
 
 export type ToastType = 'success' | 'error' | 'info';
 export type ToastPosition = 
