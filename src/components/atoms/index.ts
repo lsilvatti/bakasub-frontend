@@ -22,3 +22,4 @@ export { Select } from './Select';
 export { Table } from './Table';
 export { PentagramLoader } from './PentagramLoader';
 export { Spinner } from './Spinner';
+export { ToastItem } from './Toast';
