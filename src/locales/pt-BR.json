@@ -4,7 +4,17 @@
             "title": "Início"
         },
         "extract": {
-            "title": "Extrair"
+            "title": "Extrair",
+            "extractTrack": "Extrair Trilha {{id}} ({{language}})",
+            "unknown": "Desconhecido",
+            "selectFavoriteFolder": "Selecione uma pasta favorita...",
+            "selectSubtitleTrack": "Selecione a Trilha de Legenda",
+            "loadingTracks": "Analisando o arquivo com FFmpeg... não seja impaciente!",
+            "selectVideo": "Selecione um vídeo ao lado para ver as trilhas disponíveis.",
+            "extractTrackInitial": "Selecione uma trilha para extrair",
+            "extractTrackSuccess": "Trilha extraída com sucesso! Arquivo salvo em: {{srtPath}}",
+            "errorExtractingTrack": "Erro ao extrair a trilha.",
+            "errorLoadingTracks": "Não foi possível ler as legendas deste arquivo."
         },
          "translate": {
             "title": "Traduzir"
@@ -49,7 +59,13 @@
             "previous": "Anterior",
             "next": "Próximo",
             "page": "Página",
-            "showing": "Mostrando {{start}}-{{end}} de {{total}} registros"
+            "showing": "Mostrando {{start}}-{{end}} de {{total}} registros",
+            "errorLoadingTracks": "Não foi possível ler as legendas deste arquivo."
+        },
+        "trackSelector": {
+            "noTracksFound": "Nenhuma trilha de legenda encontrada neste vídeo.",
+            "language": "Idioma",
+            "trackTitle": "Título Original"
         }
     }
 }

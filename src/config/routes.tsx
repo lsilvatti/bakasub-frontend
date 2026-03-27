@@ -3,7 +3,7 @@ import { BookOpenText, HomeIcon, Languages, PackageOpen, Merge as MergeIcon } fr
 import { lazy } from 'react';
 
 const Home = lazy(() => import('@/app/pages/Home'));
-const Logs = lazy(() => import('@/app/pages/Logs/Logs'));
+const Logs = lazy(() => import('@/app/pages/Logs'));
 const Merge = lazy(() => import('@/app/pages/Merge/Merge'));
 const Translate = lazy(() => import('@/app/pages/Translate/Translate'));
 const Config = lazy(() => import('@/app/pages/Configs/Config'));

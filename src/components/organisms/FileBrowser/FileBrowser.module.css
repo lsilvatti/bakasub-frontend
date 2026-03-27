@@ -93,6 +93,61 @@
   align-items: center;
 }
 
+.fileItem {
+  cursor: pointer;
+}
+
+.fileItem:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.selectedItem {
+  background-color: rgba(var(--color-primary-rgb), 0.15) !important;
+  border-left: 3px solid var(--color-primary);
+  font-weight: 500;
+}
+
+.itemName {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.videoIcon {
+  color: #3b82f6; /* Azul pra vídeo, ou use uma var do seu tema */
+}
+
+.subtitleIcon {
+  color: #10b981; /* Verde pra legenda */
+}
+
 .folderIcon {
-  color: var(--secondary);
+  color: #fbbf24; /* Amarelo pra pasta */
+}
+
+.starButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  height: 100%;
+}
+
+.starButton:hover:not(:disabled) {
+  color: #fbbf24;
+}
+
+.activeStar {
+  color: #fbbf24;
+}
+
+.starButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

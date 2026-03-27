@@ -31,6 +31,7 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
           </Tooltip>
         </Link>
         <ThemeToggle />
+        <LanguageSwitcher />
       </div>
     </header>
   );

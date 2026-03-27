@@ -32,6 +32,7 @@ type BaseProps = {
   size?: Size;
   fullWidth?: boolean;
   rounded?: boolean;
+  loading?: boolean; // HMPH! Olha a sua prop aqui!
   className?: string;
   iconLeft?: ElementType;
   iconRight?: ElementType;
@@ -64,35 +65,54 @@ export function Button({
   size = "md",
   fullWidth = false,
   rounded = false,
+  loading = false,
   className,
   children,
   iconLeft: IconLeft,
   iconRight: IconRight,
   ...rest
 }: ButtonProps) {
+  // Se está carregando, nós forçamos o botão a ficar desabilitado
+  const explicitlyDisabled = "disabled" in rest ? rest.disabled : false;
+  const isDisabled = explicitlyDisabled || loading;
+
   const classes = clsx(
     styles.base,
     variantStyles[variant],
     sizeStyles[size],
     fullWidth && styles.fullWidth,
     rounded && styles.rounded,
+    loading && styles.isLoading, // Classe extra para o estado de loading
+    isDisabled && styles.disabled, // Adicionei isso pra garantir o CSS de disabled
     className
   );
 
   const iconClass = iconSizeMap[size];
 
+  // Um SVG fofinho e nativo para não depender de bibliotecas pesadas de ícones
+  const Spinner = () => (
+    <svg className={clsx(styles.spinner, iconClass)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle className={styles.spinnerCircle} cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+      <path className={styles.spinnerPath} fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+  );
+
   const content = (
     <>
-      {IconLeft && <IconLeft className={iconClass} aria-hidden="true" />}
+      {loading ? (
+        <Spinner />
+      ) : (
+        IconLeft && <IconLeft className={iconClass} aria-hidden="true" />
+      )}
       {children}
-      {IconRight && <IconRight className={iconClass} aria-hidden="true" />}
+      {!loading && IconRight && <IconRight className={iconClass} aria-hidden="true" />}
     </>
   );
 
   if ("to" in rest && rest.to != null) {
     const { disabled, to, ...linkRest } = rest as ButtonAsLink;
 
-    if (disabled) {
+    if (isDisabled) {
       return (
         <span className={classes} aria-disabled="true">
           {content}
@@ -110,7 +130,7 @@ export function Button({
   if ("href" in rest && rest.href != null) {
     const { disabled, href, ...anchorRest } = rest as ButtonAsExternalLink;
 
-    if (disabled) {
+    if (isDisabled) {
       return (
         <span className={classes} aria-disabled="true">
           {content}
@@ -126,7 +146,7 @@ export function Button({
   }
 
   return (
-    <button className={classes} {...(rest as ButtonAsButton)}>
+    <button className={classes} disabled={isDisabled} {...(rest as Omit<ButtonAsButton, 'disabled'>)}>
       {content}
     </button>
   );

@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/services';
 import { type Folder } from '@/types';
+import type { FileNode } from '@/types/api';
 
 export function useFolders() {
   const queryClient = useQueryClient();
@@ -16,7 +17,7 @@ export function useFolders() {
   });
 
   const removeFolder = useMutation({
-    mutationFn: (id: number) => apiClient.delete('/folders', { data: { id } }),
+    mutationFn: (id: number) => apiClient.delete('/folders', { id }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['folders'] }),
   });
 
@@ -32,6 +33,12 @@ export function useFolders() {
     enabled: !!path,
   });
 
+  const exploreFolder = (path: string | null) => useQuery<FileNode[]>({
+    queryKey: ['explore-folder', path],
+    queryFn: () => apiClient.get(`/folders/explore?path=${encodeURIComponent(path!)}`),
+    enabled: !!path,
+  });
+
   return {
     folders: getFolders.data || [],
     isLoadingFolders: getFolders.isLoading,
@@ -39,5 +46,6 @@ export function useFolders() {
     removeFolder,
     scanVideos,
     scanSubtitles,
+    exploreFolder,
   };
 }

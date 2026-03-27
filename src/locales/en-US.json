@@ -4,7 +4,17 @@
             "title": "Home"
         },
         "extract": {
-            "title": "Extract"
+            "title": "Extract",
+            "extractTrack": "Extract Track {{id}} ({{language}})",
+            "unknown": "Unknown",
+            "selectFavoriteFolder": "Select a favorite folder...",
+            "selectSubtitleTrack": "Select Subtitle Track",
+            "loadingTracks": "Analyzing the file with FFmpeg... please be patient!",
+            "selectVideo": "Select a video on the side to see available tracks.",
+            "extractTrackInitial": "Select a track to extract",
+            "extractTrackSuccess": "Track extracted successfully! File saved at: {{srtPath}}",
+            "errorExtractingTrack": "Error extracting track.",
+            "errorLoadingTracks": "Unable to read subtitles from this file."
         },
          "translate": {
             "title": "Translate"
@@ -38,18 +48,20 @@
             "up": "Go up one level",
             "empty": "Empty folder"
         },
-
-        "fileViewer": {
-            "noFiles": "No media files found in this folder."
-        },
-
         "table": {
             "syncing": "Syncing...",
             "limitLabel": "Row limit:",
             "previous": "Previous",
             "next": "Next",
             "page": "Page",
-            "showing": "Showing {{start}}-{{end}} of {{total}} records"
+            "showing": "Showing {{start}}-{{end}} of {{total}} records",
+            "errorLoadingTracks": "Unable to read subtitles from this file."
+        },
+        "trackSelector": {
+            "noTracksFound": "No subtitle tracks found in this video.",
+            "language": "Language",
+            "trackTitle": "Original Title"
         }
+        
     }
 }
