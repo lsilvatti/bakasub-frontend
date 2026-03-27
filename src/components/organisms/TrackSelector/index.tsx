@@ -22,7 +22,7 @@ export const TrackSelector: React.FC<TrackSelectorProps> = ({
         return (
             <div className={styles.container}>
                 <Typography variant="muted">
-                    {t('extract.noTracksFound', 'Nenhuma trilha de legenda encontrada neste vídeo.')}
+                    {t('components.trackSelector.noTracksFound')}
                 </Typography>
             </div>
         );
@@ -33,9 +33,9 @@ export const TrackSelector: React.FC<TrackSelectorProps> = ({
             <Table density="compact">
                 <Table.Header>
                     <Table.Column>ID</Table.Column>
-                    <Table.Column>{t('extract.language', 'Idioma')}</Table.Column>
+                    <Table.Column>{t('components.trackSelector.language', 'Idioma')}</Table.Column>
                     <Table.Column>Codec</Table.Column>
-                    <Table.Column>{t('extract.trackTitle', 'Título Original')}</Table.Column>
+                    <Table.Column>{t('components.trackSelector.trackTitle', 'Título Original')}</Table.Column>
                 </Table.Header>
 
                 <Table.Body>

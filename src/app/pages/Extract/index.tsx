@@ -8,12 +8,15 @@ import { useToast } from "@/hooks/useToast";
 import { Card } from "@/components/atoms/Card";
 import styles from "./Extract.module.css";
 import type { SubtitleTrack } from "@/types";
+import { useTranslation } from "react-i18next";
 
 export default function Extract() {
     const [currentPath, setCurrentPath] = useState<string>("/");
     const [selectedFile, setSelectedFile] = useState<string | null>(null);
     const [selectedTrackIndex, setSelectedTrackIndex] = useState<number | null>(null);
-    const [extractButtonState, setExtractButtonState] = useState<{ variant: "primary" | "success" | "error", label: string }>({ variant: "primary", label: "Extrair" });
+    const { t } = useTranslation();
+
+    const [extractButtonState, setExtractButtonState] = useState<{ variant: "primary" | "success" | "error", label: string }>({ variant: "primary", label: t('pages.extract.extractTrackInitial') });
 
     const toast = useToast();
     const { folders, exploreFolder } = useFolders();
@@ -23,7 +26,7 @@ export default function Extract() {
 
     const handleSelectTrack = (track: SubtitleTrack) => {
         setSelectedTrackIndex(track.id);
-        setExtractButtonState({ variant: "primary", label: `Extrair Trilha ${track.id} (${track.language || 'Unknown'})` });
+        setExtractButtonState({ variant: "primary", label: t('pages.extract.extractTrack', { id: track.id, language: track.language || t('pages.extract.unknown') }) });
     }
 
     const {
@@ -35,9 +38,9 @@ export default function Extract() {
     useEffect(() => {
         setSelectedTrackIndex(null);
         if (isTracksError) {
-            toast.warning("Não foi possível ler as legendas deste arquivo.");
+            toast.warning(t('components.table.errorLoadingTracks'));
         }
-    }, [selectedFile, isTracksError, toast]);
+    }, [selectedFile, isTracksError, toast, t]);
 
     const handleChangeFavoriteFolder = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newPath = event.target.value;
@@ -64,14 +67,14 @@ export default function Extract() {
             { videoPath: selectedFile, subtitleId: selectedTrackIndex },
             {
                 onSuccess: ({ srtPath }) => {
-                    toast.success(`Legenda extraída com sucesso! Arquivo salvo em: ${srtPath}`);
+                    toast.success(t('pages.extract.extractTrackSuccess', { srtPath }));
                     setSelectedTrackIndex(null);
-                    setExtractButtonState({ variant: "success", label: `Extraído para: ${srtPath}` });
+                    setExtractButtonState({ variant: "success", label: t('pages.extract.extractTrackSuccess', { srtPath }) });
 
                 },
                 onError: (error) => {
-                    toast.error("Erro ao extrair a trilha: " + error.message);
-                    setExtractButtonState({ variant: "error", label: "Erro" });
+                    toast.error(t('pages.extract.errorExtractingTrack'));
+                    setExtractButtonState({ variant: "error", label: t('pages.extract.errorExtractingTrack') });
                 }
             }
         );
@@ -88,14 +91,14 @@ export default function Extract() {
                     <Card variant="primary" className={styles.fullHeightCard}>
                         <Card.Header>
                             <Typography variant="h3" as="p">
-                                Selecione o arquivo de vídeo
+                                {t('pages.extract.title')}
                             </Typography>
                         </Card.Header>
 
                         <Card.Content className={styles.scrollableContent}>
                             <div className={styles.selectWrapper}>
                                 <Select
-                                    placeholder="Selecione uma pasta favorita..."
+                                    placeholder={t('pages.extract.selectFavoriteFolder', 'Selecione uma pasta favorita...')}
                                     onChange={handleChangeFavoriteFolder}
                                     value={isFavorite ? currentPath : ""}
                                     options={folders.map(folder => ({
@@ -119,13 +122,12 @@ export default function Extract() {
                     </Card>
                 </div>
 
-                {/* LADO DIREITO: TRILHAS DE LEGENDA */}
                 <div className={styles.rightColumn}>
                     {selectedFile ? (
                         <Card variant="secondary" className={styles.fullHeightCard}>
                             <Card.Header className={styles.actionFooter}>
                                 <Typography variant="h3" as="p">
-                                    Selecione a Trilha de Legenda
+                                    {t('pages.extract.selectSubtitleTrack', 'Selecione a Trilha de Legenda')}
                                 </Typography>
                                 <Button
                                     onClick={handleExtract}
@@ -140,7 +142,7 @@ export default function Extract() {
                             <Card.Content className={styles.scrollableContent}>
                                 {isLoadingTracks ? (
                                     <div className={styles.loadingState}>
-                                        <Typography variant="muted">Analisando o arquivo com FFmpeg... não seja impaciente!</Typography>
+                                        <Typography variant="muted">{t('pages.extract.loadingTracks')}</Typography>
                                     </div>
                                 ) : (
                                     <>
@@ -156,7 +158,7 @@ export default function Extract() {
                     ) : (
                         <div className={styles.emptyState}>
                             <Typography variant="muted">
-                                Selecione um vídeo ao lado para ver as trilhas disponíveis.
+                                {t('pages.extract.selectVideo')}
                             </Typography>
                         </div>
                     )}
