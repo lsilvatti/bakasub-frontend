@@ -74,3 +74,9 @@ export interface TranslatePayload {
   removeSDH: boolean;
   context?: string;
 }
+
+export interface FileNode {
+  name: string;
+  path: string;
+  isDirectory: boolean;
+}
