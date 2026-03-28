@@ -16,3 +16,9 @@ export {
     type TMDBResult,
     type TMDBEpisode
 } from './tmdb'
+
+export { 
+    type OpenRouterModel,
+    type OpenRouterModelRaw,
+    type OpenRouterPricing
+} from './openrouter'
