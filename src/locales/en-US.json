@@ -7,6 +7,7 @@
             "title": "Extract",
             "extractTrack": "Extract Track {{id}} ({{language}})",
             "unknown": "Unknown",
+            "selectFile": "Select a video file to extract subtitles.",
             "selectFavoriteFolder": "Select a favorite folder...",
             "selectSubtitleTrack": "Select Subtitle Track",
             "loadingTracks": "Analyzing the file with FFmpeg... please be patient!",
@@ -17,7 +18,9 @@
             "errorLoadingTracks": "Unable to read subtitles from this file."
         },
          "translate": {
-            "title": "Translate"
+            "title": "Translate",
+            "selectFile": "Select a subtitle file to translate.",
+            "translateDetails": "Translation Details"
         },
         "merge": {
             "title": "Merge"

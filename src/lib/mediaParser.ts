@@ -5,15 +5,21 @@ export interface ParsedMedia {
   year?: string;
 }
 
-export function parseMediaFilename(filename: string): ParsedMedia {
+export function parseMediaFilename(filepath: string): ParsedMedia {
+
+  const filename = filepath.split(/[/\\]/).pop() || "";
+
   let cleanName = filename.replace(/\.[^/.]+$/, "");
+  
+  cleanName = cleanName.replace(/[_.-]*track(?:Id)?_?\d+[_.-]*(?:[a-z]{2,3})?/i, "");
+  cleanName = cleanName.replace(/[_.-]+(?:eng|por|spa|fre|ger|ita|rus|jpn|pob|pt-br|pt)[_.-]*$/i, "");
 
   let title = cleanName;
   let season: string | undefined;
   let episode: string | undefined;
   let year: string | undefined;
 
-  const sePattern = /s(\d{1,2})\s*e(\d{1,2})/i;
+  const sePattern = /s(\d{1,2})[.\s-_]*e(\d{1,2})/i;
   const xPattern = /(?:\s|^|\.)(\d{1,2})x(\d{1,2})(?:\s|$|\.)/i;
 
   let match = cleanName.match(sePattern);
@@ -39,10 +45,17 @@ export function parseMediaFilename(filename: string): ParsedMedia {
 
   title = title
     .replace(/[\._]/g, " ") 
-    .replace(/\b(720p|1080p|2160p|4k|8k|bluray|web-dl|webrip|x264|x265|hevc)\b/gi, "") 
+    .replace(/\b(720p|1080p|2160p|4k|8k|bluray|web-dl|webrip|x264|x265|hevc|nf|amzn)\b/gi, "") 
     .replace(/\[.*?\]|\(.*?\)/g, "") 
     .replace(/\s+/g, " ") 
     .trim();
 
   return { title, season, episode, year };
+}
+
+export interface ParsedMedia {
+  title: string;
+  season?: string;
+  episode?: string;
+  year?: string;
 }

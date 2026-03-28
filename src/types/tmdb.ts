@@ -3,6 +3,7 @@ export interface TMDBResult {
   media_type: 'movie' | 'tv' | 'person';
   overview: string;
   poster_path: string | null;
+  backdrop_path: string | null;
   title?: string;
   name?: string;
   release_date?: string;

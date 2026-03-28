@@ -7,6 +7,7 @@
             "title": "Extrair",
             "extractTrack": "Extrair Trilha {{id}} ({{language}})",
             "unknown": "Desconhecido",
+            "selectFile": "Selecione um arquivo de vídeo para extrair as legendas.",
             "selectFavoriteFolder": "Selecione uma pasta favorita...",
             "selectSubtitleTrack": "Selecione a Trilha de Legenda",
             "loadingTracks": "Analisando o arquivo com FFmpeg... não seja impaciente!",
@@ -14,10 +15,16 @@
             "extractTrackInitial": "Selecione uma trilha para extrair",
             "extractTrackSuccess": "Trilha extraída com sucesso! Arquivo salvo em: {{srtPath}}",
             "errorExtractingTrack": "Erro ao extrair a trilha.",
-            "errorLoadingTracks": "Não foi possível ler as legendas deste arquivo."
+            "errorLoadingTracks": "Não foi possível ler as legendas deste arquivo.",
+            "file": "Arquivo:",
+            "noFileSelected": "Nenhum arquivo selecionado",
+            "track": "Trilha:",
+            "noTrackSelected": "Nenhuma trilha selecionada"
         },
          "translate": {
-            "title": "Traduzir"
+            "title": "Traduzir",
+            "selectFile": "Selecionar arquivo de legenda",
+            "translateDetails": "Detalhes da Tradução"
         },
         "merge": {
             "title": "Mesclar"

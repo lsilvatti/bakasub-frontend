@@ -5,7 +5,7 @@ import { lazy } from 'react';
 const Home = lazy(() => import('@/app/pages/Home'));
 const Logs = lazy(() => import('@/app/pages/Logs'));
 const Merge = lazy(() => import('@/app/pages/Merge/Merge'));
-const Translate = lazy(() => import('@/app/pages/Translate/Translate'));
+const Translate = lazy(() => import('@/app/pages/Translate'));
 const Config = lazy(() => import('@/app/pages/Configs/Config'));
 const Extract = lazy(() => import('@/app/pages/Extract'));
 

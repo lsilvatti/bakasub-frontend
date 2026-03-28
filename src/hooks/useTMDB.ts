@@ -1,55 +1,57 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { tmdbClient } from '@/services';
 import { type TMDBResult, type TMDBEpisode } from '@/types';
 import { useTranslation } from 'react-i18next';
+
+const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
 
 export function useTMDB() {
   const { i18n } = useTranslation();
   const lang = i18n.language === 'pt-BR' ? 'pt-BR' : 'en-US';
 
-  const searchMedia = (query: string, enabled: boolean = false) => {
-    return useQuery({
-      queryKey: ['tmdb-search', query, lang],
-      queryFn: async () => {
-        const res = await tmdbClient.get<{ results: TMDBResult[] }>(
-          `/search/multi?query=${encodeURIComponent(query)}&language=${lang}`
-        );
+  const searchMedia = useMutation({
+    mutationFn: async ({ query }: { query: string }) => {
+      if (!query || !import.meta.env.VITE_TMDB_ACCESS_TOKEN) {
+          throw new Error('Query ou Token do TMDB faltando.');
+      }
 
-        const media = res.results?.filter(r => r.media_type === 'movie' || r.media_type === 'tv') || [];
+      const res = await tmdbClient.get<{ results: TMDBResult[] }>(
+        `/search/multi?query=${encodeURIComponent(query)}&language=${lang}`
+      );
 
-        if (media.length === 0) {
-          throw new Error('Nenhuma mídia encontrada com esse título.');
-        }
+      const media = res.results?.filter(r => r.media_type === 'movie' || r.media_type === 'tv') || [];
 
-        return media;
-      },
-      enabled: enabled && !!query && !!import.meta.env.VITE_TMDB_ACCESS_TOKEN,
-      staleTime: 1000 * 60 * 60 * 24,
-      retry: 1,
-    });
-  };
+      if (media.length === 0) {
+        throw new Error('Nenhuma mídia encontrada com esse título.');
+      }
 
-  const getEpisode = (seriesId: number | null, season: string, episode: string, enabled: boolean = false) => {
-    return useQuery({
-      queryKey: ['tmdb-episode', seriesId, season, episode, lang],
-      queryFn: async () => {
-        if (!seriesId) throw new Error('ID da série é obrigatório para buscar o episódio.');
+      const processedMedia = media.map(r => ({
+        ...r,
+        posterImageUrl: r.poster_path ? `${TMDB_IMAGE_BASE_URL}w500${r.poster_path}` : null,
+        backdropImageUrl: r.backdrop_path ? `${TMDB_IMAGE_BASE_URL}w780${r.backdrop_path}` : null,
+      }));
 
-        const epRes = await tmdbClient.get<TMDBEpisode>(
-          `/tv/${seriesId}/season/${season}/episode/${episode}?language=${lang}`
-        );
+      // Retornamos o objeto com os resultados processados
+      return { results: processedMedia }; 
+    },
+  });
 
-        return {
-          title: epRes.name,
-          overview: epRes.overview,
-          poster: epRes.still_path ? `https://image.tmdb.org/t/p/w500${epRes.still_path}` : null,
-        };
-      },
-      enabled: enabled && !!seriesId && !!season && !!episode,
-      staleTime: 1000 * 60 * 60 * 24,
-      retry: 1,
-    });
-  };
+  const getEpisode = useMutation({
+    mutationFn: async ({ showId, season, episode }: { showId: number; season: number; episode: number }) => {
+      if (!showId) throw new Error('ID da série é obrigatório para buscar o episódio.');
+
+      const epRes = await tmdbClient.get<TMDBEpisode>(
+        `/tv/${showId}/season/${season}/episode/${episode}?language=${lang}`
+      );
+
+      return {
+        ...epRes,
+        title: epRes.name,
+        overview: epRes.overview,
+        poster: epRes.still_path ? `${TMDB_IMAGE_BASE_URL}w500${epRes.still_path}` : null,
+      };
+    },
+  });
 
   return { searchMedia, getEpisode };
 }
