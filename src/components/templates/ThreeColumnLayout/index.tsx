@@ -1,35 +1,35 @@
 import { type ReactNode } from 'react';
 import clsx from 'clsx';
 import { PageTitle } from '@/components/atoms';
-import styles from './SplitPageLayout.module.css';
+import styles from './ThreeColumnLayout.module.css';
 import type { ParseKeys } from 'node_modules/i18next/typescript/t';
 
-export interface TreeRowLayoutProps {
+export interface ThreeColumnLayoutProps {
   titleKey: ParseKeys;
-rowContent: ReactNode[];
+  columns: ReactNode[];
   footerContent?: ReactNode;
 }
 
-export const TreeRowLayout = ({
+export const ThreeColumnLayout = ({
   titleKey,
-  rowContent,
+  columns,
   footerContent,
-}: TreeRowLayoutProps) => {
+}: ThreeColumnLayoutProps) => {
   return (
     <div className={styles.pageContainer}>
       <PageTitle titleKey={titleKey as ParseKeys} />
 
-      <div className={styles.splitLayout}>
+      <div className={styles.threeColumnLayout}>
         <div className={styles.leftColumn}>
-          {rowContent[0]}
+          {columns[0]}
         </div>
 
         <div className={styles.centerColumn}>
-            {rowContent[1]}
+            {columns[1]}
         </div>
 
         <div className={styles.rightColumn}>
-          {rowContent[2]}
+          {columns[2]}
         </div>
       </div>
 

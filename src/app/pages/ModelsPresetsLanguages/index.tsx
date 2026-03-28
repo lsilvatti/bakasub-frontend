@@ -1,4 +1,4 @@
-import { SplitPageLayout } from '@/components/templates/SplitPageLayout';
+import { ThreeColumnLayout } from '@/components/templates';
 import styles from './ModelsPresetsLanguages.module.css';
 
 export default function ModelsPresetsLanguages () { 
@@ -20,10 +20,9 @@ export default function ModelsPresetsLanguages () {
     }
 
     return (
-        <SplitPageLayout
+        <ThreeColumnLayout
             titleKey='pages.modelsPresetsLanguages.title'
-            leftContent={renderLeft()}
-            rightContent={renderRight()}
+            columns={[renderLeft(), null, renderRight()]}
         />
     )
 }

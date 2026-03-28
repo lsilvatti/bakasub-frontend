@@ -1,13 +1,13 @@
 .pageContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 1.5rem;
   height: 100%; 
 }
 
-.splitLayout {
+.threeColumnLayout {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 1.5rem;
   flex: 1;
   min-height: 0;
