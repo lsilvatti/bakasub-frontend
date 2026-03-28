@@ -1,42 +1,9 @@
-.pageContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.splitLayout {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  flex: 1;
-  min-height: 0;
-}
-
-@media (min-width: 1024px) {
-  .splitLayout {
-    flex-direction: row;
-  }
-}
-
-.leftColumn {
-  flex: 0 0 600px;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.rightColumn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
+/* --- ESTILOS INTERNOS DOS CARDS --- */
 
 .fullHeightCard {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: var(--space-4);
 }
 
 .scrollableContent {
@@ -44,8 +11,9 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+  padding: var(--space-4); /* O padding interno fica aqui, não no layout global */
+  overflow-y: auto;
 }
-
 
 .selectWrapper {
   margin-bottom: 1rem;
@@ -68,16 +36,50 @@
   padding: 2rem;
 }
 
-.actionFooter {
+.footer { 
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-direction: row;
+  width: 100%;
 }
 
+/* --- ESTILOS DO CONTEÚDO DO RODAPÉ FIXO --- */
 
-@media (min-width: 768px) {
-  .pageContainer {
-      height: 100%; 
+.selectedInfo { 
+  display: none; /* Esconde em telas muito pequenas para o botão caber */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.selectedTrackInfo { 
+  display: flex;
+  flex-direction: row; 
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.truncateText {
+  max-width: 600px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mostra a informação do arquivo no rodapé apenas se a tela for razoável */
+@media (min-width: 1024px) {
+  .selectedInfo { 
+      display: flex;
+  }
+
+
+  .footer { 
+    justify-content: flex-end;
+  }
+
+  .footerCentered {
+    justify-content: center;
   }
 }

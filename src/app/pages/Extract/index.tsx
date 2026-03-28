@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { PageTitle, Select, Typography, Button } from "@/components/atoms";
-import { FileBrowser } from "@/components/organisms/FileBrowser";
-import { TrackSelector } from "@/components/organisms/TrackSelector";
-import { useFolders } from "@/hooks/api/useFolders";
-import { useVideo } from "@/hooks/api/useVideo";
-import { useToast } from "@/hooks/useToast";
-import { Card } from "@/components/atoms/Card";
+import { Select, Typography, Button, Card, Badge } from "@/components/atoms";
+import { FileBrowser, TrackSelector } from "@/components/organisms";
+// O NOSSO LAYOUT PODEROSO
+import { SplitPageLayout } from "@/components/templates/SplitPageLayout";
+import { useFolders, useVideo, useToast } from "@/hooks";
 import styles from "./Extract.module.css";
 import type { SubtitleTrack } from "@/types";
 import { useTranslation } from "react-i18next";
+import clsx from "clsx";
 
 export default function Extract() {
     const [currentPath, setCurrentPath] = useState<string>("/");
@@ -29,11 +28,7 @@ export default function Extract() {
         setExtractButtonState({ variant: "primary", label: t('pages.extract.extractTrack', { id: track.id, language: track.language || t('pages.extract.unknown') }) });
     }
 
-    const {
-        data: tracksData,
-        isFetching: isLoadingTracks,
-        isError: isTracksError
-    } = getTracks(selectedFile);
+    const { data: tracksData, isFetching: isLoadingTracks, isError: isTracksError } = getTracks(selectedFile);
 
     useEffect(() => {
         setSelectedTrackIndex(null);
@@ -70,9 +65,8 @@ export default function Extract() {
                     toast.success(t('pages.extract.extractTrackSuccess', { srtPath }));
                     setSelectedTrackIndex(null);
                     setExtractButtonState({ variant: "success", label: t('pages.extract.extractTrackSuccess', { srtPath }) });
-
                 },
-                onError: (error) => {
+                onError: () => {
                     toast.error(t('pages.extract.errorExtractingTrack'));
                     setExtractButtonState({ variant: "error", label: t('pages.extract.errorExtractingTrack') });
                 }
@@ -82,88 +76,113 @@ export default function Extract() {
 
     const isFavorite = folders.some(f => f.path === currentPath);
 
-    return (
-        <div className={styles.pageContainer}>
-            <PageTitle titleKey="pages.extract.title" />
+    // --- BLOCOS DO LAYOUT ---
 
-            <div className={styles.splitLayout}>
-                <div className={styles.leftColumn}>
-                    <Card variant="primary" className={styles.fullHeightCard}>
-                        <Card.Header>
-                            <Typography variant="h3" as="p">
-                                {t('pages.extract.title')}
-                            </Typography>
-                        </Card.Header>
-
-                        <Card.Content className={styles.scrollableContent}>
-                            <div className={styles.selectWrapper}>
-                                <Select
-                                    placeholder={t('pages.extract.selectFavoriteFolder', 'Selecione uma pasta favorita...')}
-                                    onChange={handleChangeFavoriteFolder}
-                                    value={isFavorite ? currentPath : ""}
-                                    options={folders.map(folder => ({
-                                        value: folder.path,
-                                        label: `${folder.alias} (${folder.path})`
-                                    }))}
-                                />
-                            </div>
-
-                            <FileBrowser
-                                currentPath={currentPath}
-                                items={exploreEntries || []}
-                                onNavigate={handleNavigate}
-                                onPathSubmit={onPathSubmit}
-                                showFavorites={true}
-                                fileFilter="video"
-                                selectedFile={selectedFile}
-                                onSelectFile={setSelectedFile}
-                            />
-                        </Card.Content>
-                    </Card>
+    const renderLeft = () => (
+        <Card variant="primary" className={styles.fullHeightCard}>
+            <Card.Header>
+                <Typography variant="h3" as="p">{t('pages.extract.selectFile')}</Typography>
+            </Card.Header>
+            <Card.Content className={styles.scrollableContent}>
+                <div className={styles.selectWrapper}>
+                    <Select
+                        placeholder={t('pages.extract.selectFavoriteFolder')}
+                        onChange={handleChangeFavoriteFolder}
+                        value={isFavorite ? currentPath : ""}
+                        options={folders.map(folder => ({
+                            value: folder.path,
+                            label: `${folder.alias} (${folder.path})`
+                        }))}
+                    />
                 </div>
+                <FileBrowser
+                    currentPath={currentPath}
+                    items={exploreEntries || []}
+                    onNavigate={handleNavigate}
+                    onPathSubmit={onPathSubmit}
+                    showFavorites={true}
+                    fileFilter="video"
+                    selectedFile={selectedFile}
+                    onSelectFile={setSelectedFile}
+                />
+            </Card.Content>
+        </Card>
+    );
 
-                <div className={styles.rightColumn}>
-                    {selectedFile ? (
-                        <Card variant="secondary" className={styles.fullHeightCard}>
-                            <Card.Header className={styles.actionFooter}>
-                                <Typography variant="h3" as="p">
-                                    {t('pages.extract.selectSubtitleTrack', 'Selecione a Trilha de Legenda')}
-                                </Typography>
-                                <Button
-                                    onClick={handleExtract}
-                                    disabled={selectedTrackIndex === null || extractTrack.isPending}
-                                    loading={extractTrack.isPending}
-                                    variant={extractButtonState.variant}
-                                >
-                                    {extractButtonState.label}
-                                </Button>
-                            </Card.Header>
+    const renderRight = () => {
+        if (!selectedFile) {
+            return (
+                <div className={styles.emptyState}>
+                    <Typography variant="muted">{t('pages.extract.selectVideo')}</Typography>
+                </div>
+            );
+        }
 
-                            <Card.Content className={styles.scrollableContent}>
-                                {isLoadingTracks ? (
-                                    <div className={styles.loadingState}>
-                                        <Typography variant="muted">{t('pages.extract.loadingTracks')}</Typography>
-                                    </div>
-                                ) : (
-                                    <>
-                                        <TrackSelector
-                                            tracks={tracksData?.tracks || []}
-                                            selectedTrackIndex={selectedTrackIndex}
-                                            onSelectTrack={handleSelectTrack}
-                                        />
-                                    </>
-                                )}
-                            </Card.Content>
-                        </Card>
+        return (
+            <Card variant="secondary" className={styles.fullHeightCard}>
+                <Card.Header>
+                    <Typography variant="h3" as="p">{t('pages.extract.selectSubtitleTrack')}</Typography>
+                </Card.Header>
+                <Card.Content className={styles.scrollableContent}>
+                    {isLoadingTracks ? (
+                        <div className={styles.loadingState}>
+                            <Typography variant="muted">{t('pages.extract.loadingTracks')}</Typography>
+                        </div>
                     ) : (
-                        <div className={styles.emptyState}>
-                            <Typography variant="muted">
-                                {t('pages.extract.selectVideo')}
-                            </Typography>
+                        <TrackSelector
+                            tracks={tracksData?.tracks || []}
+                            selectedTrackIndex={selectedTrackIndex}
+                            onSelectTrack={handleSelectTrack}
+                        />
+                    )}
+                </Card.Content>
+            </Card>
+        );
+    };
+
+    const renderFooter = () => (
+        <div className={clsx(styles.footer, { [styles.footerCentered]: selectedFile })}>
+            {selectedFile && (
+                <div className={styles.selectedInfo}>
+                    <Typography className={styles.truncateText} variant="muted">
+                        <Typography variant="span" color="primary">{t('pages.extract.file')}</Typography> {selectedFile}
+                    </Typography>
+                    {selectedTrackIndex !== null && (
+                        <div className={styles.selectedTrackInfo}>
+                            <Typography variant="muted" color="secondary">{t('pages.extract.track')}</Typography>
+                            <div className={styles.selectedTrackInfo}>
+                                <Typography variant="muted">
+                                    ID # {selectedTrackIndex} - {tracksData?.tracks.find(t => t.id === selectedTrackIndex)?.language || t('pages.extract.unknown')}
+                                </Typography>
+                                <Badge variant="secondary">
+                                    {tracksData?.tracks.find(t => t.id === selectedTrackIndex)?.codec}
+                                </Badge>
+                                <Typography variant="muted">
+                                    {tracksData?.tracks.find(t => t.id === selectedTrackIndex)?.name}
+                                </Typography>
+                            </div>
                         </div>
                     )}
                 </div>
-            </div>
+            )}
+            <Button
+                onClick={handleExtract}
+                disabled={selectedTrackIndex === null || extractTrack.isPending}
+                loading={extractTrack.isPending}
+                variant={extractButtonState.variant}
+            >
+                {extractButtonState.label}
+            </Button>
         </div>
+    );
+
+    return (
+        <SplitPageLayout
+            titleKey="pages.extract.title"
+            leftContent={renderLeft()}
+            rightContent={renderRight()}
+            footerContent={renderFooter()}
+            footerCentered={!selectedFile} 
+        />
     );
 }

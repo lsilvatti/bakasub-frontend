@@ -94,6 +94,7 @@
   --color-primary-rgb: 255, 143, 187; 
   --color-primary-light: var(--primary-300);
 
+  --tmdb-card-rgb: 200, 200, 200;
   --color-surface: var(--gray-50);
   --color-surface-elevated: #ffffff;
   --color-surface-hover: var(--surface-hover);
@@ -144,6 +145,7 @@
   --color-primary-rgb: 255, 193, 217; 
   --color-primary-light: var(--primary-200);
 
+  --tmdb-card-rgb: 0, 0, 0;
   --color-surface: var(--gray-600);
   --color-surface-elevated: #2a2a2a;
   --color-surface-hover: var(--surface-hover);
