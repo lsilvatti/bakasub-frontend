@@ -35,6 +35,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         
         <div className={clsx(
           styles.inputContainer,
+          styles.textareaContainer, 
           error && styles.error,
           disabled && styles.disabled
         )}>

@@ -65,10 +65,17 @@
   cursor: not-allowed;
 }
 
+
+.textareaContainer {
+  align-items: flex-start; 
+  height: auto;
+}
+
 .textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 120px; 
   line-height: 1.5;
+  padding: 12px;
 }
 
 .iconLeft, .iconRight {
