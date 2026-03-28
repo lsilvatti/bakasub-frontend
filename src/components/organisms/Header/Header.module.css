@@ -47,7 +47,7 @@ h3.title {
   font-family: var(--font-sans);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1600px) {
   .header {
       justify-content: end;
     padding: 0 24px;

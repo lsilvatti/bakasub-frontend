@@ -28,7 +28,7 @@
   max-height: 35px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1600px) {
   .sidebar {
     position: static;
     transform: translateX(0);
