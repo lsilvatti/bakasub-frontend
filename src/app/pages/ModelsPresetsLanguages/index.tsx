@@ -1,28 +1,39 @@
 import { ThreeColumnLayout } from '@/components/templates';
 import styles from './ModelsPresetsLanguages.module.css';
+import { Card } from '@/components/atoms/Card';
+import { clsx } from 'clsx';
 
 export default function ModelsPresetsLanguages () { 
 
-    const renderLeft = () => {
+    const openRouterModels = () => {
         return (
-            <div className={styles.left}>
+            <Card variant="primary" className={clsx(styles.left, styles.fullHeightCard)}>
                 <h2>Modelos</h2>
-            </div>
+            </Card>
         )
     }
 
-    const renderRight = () => {
+    const translationPresets = () => {
         return (
-            <div className={styles.right}>
-                <h2>Detalhes</h2>
-            </div>
+            <Card variant="secondary" className={clsx(styles.center, styles.fullHeightCard)}>
+                <h2>Presets de Tradução</h2>
+            </Card>
+        )
+    }
+
+    const languages = () => {
+        return (
+            <Card variant="primary" className={clsx(styles.right, styles.fullHeightCard)}>
+                <h2>Idiomas disponíveis</h2>
+            </Card>
         )
     }
 
     return (
         <ThreeColumnLayout
             titleKey='pages.modelsPresetsLanguages.title'
-            columns={[renderLeft(), null, renderRight()]}
+            columns={[openRouterModels(), translationPresets(), languages()]}
+            layoutClassName={styles.layout}
         />
     )
 }

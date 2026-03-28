@@ -8,18 +8,22 @@ export interface ThreeColumnLayoutProps {
   titleKey: ParseKeys;
   columns: ReactNode[];
   footerContent?: ReactNode;
+  className?: string;
+  layoutClassName?: string;
 }
 
 export const ThreeColumnLayout = ({
   titleKey,
   columns,
   footerContent,
+  className,
+  layoutClassName
 }: ThreeColumnLayoutProps) => {
   return (
-    <div className={styles.pageContainer}>
+    <div className={clsx(styles.pageContainer, className)}>
       <PageTitle titleKey={titleKey as ParseKeys} />
 
-      <div className={styles.threeColumnLayout}>
+      <div className={clsx(styles.threeColumnLayout, layoutClassName)}>
         <div className={styles.leftColumn}>
           {columns[0]}
         </div>

@@ -31,8 +31,6 @@
   opacity: 0.5;
 }
 
-/* --- Variantes de Cor --- */
-
 .primary {
   background-color: var(--primary);
   color: var(--primary-foreground);
@@ -60,7 +58,7 @@
 }
 
 .success:hover {
-  background-color: var(--success-600, #00a02f); /* Fallback numérico se não existir a var 600 */
+  background-color: var(--success-600, #00a02f);
 }
 
 .error {
@@ -70,7 +68,7 @@
 }
 
 .error:hover {
-  background-color: var(--error-600, #cc0000); /* Fallback numérico se não existir a var 600 */
+  background-color: var(--error-600, #cc0000);
 }
 
 .outline {
@@ -92,7 +90,6 @@
   background-color: var(--surface-hover);
 }
 
-/* --- Tamanhos --- */
 
 .sm {
   height: 32px;
