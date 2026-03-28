@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.2s;
+  color: var(--color-text-muted);
+}
+
+.container:hover {
+  border-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+/* Suporte a diferentes aspect-ratios (Poster, Still, Square) */
+.poster {
+  aspect-ratio: 2 / 3;
+}
+
+.still {
+  aspect-ratio: 16 / 9;
+}
+
+.square {
+  aspect-ratio: 1 / 1;
+}
+
+/* Estilos do SVG */
+.svg {
+  width: 50%; /* Ocupa metade da largura do container */
+  height: auto;
+  stroke: currentColor; /* Pega a cor do texto do container (muted ou primary no hover) */
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform-origin: center;
+  /* Uma rotação muito lenta e suave, só para dar um charme ocultista */
+  animation: slowSpin 20s linear infinite;
+}
+
+@keyframes slowSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
