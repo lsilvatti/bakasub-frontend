@@ -85,7 +85,7 @@
 .weight-semibold { font-weight: 600; }
 .weight-bold { font-weight: 700; }
 
-.color-primary { color: var(--text-color); }
-.color-secondary { color: var(--text-muted); }
+.color-primary { color: var(--primary); }
+.color-secondary { color: var(--secondary); }
 .color-error { color: var(--error-500, #ef4444); }
 .color-success { color: var(--success-500, #22c55e); }
