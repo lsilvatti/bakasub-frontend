@@ -23,3 +23,4 @@ export { Table } from './Table';
 export { PentagramLoader } from './PentagramLoader';
 export { Spinner } from './Spinner';
 export { ToastItem } from './Toast';
+export { Card } from './Card';
