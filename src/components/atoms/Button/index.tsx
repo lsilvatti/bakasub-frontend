@@ -32,7 +32,7 @@ type BaseProps = {
   size?: Size;
   fullWidth?: boolean;
   rounded?: boolean;
-  loading?: boolean; // HMPH! Olha a sua prop aqui!
+  loading?: boolean;
   className?: string;
   iconLeft?: ElementType;
   iconRight?: ElementType;
@@ -72,7 +72,6 @@ export function Button({
   iconRight: IconRight,
   ...rest
 }: ButtonProps) {
-  // Se está carregando, nós forçamos o botão a ficar desabilitado
   const explicitlyDisabled = "disabled" in rest ? rest.disabled : false;
   const isDisabled = explicitlyDisabled || loading;
 
@@ -82,14 +81,13 @@ export function Button({
     sizeStyles[size],
     fullWidth && styles.fullWidth,
     rounded && styles.rounded,
-    loading && styles.isLoading, // Classe extra para o estado de loading
-    isDisabled && styles.disabled, // Adicionei isso pra garantir o CSS de disabled
+    loading && styles.isLoading,
+    isDisabled && styles.disabled,
     className
   );
 
   const iconClass = iconSizeMap[size];
 
-  // Um SVG fofinho e nativo para não depender de bibliotecas pesadas de ícones
   const Spinner = () => (
     <svg className={clsx(styles.spinner, iconClass)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
       <circle className={styles.spinnerCircle} cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

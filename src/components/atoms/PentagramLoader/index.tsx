@@ -1,4 +1,3 @@
-// src/components/atoms/PentagramLoader/index.tsx
 import styles from './PentagramLoader.module.css';
 
 export const PentagramLoader = () => {

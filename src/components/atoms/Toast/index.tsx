@@ -28,7 +28,6 @@ export const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove }) => {
 
   const handleClose = useCallback(() => {
     setIsClosing(true);
-    // Tempo exato para a animação de saída rodar antes de desmontar do DOM
     setTimeout(() => onRemove(toast.id), 300); 
   }, [toast.id, onRemove]);
 

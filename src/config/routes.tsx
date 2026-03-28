@@ -1,5 +1,5 @@
 
-import { BookOpenText, HomeIcon, Languages, PackageOpen, Merge as MergeIcon } from 'lucide-react';
+import { BookOpenText, HomeIcon, Languages, PackageOpen, Merge as MergeIcon, Bot } from 'lucide-react';
 import { lazy } from 'react';
 
 const Home = lazy(() => import('@/app/pages/Home'));
@@ -8,6 +8,7 @@ const Merge = lazy(() => import('@/app/pages/Merge/Merge'));
 const Translate = lazy(() => import('@/app/pages/Translate'));
 const Config = lazy(() => import('@/app/pages/Configs/Config'));
 const Extract = lazy(() => import('@/app/pages/Extract'));
+const ModelsPresetsLanguages = lazy(() => import('@/app/pages/ModelsPresetsLanguages'));
 
 
 
@@ -47,6 +48,13 @@ export const APP_ROUTES: AppRoute[] = [
     element: <Merge />,
     showInSidebar: true,
     icon: MergeIcon
+  },
+  {
+    path: '/models',
+    title: 'pages.modelsPresetsLanguages.title',
+    element: <ModelsPresetsLanguages />,
+    showInSidebar: true,
+    icon: Bot
   },
   {
     path: '/config',

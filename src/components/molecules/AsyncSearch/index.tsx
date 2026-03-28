@@ -11,7 +11,7 @@ export interface AsyncSearchProps<T> {
   delay?: number;
   isLoading?: boolean;
   results: T[];
-  value: string; // Trocamos initialValue por value controlado!
+  value: string;
   onChange: (value: string) => void;
   onSearch: (query: string) => void;
   onSelect: (item: T) => void;
@@ -40,17 +40,14 @@ export function AsyncSearch<T>({
   const containerRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
 
-  // O debounce agora observa o valor controlado que vem do pai
   const debouncedValue = useDebounce(value, delay);
 
-  // Efeito responsável apenas por buscar quando o texto "assentar"
   useEffect(() => {
     if (debouncedValue.trim()) {
       onSearch(debouncedValue);
     }
   }, [debouncedValue, onSearch]);
 
-  // Fechar ao clicar fora
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -81,7 +78,7 @@ export function AsyncSearch<T>({
         value={value}
         onChange={(e) => {
           onChange(e.target.value);
-          setIsOpen(true); // Só abre automaticamente se o usuário estiver digitando
+          setIsOpen(true);
         }}
         onFocus={() => {
           if (value.trim() && results.length > 0) setIsOpen(true);

@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import styles from './FileBrowser.module.css';
 import { useTranslation } from 'react-i18next';
 import type { FileNode } from '@/types/api';
-// Você vai precisar dos seus hooks de volta!
 import { useFolders } from '@/hooks/api/useFolders';
 import { useToast } from '@/hooks/useToast';
 
@@ -13,7 +12,6 @@ export interface FileBrowserProps {
   onNavigate: (newPath: string) => void;
   onPathSubmit?: (manualPath: string) => void;
   
-  // Novas props para seleção e filtro!
   onSelectFile?: (path: string) => void;
   selectedFile?: string | null;
   fileFilter?: 'video' | 'subtitle' | 'all';
@@ -21,7 +19,6 @@ export interface FileBrowserProps {
   className?: string;
 }
 
-// Extensões hardcoded porque seu backend não manda o tipo. Agradeça depois.
 const VIDEO_EXTS = ['.mp4', '.mkv', '.avi', '.webm', '.mov', '.flv'];
 const SUB_EXTS = ['.srt', '.ass', '.vtt', '.ssa', '.sub'];
 
@@ -40,7 +37,6 @@ export function FileBrowser({
   const { t } = useTranslation();
   const toast = useToast();
 
-  // Hooks de favoritos que você tinha esquecido
   const { folders, addFolder, removeFolder, isLoadingFolders } = useFolders();
 
   useEffect(() => {
@@ -60,7 +56,6 @@ export function FileBrowser({
     }
   };
 
-  // Identificador de tipo de arquivo
   const getFileType = (filename: string) => {
     const ext = filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2).toLowerCase();
     if (VIDEO_EXTS.includes(`.${ext}`)) return 'video';
@@ -68,7 +63,6 @@ export function FileBrowser({
     return 'other';
   };
 
-  // Filtra a lista de itens baseada na prop fileFilter
   const filteredItems = useMemo(() => {
     return items.filter(item => {
       if (item.isDirectory) return true; // Sempre exibe pastas
@@ -78,7 +72,6 @@ export function FileBrowser({
     });
   }, [items, fileFilter]);
 
-  // Lógica da Estrela de Favorito
   const currentFavorite = folders?.find(f => f.path === currentPath);
   const isFavorite = !!currentFavorite;
 
@@ -126,7 +119,6 @@ export function FileBrowser({
       );
     }
 
-    // Arquivo genérico
     return (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>

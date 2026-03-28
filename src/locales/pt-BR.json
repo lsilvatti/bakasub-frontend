@@ -32,6 +32,9 @@
         "settings": {
             "title": "Configurações"
         },
+        "modelsPresetsLanguages": {
+            "title": "Modelos e Presets"
+        },
         "logs": {
             "title": "Registros",
             "error": "Erro ao carregar logs.",

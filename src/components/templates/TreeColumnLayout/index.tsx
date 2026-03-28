@@ -4,30 +4,32 @@ import { PageTitle } from '@/components/atoms';
 import styles from './SplitPageLayout.module.css';
 import type { ParseKeys } from 'node_modules/i18next/typescript/t';
 
-export interface SplitPageLayoutProps {
+export interface TreeRowLayoutProps {
   titleKey: ParseKeys;
-  leftContent: ReactNode;
-  rightContent: ReactNode;
+rowContent: ReactNode[];
   footerContent?: ReactNode;
 }
 
-export const SplitPageLayout = ({
+export const TreeRowLayout = ({
   titleKey,
-  leftContent,
-  rightContent,
+  rowContent,
   footerContent,
-}: SplitPageLayoutProps) => {
+}: TreeRowLayoutProps) => {
   return (
     <div className={styles.pageContainer}>
       <PageTitle titleKey={titleKey as ParseKeys} />
 
       <div className={styles.splitLayout}>
         <div className={styles.leftColumn}>
-          {leftContent}
+          {rowContent[0]}
+        </div>
+
+        <div className={styles.centerColumn}>
+            {rowContent[1]}
         </div>
 
         <div className={styles.rightColumn}>
-          {rightContent}
+          {rowContent[2]}
         </div>
       </div>
 

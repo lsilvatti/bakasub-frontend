@@ -12,7 +12,6 @@ export const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
     className,
 }) => {
     
-    // O Pentagrama Sagrado - Agora calculado com exatidão trigonométrica!
     const GeometricPentagram = () => (
         <svg 
             viewBox="0 0 100 100" 
@@ -20,11 +19,8 @@ export const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
         >
-            {/* Círculo Externo (Raio 45) */}
             <circle cx="50" cy="50" r="45" />
             
-            {/* A Estrela de Cinco Pontas (Decágono Alternado) */}
-            {/* As pontas externas agora tocam o raio de 45 de forma exata! */}
             <polygon 
                 points="
                     50,5 
@@ -40,7 +36,6 @@ export const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
                 " 
             />
             
-            {/* Pequeno Círculo Central */}
             <circle cx="50" cy="50" r="5" />
         </svg>
     );

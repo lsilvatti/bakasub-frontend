@@ -1,6 +1,5 @@
 import React, { createContext, useState, useCallback, useMemo, type ReactNode } from 'react';
 import clsx from 'clsx';
-// Importando o componente visual e o CSS do container
 import { ToastItem } from '@/components/atoms';
 import styles from '@/components/atoms/Toast/Toast.module.css';
 
@@ -58,7 +57,6 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     setToasts((state) => state.filter((toast) => toast.id !== id));
   }, []);
 
-  // Variantes encapsuladas, como Vossa Majestade solicitou (de novo)
   const success = useCallback((message: string, title?: string, duration?: number) => 
     addToast({ message, title, type: 'success', duration }), [addToast]);
 

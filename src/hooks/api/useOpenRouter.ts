@@ -65,7 +65,7 @@ export function useOpenRouter() {
         return a.isFavorite ? -1 : 1;
       });
     },
-    staleTime: 1000 * 60 * 60, // 1 hora
+    staleTime: 1000 * 60 * 60,
   });
 
   const favoriteModels = modelsQuery.data?.filter(m => m.isFavorite) || [];

@@ -31,7 +31,6 @@ export function useTMDB() {
         backdropImageUrl: r.backdrop_path ? `${TMDB_IMAGE_BASE_URL}w780${r.backdrop_path}` : null,
       }));
 
-      // Retornamos o objeto com os resultados processados
       return { results: processedMedia }; 
     },
   });

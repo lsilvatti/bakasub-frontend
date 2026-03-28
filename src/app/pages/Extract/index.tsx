@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Select, Typography, Button, Card, Badge } from "@/components/atoms";
 import { FileBrowser, TrackSelector } from "@/components/organisms";
-// O NOSSO LAYOUT PODEROSO
 import { SplitPageLayout } from "@/components/templates/SplitPageLayout";
 import { useFolders, useVideo, useToast } from "@/hooks";
 import styles from "./Extract.module.css";
@@ -75,8 +74,6 @@ export default function Extract() {
     };
 
     const isFavorite = folders.some(f => f.path === currentPath);
-
-    // --- BLOCOS DO LAYOUT ---
 
     const renderLeft = () => (
         <Card variant="primary" className={styles.fullHeightCard}>
@@ -182,7 +179,6 @@ export default function Extract() {
             leftContent={renderLeft()}
             rightContent={renderRight()}
             footerContent={renderFooter()}
-            footerCentered={!selectedFile} 
         />
     );
 }
