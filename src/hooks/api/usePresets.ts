@@ -21,7 +21,7 @@ export function usePresets() {
   });
 
   const deletePreset = useMutation({
-    mutationFn: (id: number) => apiClient.delete('/presets', { data: { id } }),
+    mutationFn: (id: number) => apiClient.delete('/presets', { id: id }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['presets'] }),
   });
 

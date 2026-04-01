@@ -1,5 +1,6 @@
 export { 
     useConfig,
+    useFavorites,
     useFolders,
     useGlobalSSE,
     useLanguages,
