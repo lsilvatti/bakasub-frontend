@@ -1,35 +1,101 @@
-.layout {
-    display: grid;
-    grid-template-columns: 4fr 3fr 2fr;
-    gap: 1.5rem;
+/* --- Layout stacks --- */
+.modelsStack,
+.presetsStack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 0;
+  min-width: 0;
+  height: 100%;
 }
 
+.modelsStack>*:first-child {
+  flex: 3;
+  min-height: 420px;
+  min-width: 0;
+}
+
+.modelsStack>*:last-child {
+  flex: 1;
+  min-height: 320px;
+  min-width: 0;
+}
+
+.presetsStack>*:first-child {
+  flex: 3;
+  min-height: 380px;
+  min-width: 0;
+}
+
+.presetsStack>*:last-child {
+  flex: 1;
+  height: 100%;
+  min-height: 320px;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .modelsStack>*:first-child,
+  .presetsStack>*:first-child {
+    min-height: 0;
+  }
+
+  .modelsStack>*:last-child {
+    min-height: 180px;
+  }
+
+  .presetsStack>*:last-child {
+    min-height: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .modelsStack>*:first-child  { max-height: 60vh; }
+  .presetsStack>*:first-child { max-height: 50vh; }
+}
+
+/* --- Cards --- */
 .fullHeightCard {
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
+/* --- Header controls --- */
 .headerControls {
   display: flex;
   gap: 12px;
   align-items: center;
   flex-wrap: wrap;
+  width: 100%;
 }
 
-.searchInput {
-  width: 240px;
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-.sortSelect {
-  width: 160px;
+.searchInput { width: 100%; }
+.sortSelect  { width: 100%; }
+
+@media (min-width: 640px) {
+  .searchInput   { width: 240px; }
+  .sortSelect    { width: 160px; }
+  .formRow       { flex-direction: row; }
+  .addLangForm   { flex-direction: row; align-items: flex-end; }
+  .langCodeInput { width: 100px; }
 }
 
+/* --- Content & tables --- */
 .content {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 0;
+  min-width: 0;
 }
 
 .spinnerWrapper {
@@ -38,9 +104,18 @@
   justify-content: center;
 }
 
+.emptyState {
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .tableScrollWrapper {
   flex: 1;
   min-height: 0;
+  min-width: 0;
+  overflow: auto;
   display: flex;
   flex-direction: column;
 }
@@ -58,15 +133,63 @@
 }
 
 .paginationWrapper {
-  padding: 0 16px;
-  background: var(--header-bg);
-  border-top: 1px solid var(--border);
+  margin-top: var(--space-2);
 }
 
-.starActive {
-  color: var(--color-primary);
+/* --- Stars --- */
+.starActive svg   { color: var(--star-color); stroke: var(--star-color); }
+.starInactive svg { color: inherit; }
+
+/* --- Presets & Languages --- */
+.aliasCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.starInactive {
-  color: inherit;
+.actionButtons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.presetForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formRow>* { flex: 1; }
+
+.addLangForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+  padding: 0 0 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+.langCodeInput {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.langNameInput { flex: 1; }
+
+.deleteIcon       { color: var(--color-error); }
+.deleteIcon:hover { color: var(--color-error-hover, #ff4444); }
+.addIconButton    { color: var(--color-primary); }
+
+.promptText {
+  white-space: pre-wrap;
+  line-height: 1.5;
+  color: var(--text-muted);
 }
