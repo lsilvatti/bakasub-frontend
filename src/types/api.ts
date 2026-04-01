@@ -81,3 +81,15 @@ export interface FileNode {
   path: string;
   isDirectory: boolean;
 }
+
+export interface BakasubModel {
+  id: string;
+  name: string;
+  description: string;
+  contextLength: number;
+  maxOutput: number;
+  pricingInput1M: number;
+  pricingOutput1M: number;
+  isModerated: boolean;
+  isFavorite: boolean;
+}

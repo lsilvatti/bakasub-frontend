@@ -7,10 +7,16 @@ export interface OpenRouterModelRaw {
   id: string;
   name: string;
   description: string;
-  pricing: OpenRouterPricing;
   context_length: number;
+  pricing: {
+    prompt: string;
+    completion: string;
+  };
+  top_provider?: {
+    max_completion_tokens?: number;
+    is_moderated?: boolean;
+  };
 }
-
 export interface OpenRouterModel {
   id: string;
   name: string;

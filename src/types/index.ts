@@ -8,7 +8,8 @@ export {
     type SSEEvent,
     type GetLogsParams,
     type LogsResponse,
-    type TranslatePayload
+    type TranslatePayload,
+    type BakasubModel
 } from './api'
 
 
