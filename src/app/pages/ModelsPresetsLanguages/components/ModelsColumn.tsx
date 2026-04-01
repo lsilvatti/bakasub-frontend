@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Badge, Card, IconButton, Table, Typography, Input, Select, Checkbox, Spinner } from "@/components/atoms";
+import { Badge, Card, IconButton, Table, Tooltip, Typography, Input, Select, Checkbox, Spinner } from "@/components/atoms";
 import { useOpenRouter } from "@/hooks";
 import { Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -10,9 +10,8 @@ export const ModelsColumn = () => {
     const { modelsQuery, filteredModels, toggleFavorite, filters } = useOpenRouter();
 
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(20);
-    const [onlyModerated, setOnlyModerated] = useState(false);
-    const [onlyForTranslation, setOnlyForTranslation] = useState(false);
+    const limit = 20;
+    const [hideModerated, setHideModerated] = useState(false);
     
     const [expandedModel, setExpandedModel] = useState<string | null>(null);
 
@@ -22,18 +21,16 @@ export const ModelsColumn = () => {
     useEffect(() => {
         setPage(1);
         setExpandedModel(null);
-    }, [filters.searchQuery, filters.sortBy, filters.onlyFavorites, onlyModerated, onlyForTranslation, limit]);
+    }, [filters.searchQuery, filters.sortBy, filters.onlyFavorites, hideModerated, limit]);
 
     const displayed = useMemo(() => {
         let list = filteredModels || [];
-        if (onlyModerated) list = list.filter(m => m.isModerated);
-        if (onlyForTranslation) {
-            list = list.filter(
-                m => (m.contextLength || 0) >= TRANSLATION_MIN_CONTEXT && (m.maxOutput || 0) >= TRANSLATION_MIN_MAXOUTPUT
-            );
-        }
+        if (hideModerated) list = list.filter(m => !m.isModerated);
+        list = list.filter(
+            m => (m.contextLength || 0) >= TRANSLATION_MIN_CONTEXT && (m.maxOutput || 0) >= TRANSLATION_MIN_MAXOUTPUT
+        );
         return list;
-    }, [filteredModels, onlyModerated, onlyForTranslation]);
+    }, [filteredModels, hideModerated]);
 
     const totalItems = displayed.length;
     const totalPages = Math.max(1, Math.ceil(totalItems / limit));
@@ -57,9 +54,9 @@ export const ModelsColumn = () => {
                     <Select
                         options={[
                             { label: t('common.name', 'Nome (A-Z)'), value: 'name' },
-                            { label: 'Preço ↑', value: 'price_asc' },
-                            { label: 'Preço ↓', value: 'price_desc' },
-                            { label: 'Maior Contexto', value: 'context' },
+                            { label: t('pages.modelsPresetsLanguages.sortPriceAsc'), value: 'price_asc' },
+                            { label: t('pages.modelsPresetsLanguages.sortPriceDesc'), value: 'price_desc' },
+                            { label: t('pages.modelsPresetsLanguages.sortContext'), value: 'context' },
                         ]}
                         value={filters.sortBy}
                         onChange={e => filters.setSortBy(e.target.value as any)}
@@ -73,16 +70,12 @@ export const ModelsColumn = () => {
                     />
 
                     <Checkbox
-                        label={t('pages.modelsPresetsLanguages.moderated', 'Com Filtro NSFW')}
-                        checked={onlyModerated}
-                        onChange={e => setOnlyModerated(e.target.checked)}
+                        label={t('pages.modelsPresetsLanguages.hideModerated', 'Ocultar Filtro NSFW')}
+                        checked={hideModerated}
+                        onChange={e => setHideModerated(e.target.checked)}
                     />
 
-                    <Checkbox
-                        label={t('pages.modelsPresetsLanguages.forTranslation', 'Capaz de Traduzir')}
-                        checked={onlyForTranslation}
-                        onChange={e => setOnlyForTranslation(e.target.checked)}
-                    />
+
                 </div>
             </Card.Header>
 
@@ -94,15 +87,14 @@ export const ModelsColumn = () => {
                 ) : (
                     <>
                       <div className={styles.tableScrollWrapper}>
-                          <Table density="compact">
-                            <Table.Header>
+                          <Table>
+                            <Table.Header colWidths={[3, 1, 1, 1, 1, 1]}>
                                 <Table.Column>{t('pages.modelsPresetsLanguages.modelName', 'Nome')}</Table.Column>
                                 <Table.Column>{t('pages.modelsPresetsLanguages.contextLength', 'Contexto')}</Table.Column>
                                 <Table.Column>{t('pages.modelsPresetsLanguages.inputPrice1M', 'In/1M')}</Table.Column>
                                 <Table.Column>{t('pages.modelsPresetsLanguages.outputPrice1M', 'Out/1M')}</Table.Column>
                                 <Table.Column>{t('pages.modelsPresetsLanguages.moderated', 'Restrito?')}</Table.Column>
                                 <Table.Column>{t('pages.modelsPresetsLanguages.favorite', 'Fav')}</Table.Column>
-                                <Table.Column> </Table.Column>
                             </Table.Header>
 
                             <Table.Body>
@@ -115,8 +107,8 @@ export const ModelsColumn = () => {
                                             <>
                                                 <Table.Cell>{model.name}</Table.Cell>
                                                 <Table.Cell>{(model.contextLength / 1000).toFixed(0)}k</Table.Cell>
-                                                <Table.Cell>{model.pricingInput1M > 0 ? `$${model.pricingInput1M.toFixed(2)}` : 'Grátis'}</Table.Cell>
-                                                <Table.Cell>{model.pricingOutput1M > 0 ? `$${model.pricingOutput1M.toFixed(2)}` : 'Grátis'}</Table.Cell>
+                                                <Table.Cell>{model.pricingInput1M > 0 ? `$${model.pricingInput1M.toFixed(2)}` : t('pages.modelsPresetsLanguages.free')}</Table.Cell>
+                                                <Table.Cell>{model.pricingOutput1M > 0 ? `$${model.pricingOutput1M.toFixed(2)}` : t('pages.modelsPresetsLanguages.free')}</Table.Cell>
                                                 <Table.Cell>
                                                     {model.isModerated ? (
                                                         <Badge variant="danger">{t('common.yes', 'Sim')}</Badge>
@@ -125,21 +117,23 @@ export const ModelsColumn = () => {
                                                     )}
                                                 </Table.Cell>
                                                 <Table.Cell>
-                                                    <IconButton
-                                                        onClick={(e) => { e.stopPropagation(); toggleFavorite(model.id); }}
-                                                        className={model.isFavorite ? styles.starActive : styles.starInactive}
-                                                    >
-                                                        <Star fill={model.isFavorite ? "currentColor" : "none"} />
-                                                    </IconButton>
+                                                    <Tooltip text={model.isFavorite ? t('pages.modelsPresetsLanguages.removeFavorite') : t('pages.modelsPresetsLanguages.addFavorite')}>
+                                                        <IconButton
+                                                            onClick={(e) => { e.stopPropagation(); toggleFavorite(model.id); }}
+                                                            className={model.isFavorite ? styles.starActive : styles.starInactive}
+                                                        >
+                                                            <Star fill={model.isFavorite ? "currentColor" : "none"} size={16} />
+                                                        </IconButton>
+                                                    </Tooltip>
                                                 </Table.Cell>
                                             </>
                                         }
                                         expandedContent={
                                             <div className={styles.expandedContent}>
-                                                <Typography variant="small" color="secondary">ID Técnico: {model.id}</Typography>
-                                                <Typography variant="body">{model.description || 'Nenhuma descrição fornecida pelo provedor.'}</Typography>
+                                                <Typography variant="small" color="secondary">{t('pages.modelsPresetsLanguages.technicalId')}: {model.id}</Typography>
+                                                <Typography variant="body">{model.description || t('pages.modelsPresetsLanguages.noDescription')}</Typography>
                                                 <div className={styles.expandedBadges}>
-                                                    <Badge variant="secondary">Saída Máxima: {model.maxOutput} tokens</Badge>
+                                                    <Badge variant="secondary">{t('pages.modelsPresetsLanguages.maxOutput')}: {model.maxOutput} tokens</Badge>
                                                 </div>
                                             </div>
                                         }
