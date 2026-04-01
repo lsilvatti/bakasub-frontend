@@ -67,7 +67,7 @@ interface ExpandableRowProps {
 
 Table.ExpandableRow = ({ mainContent, expandedContent, isExpanded, onToggle }: ExpandableRowProps) => (
   <>
-    <tr className={`${styles.tr} ${styles.trHover}`} onClick={onToggle}>
+    <tr className={`${styles.tr} ${styles.trHover} ${isExpanded ? styles.trExpanded : ''}`} onClick={onToggle}>
       {mainContent}
       <td className={styles.td} style={{ width: '40px', textAlign: 'center' }}>
         <span className={styles.chevron} data-expanded={isExpanded}>▼</span>

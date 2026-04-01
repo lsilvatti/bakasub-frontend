@@ -1,20 +1,72 @@
-.fullHeightCard {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.scrollableContent {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    padding: var(--space-4);
-    overflow-y: auto;
-}
-
 .layout {
     display: grid;
     grid-template-columns: 4fr 3fr 2fr;
     gap: 1.5rem;
+}
+
+.fullHeightCard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.headerControls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  width: 240px;
+}
+
+.sortSelect {
+  width: 160px;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.spinnerWrapper {
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.tableScrollWrapper {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.expandedContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.expandedBadges {
+  display: flex;
+  gap: 1rem;
+  margin-top: 8px;
+}
+
+.paginationWrapper {
+  padding: 0 16px;
+  background: var(--header-bg);
+  border-top: 1px solid var(--border);
+}
+
+.starActive {
+  color: var(--color-primary);
+}
+
+.starInactive {
+  color: inherit;
 }

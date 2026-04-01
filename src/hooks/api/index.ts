@@ -1,4 +1,5 @@
 export { useConfig } from './useConfig';
+export { useFavorites } from './useFavorites';
 export { useFolders } from './useFolders';
 export { useGlobalSSE } from './useGlobalSSE';
 export { useLanguages } from './useLanguages';

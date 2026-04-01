@@ -39,6 +39,8 @@
 
 .expandedRow { background-color: var(--surface-hover); }
 
+.trExpanded { background-color: var(--surface-hover); }
+
 .expandedCell { padding: 0; border-bottom: 1px solid var(--border); }
 
 .expandedContentWrapper { padding: 16px 24px; animation: slideDown 0.2s ease-out; }
