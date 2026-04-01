@@ -17,9 +17,30 @@ export const Table = ({ children, density = 'normal' }: TableProps) => (
   </div>
 );
 
-Table.Header = ({ children }: { children: ReactNode }) => (
-  <thead className={styles.thead}><tr>{children}</tr></thead>
-);
+Table.Header = ({ children, colWidths }: { children: ReactNode; colWidths?: (string | number | undefined)[] }) => {
+  const allNumbers = colWidths?.every((w) => w === undefined || typeof w === 'number');
+  const total = allNumbers
+    ? (colWidths ?? []).reduce<number>((sum, v) => sum + (typeof v === 'number' ? v : 0), 0)
+    : 0;
+
+  const resolvedWidths = colWidths?.map((w) => {
+    if (w === undefined || typeof w === 'string') return w;
+    return total > 0 ? `${((w / total) * 100).toFixed(2)}%` : undefined;
+  });
+
+  return (
+    <>
+      {resolvedWidths && resolvedWidths.length > 0 && (
+        <colgroup>
+          {resolvedWidths.map((w, i) => (
+            <col key={i} style={w !== undefined ? { width: w } : undefined} />
+          ))}
+        </colgroup>
+      )}
+      <thead className={styles.thead}><tr>{children}</tr></thead>
+    </>
+  );
+};
 
 Table.Column = ({ children, ...props }: { children: ReactNode; [key: string]: any }) => (
   <th className={styles.th} {...props}>{children}</th>
@@ -69,9 +90,6 @@ Table.ExpandableRow = ({ mainContent, expandedContent, isExpanded, onToggle }: E
   <>
     <tr className={`${styles.tr} ${styles.trHover} ${isExpanded ? styles.trExpanded : ''}`} onClick={onToggle}>
       {mainContent}
-      <td className={styles.td} style={{ width: '40px', textAlign: 'center' }}>
-        <span className={styles.chevron} data-expanded={isExpanded}>▼</span>
-      </td>
     </tr>
     {isExpanded && (
       <tr className={styles.expandedRow}>
