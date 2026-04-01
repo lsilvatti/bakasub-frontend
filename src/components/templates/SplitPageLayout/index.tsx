@@ -9,6 +9,8 @@ export interface SplitPageLayoutProps {
   leftContent: ReactNode;
   rightContent: ReactNode;
   footerContent?: ReactNode;
+  layoutClassName?: string;
+  variant?: 'default' | 'half';
 }
 
 export const SplitPageLayout = ({
@@ -16,12 +18,14 @@ export const SplitPageLayout = ({
   leftContent,
   rightContent,
   footerContent,
+  layoutClassName,
+  variant = 'default',
 }: SplitPageLayoutProps) => {
   return (
-    <div className={styles.pageContainer}>
+    <div className={clsx(styles.pageContainer)}>
       <PageTitle titleKey={titleKey as ParseKeys} />
 
-      <div className={styles.splitLayout}>
+      <div className={clsx(styles.splitLayout, variant === 'half' && styles.halfLayout, layoutClassName)}>
         <div className={styles.leftColumn}>
           {leftContent}
         </div>
