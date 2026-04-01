@@ -1,4 +1,5 @@
 import React, { createContext, useState, useCallback, useMemo, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import { ToastItem } from '@/components/atoms';
 import styles from '@/components/atoms/Toast/Toast.module.css';
@@ -30,7 +31,7 @@ export interface ToastContextData {
   removeToast: (id: string) => void;
 }
 
-export const ToastContext = createContext<ToastContextData>({} as ToastContextData);
+export const ToastContext = createContext<ToastContextData | null>(null);
 
 interface ToastProviderProps {
   children: ReactNode;
@@ -76,11 +77,14 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
   return (
     <ToastContext.Provider value={contextValue}>
       {children}
-      <div className={clsx(styles.viewport, styles[position])} aria-live="polite">
-        {toasts.map((toast) => (
-          <ToastItem key={toast.id} toast={toast} onRemove={removeToast} />
-        ))}
-      </div>
+      {createPortal(
+        <div className={clsx(styles.viewport, styles[position])} aria-live="polite">
+          {toasts.map((toast) => (
+            <ToastItem key={toast.id} toast={toast} onRemove={removeToast} />
+          ))}
+        </div>,
+        document.body
+      )}
     </ToastContext.Provider>
   );
 };
