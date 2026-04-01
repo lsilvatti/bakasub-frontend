@@ -34,8 +34,8 @@ export default function Logs() {
       </header>
 
       <div className={styles.tableWrapper}>
-        <Table>
-          <Table.Header>
+        <Table >
+          <Table.Header colWidths={[1, 1, 1, 1, undefined]}>
             <Table.Column>{t("pages.logs.columns.date")}</Table.Column>
             <Table.Column>{t("pages.logs.columns.level")}</Table.Column>
             <Table.Column>{t("pages.logs.columns.module")}</Table.Column>
