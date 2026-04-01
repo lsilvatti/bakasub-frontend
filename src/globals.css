@@ -67,6 +67,16 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
+  --font-ssm: 0.625rem;
+  --font-sm: 0.875rem;
+  --font-md: 1rem;
+  --font-lg: 1.125rem;
+  --font-xl: 1.25rem;
+  --font-2xl: 1.5rem;
+  --font-3xl: 1.875rem;
+  --font-4xl: 2.25rem;
+  --font-5xl: 3rem;
+
   --font-heading: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-sans: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Courier New', monospace;
@@ -104,6 +114,8 @@
   --color-text-muted: var(--text-muted);
   
   --color-border: var(--border);
+
+  --star-color: var(--secondary-400);
 
   --tooltip-bg: var(--gray-600);
   --tooltip-text: var(--gray-100);
@@ -155,6 +167,8 @@
   --color-text-muted: var(--text-muted);
   
   --color-border: var(--border);
+
+  --star-color: var(--secondary-400);
 
   --tooltip-bg-primary: var(--primary-300);
   --tooltip-text-primary: var(--gray-700);
