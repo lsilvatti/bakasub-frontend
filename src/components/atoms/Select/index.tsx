@@ -29,24 +29,18 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       className, 
       disabled,
       id,
-      value, // HMPH! Extraindo para não vazar no ...props
-      defaultValue, // Extraindo também!
+      value,
+      defaultValue,
       ...props 
     }, 
     ref
   ) => {
-    // Gerador de ID para o label conectar com o select. Pelo menos isso você fez certo.
     const selectId = id || `select-${Math.random().toString(36).substring(2, 9)}`;
 
-    // A MÁGICA DE VERDADE:
-    // Verifica se você está tentando usar como Controlado (passou value) ou Não-Controlado
     const isControlled = value !== undefined && value !== null;
     
-    // Se for controlado, usamos o value (ou vazio para pegar o placeholder). 
-    // Se não, deixamos undefined para o React não reclamar.
     const safeValue = isControlled ? value : undefined;
     
-    // O defaultValue só é aplicado se NÃO for controlado.
     const safeDefaultValue = !isControlled 
       ? (defaultValue ?? (placeholder ? "" : undefined)) 
       : undefined;
@@ -69,7 +63,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             id={selectId}
             disabled={disabled}
             className={styles.baseSelect}
-            // Passando os valores de forma segura:
             value={safeValue}
             defaultValue={safeDefaultValue}
             {...props}
@@ -92,7 +85,6 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </select>
 
           <div className={styles.iconContainer}>
-            {/* Ícone fofo, admito */}
             <svg 
               width="16" 
               height="16" 

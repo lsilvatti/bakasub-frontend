@@ -1,12 +1,12 @@
 export interface LocalStorageProps { 
-    getItem: (key: string) => any
-    setItem: (key: string, value: any) => void
+    getItem: <T>(key: string) => T | null
+    setItem: <T>(key: string, value: T) => void
     removeItem: (key: string) => void
 }
 
 export default function LocalStorage(): LocalStorageProps {
 
-    function getItem(key: string){
+    function getItem<T>(key: string): T | null {
         const item = localStorage.getItem(key)
 
         if(item) { 
@@ -16,7 +16,7 @@ export default function LocalStorage(): LocalStorageProps {
         return null;
     }
 
-    function setItem(key: string, value: any) {
+    function setItem<T>(key: string, value: T) {
         const formattedValue = JSON.stringify(value);
         localStorage.setItem(key, formattedValue);
     }

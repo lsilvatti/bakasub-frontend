@@ -1,9 +1,7 @@
-// src/components/atoms/Typography/index.tsx
 import React from 'react';
 import clsx from 'clsx';
 import styles from './Typography.module.css';
 
-// Expandindo as opções!
 type TypographyVariants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'span' | 'body' | 'muted' | 'monospace' | 'small';
 type TypographyWeights = 'normal' | 'medium' | 'semibold' | 'bold';
 type TypographyColors = 'primary' | 'secondary' | 'error' | 'success';
@@ -28,7 +26,6 @@ export function Typography<C extends React.ElementType = 'p'>({
     className, 
     ...props
 }: Props<C>) {
-    // Se não passar a prop 'as', eu infiro inteligentemente a partir da variante!
     const defaultTag = ['h1', 'h2', 'h3', 'h4', 'h5'].includes(variant) 
         ? variant 
         : variant === 'span' ? 'span' : 'p';

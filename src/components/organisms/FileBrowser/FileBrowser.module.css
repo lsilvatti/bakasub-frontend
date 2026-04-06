@@ -115,15 +115,15 @@
 }
 
 .videoIcon {
-  color: #3b82f6; /* Azul pra vídeo, ou use uma var do seu tema */
+  color: #3b82f6;
 }
 
 .subtitleIcon {
-  color: #10b981; /* Verde pra legenda */
+  color: #10b981;
 }
 
 .folderIcon {
-  color: #fbbf24; /* Amarelo pra pasta */
+  color: #fbbf24;
 }
 
 .starButton {

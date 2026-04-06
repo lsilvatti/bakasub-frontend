@@ -1,37 +1,39 @@
 import { type ReactNode } from 'react';
 import clsx from 'clsx';
 import { PageTitle } from '@/components/atoms';
-import styles from './SplitPageLayout.module.css';
+import styles from './ThreeColumnLayout.module.css';
 import type { ParseKeys } from 'node_modules/i18next/typescript/t';
 
-export interface SplitPageLayoutProps {
+export interface ThreeColumnLayoutProps {
   titleKey: ParseKeys;
-  leftContent: ReactNode;
-  rightContent: ReactNode;
+  columns: ReactNode[];
   footerContent?: ReactNode;
+  className?: string;
   layoutClassName?: string;
-  variant?: 'default' | 'half';
 }
 
-export const SplitPageLayout = ({
+export const ThreeColumnLayout = ({
   titleKey,
-  leftContent,
-  rightContent,
+  columns,
   footerContent,
-  layoutClassName,
-  variant = 'default',
-}: SplitPageLayoutProps) => {
+  className,
+  layoutClassName
+}: ThreeColumnLayoutProps) => {
   return (
-    <div className={clsx(styles.pageContainer)}>
+    <div className={clsx(styles.pageContainer, className)}>
       <PageTitle titleKey={titleKey as ParseKeys} />
 
-      <div className={clsx(styles.splitLayout, variant === 'half' && styles.halfLayout, layoutClassName)}>
+      <div className={clsx(styles.threeColumnLayout, layoutClassName)}>
         <div className={styles.leftColumn}>
-          {leftContent}
+          {columns[0]}
+        </div>
+
+        <div className={styles.centerColumn}>
+            {columns[1]}
         </div>
 
         <div className={styles.rightColumn}>
-          {rightContent}
+          {columns[2]}
         </div>
       </div>
 

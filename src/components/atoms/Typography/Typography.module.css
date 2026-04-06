@@ -71,8 +71,6 @@
   line-height: 1.5;
 }
 
-/* Typography.module.css - Adicione no final do arquivo */
-
 .small {
   font-family: var(--font-sans);
   font-size: 0.875rem;

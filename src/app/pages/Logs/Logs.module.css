@@ -21,7 +21,6 @@
   flex-direction: column;
 }
 
-/* Estilo para o JSON nos metadados */
 .metadataPre {
   margin: 0;
   padding: var(--space-3);

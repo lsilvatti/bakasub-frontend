@@ -17,7 +17,6 @@
   color: var(--color-primary);
 }
 
-/* Suporte a diferentes aspect-ratios (Poster, Still, Square) */
 .poster {
   aspect-ratio: 2 / 3;
 }
@@ -30,17 +29,15 @@
   aspect-ratio: 1 / 1;
 }
 
-/* Estilos do SVG */
 .svg {
-  width: 50%; /* Ocupa metade da largura do container */
+  width: 50%; 
   height: auto;
-  stroke: currentColor; /* Pega a cor do texto do container (muted ou primary no hover) */
+  stroke: currentColor;
   fill: none;
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
   transform-origin: center;
-  /* Uma rotação muito lenta e suave, só para dar um charme ocultista */
   animation: slowSpin 20s linear infinite;
 }
 

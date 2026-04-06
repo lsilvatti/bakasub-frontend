@@ -43,7 +43,6 @@ export const TrackSelector: React.FC<TrackSelectorProps> = ({
                         const isSelected = selectedTrackIndex === track.id;
 
                         return (
-                            // Olha aí o seu componente novo! Vê se funciona!
                             <Table.Row
                                 key={track.id}
                                 className={`${styles.row} ${isSelected ? styles.selected : ''}`}

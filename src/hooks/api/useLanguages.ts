@@ -21,7 +21,7 @@ export function useLanguages() {
   });
 
   const deleteLanguage = useMutation({
-    mutationFn: (code: string) => apiClient.delete('/languages', { data: { code } }),
+    mutationFn: (code: string) => apiClient.delete('/languages', { code: code }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['languages'] }),
   });
 

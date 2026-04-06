@@ -157,10 +157,10 @@ export default function TranslatePage() {
                         />
 
                         {selectedMedia?.media_type === 'tv' && (
-                                                    <div className={styles.shortInputsRow}>
-                            <Input label="Temporada" value={season} onChange={(e) => setSeason(e.target.value)} type="number" fullWidth />
-                            <Input label="Episódio" value={episode} onChange={(e) => setEpisode(e.target.value)} type="number" fullWidth />
-                        </div>
+                            <div className={styles.shortInputsRow}>
+                                <Input label="Temporada" value={season} onChange={(e) => setSeason(e.target.value)} type="number" fullWidth />
+                                <Input label="Episódio" value={episode} onChange={(e) => setEpisode(e.target.value)} type="number" fullWidth />
+                            </div>
                         )}
                     </div>
                     <div className={styles.editorContainer}>
@@ -208,7 +208,30 @@ export default function TranslatePage() {
                                 </div>
                             </div>
                         )}
+
+                        <div className={styles.metadataEditor}>
+                            <div className={styles.customMetadataSection}>
+                                <div>
+                                    <Typography variant="h3" as="p">Metadados Personalizados</Typography>
+                                    <Typography variant="muted" className={styles.customMetadataDescription}>
+                                        Adicione quaisquer metadados personalizados que possam ajudar a melhorar a tradução. Isso pode incluir informações como gírias específicas, termos técnicos ou expressões regionais que são relevantes para a mídia em questão.
+                                    </Typography>
+                                </div>
+                                <Textarea placeholder="Ex: 'O protagonista é um hacker especializado em segurança cibernética.'" fullWidth rows={4} />
+                            </div>
+                             <div className={styles.modelAndOptionsSection}>
+                                <div>
+                                    <Typography variant="h3" as="p">Metadados Personalizados</Typography>
+                                    <Typography variant="muted" className={styles.customMetadataDescription}>
+                                        Adicione quaisquer metadados personalizados que possam ajudar a melhorar a tradução. Isso pode incluir informações como gírias específicas, termos técnicos ou expressões regionais que são relevantes para a mídia em questão.
+                                    </Typography>
+                                </div>
+                                <Textarea placeholder="Ex: 'O protagonista é um hacker especializado em segurança cibernética.'" fullWidth rows={4} />
+                            </div>
+                        </div>
                     </div>
+
+
                 </Card.Content>
             </Card>
         );

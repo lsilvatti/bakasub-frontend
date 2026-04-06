@@ -6,24 +6,19 @@
 }
 
 .text {
-  --tooltip-bg: var(--tooltip-bg-default, #1e1e1e);
-  --tooltip-color: var(--tooltip-text-default, #ffffff);
+  position: fixed;
+  z-index: 10001;
+  pointer-events: none;
 
-  background-color: var(--tooltip-bg);
-  color: var(--tooltip-color);
-
-  visibility: hidden;
-  opacity: 0;
-  text-align: center;
+  background-color: var(--tooltip-bg, #1e1e1e);
+  color: var(--tooltip-color, #ffffff);
   font-size: 12px;
   font-family: sans-serif;
   padding: 6px 10px;
   border-radius: 6px;
   white-space: nowrap;
-  position: absolute;
-  z-index: 10;
-  pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  animation: tooltipFadeIn 0.15s ease forwards;
 }
 
 .text::after {
@@ -33,95 +28,46 @@
   border-style: solid;
 }
 
-.primary {
-  --tooltip-bg: var(--tooltip-bg-primary);
-  --tooltip-color: var(--tooltip-text-primary);
-}
+/* --- Position transforms --- */
+.top    { transform: translate(-50%, -100%); }
+.bottom { transform: translate(-50%, 0%); }
+.left   { transform: translate(-100%, -50%); }
+.right  { transform: translate(0%, -50%); }
 
-.secondary {
-  --tooltip-bg: var(--tooltip-bg-secondary);
-  --tooltip-color: var(--tooltip-text-secondary);
-}
-
-.error {
-  --tooltip-bg: var(--tooltip-bg-error);
-  --tooltip-color: var(--tooltip-text-error);
-}
-
-.success {
-  --tooltip-bg: var(--tooltip-bg-success);
-  --tooltip-color: var(--tooltip-text-success);
-}
-
-.default {
-  --tooltip-bg: var(--tooltip-bg-default, #1e1e1e);
-  --tooltip-color: var(--tooltip-text-default, #ffffff);
-}
-
-.top {
-  bottom: 100%;
-  left: 50%;
-  transform: translate(-50%, -8px);
-}
+/* --- Arrows --- */
 .top::after {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border-color: var(--tooltip-bg) transparent transparent transparent;
-}
-.wrapper:hover .top, .wrapper:focus-within .top {
-  visibility: visible;
-  opacity: 1;
-  transform: translate(-50%, -12px);
-}
-
-.bottom {
-  top: 100%;
-  left: 50%;
-  transform: translate(-50%, 8px);
+  border-color: var(--tooltip-bg, #1e1e1e) transparent transparent transparent;
 }
 .bottom::after {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  border-color: transparent transparent var(--tooltip-bg) transparent;
-}
-.wrapper:hover .bottom, .wrapper:focus-within .bottom {
-  visibility: visible;
-  opacity: 1;
-  transform: translate(-50%, 12px);
-}
-
-.left {
-  right: 100%;
-  top: 50%;
-  transform: translate(-8px, -50%);
+  border-color: transparent transparent var(--tooltip-bg, #1e1e1e) transparent;
 }
 .left::after {
   left: 100%;
   top: 50%;
   transform: translateY(-50%);
-  border-color: transparent transparent transparent var(--tooltip-bg);
-}
-.wrapper:hover .left, .wrapper:focus-within .left {
-  visibility: visible;
-  opacity: 1;
-  transform: translate(-12px, -50%);
-}
-
-.right {
-  left: 100%;
-  top: 50%;
-  transform: translate(8px, -50%);
+  border-color: transparent transparent transparent var(--tooltip-bg, #1e1e1e);
 }
 .right::after {
   right: 100%;
   top: 50%;
   transform: translateY(-50%);
-  border-color: transparent var(--tooltip-bg) transparent transparent;
+  border-color: transparent var(--tooltip-bg, #1e1e1e) transparent transparent;
 }
-.wrapper:hover .right, .wrapper:focus-within .right {
-  visibility: visible;
-  opacity: 1;
-  transform: translate(12px, -50%);
+
+/* --- Variants --- */
+.primary   { --tooltip-bg: var(--tooltip-bg-primary);   --tooltip-color: var(--tooltip-text-primary); }
+.secondary { --tooltip-bg: var(--tooltip-bg-secondary); --tooltip-color: var(--tooltip-text-secondary); }
+.error     { --tooltip-bg: var(--tooltip-bg-error);     --tooltip-color: var(--tooltip-text-error); }
+.success   { --tooltip-bg: var(--tooltip-bg-success);   --tooltip-color: var(--tooltip-text-success); }
+.default   { --tooltip-bg: var(--tooltip-bg-default, #1e1e1e); --tooltip-color: var(--tooltip-text-default, #ffffff); }
+
+@keyframes tooltipFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

@@ -8,7 +8,8 @@ export {
     type SSEEvent,
     type GetLogsParams,
     type LogsResponse,
-    type TranslatePayload
+    type TranslatePayload,
+    type BakasubModel
 } from './api'
 
 
@@ -16,3 +17,9 @@ export {
     type TMDBResult,
     type TMDBEpisode
 } from './tmdb'
+
+export { 
+    type OpenRouterModel,
+    type OpenRouterModelRaw,
+    type OpenRouterPricing
+} from './openrouter'

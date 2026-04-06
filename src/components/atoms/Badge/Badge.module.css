@@ -54,7 +54,6 @@
 }
 
 .danger {
-  /* Mapeando danger para as mesmas cores do error para manter compatibilidade */
   background-color: rgba(230, 0, 0, 0.15);
   color: var(--error-500);
   border: 1px solid rgba(230, 0, 0, 0.3);
