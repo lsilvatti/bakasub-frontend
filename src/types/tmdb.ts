@@ -8,6 +8,9 @@ export interface TMDBResult {
   name?: string;
   release_date?: string;
   first_air_date?: string;
+  enTitle?: string;
+  enName?: string;
+  enOverview?: string;
 }
 
 export interface TMDBEpisode {
@@ -17,4 +20,6 @@ export interface TMDBEpisode {
   still_path: string | null;
   season_number: number;
   episode_number: number;
+  enName?: string;
+  enOverview?: string;
 }

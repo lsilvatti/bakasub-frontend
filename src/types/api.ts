@@ -7,6 +7,7 @@ export interface Folder {
 export interface UserConfig {
   default_model: string;
   default_preset: string;
+  default_language: string;
   remove_sdh_default: boolean;
   video_timeout_minutes: number;
   log_retention_days: number;
