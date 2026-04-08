@@ -7,9 +7,16 @@ export interface Folder {
 export interface UserConfig {
   default_model: string;
   default_preset: string;
+  default_language: string;
   remove_sdh_default: boolean;
   video_timeout_minutes: number;
   log_retention_days: number;
+  openrouter_api_key: string;
+  tmdb_access_token: string;
+  tmdb_metadata_enabled: boolean;
+  concurrent_translations: number;
+  max_retries: number;
+  base_retry_delay: number;
 }
 
 export interface TranslationPreset {
@@ -76,6 +83,30 @@ export interface TranslatePayload {
   context?: string;
 }
 
+export interface PreflightPayload {
+  filePath: string;
+  model: string;
+  targetLang: string;
+  preset: string;
+  removeSDH: boolean;
+  context?: string;
+}
+
+export interface PreflightResult {
+  total_lines: number;
+  cached_lines: number;
+  lines_to_translate: number;
+  total_batches: number;
+  estimated_tokens: number;
+  estimated_cost_usd: number;
+  is_free_model: boolean;
+  system_prompt: string;
+  target_language: string;
+  source_language: string;
+  preset_name: string;
+  batch_size: number;
+}
+
 export interface FileNode {
   name: string;
   path: string;
@@ -92,4 +123,22 @@ export interface BakasubModel {
   pricingOutput1M: number;
   isModerated: boolean;
   isFavorite: boolean;
+}
+
+export interface TranslationJob {
+  id: string;
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  file_path: string;
+  target_lang: string;
+  preset: string;
+  model: string;
+  total_lines: number;
+  processed_lines: number;
+  cached_lines: number;
+  prompt_tokens: number;
+  completion_tokens: number;
+  cost_usd: number;
+  error_message?: string;
+  created_at: string;
+  updated_at: string;
 }

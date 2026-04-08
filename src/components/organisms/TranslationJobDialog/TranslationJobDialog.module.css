@@ -1,0 +1,228 @@
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+}
+
+.cassetteWrapper {
+  padding: var(--space-2) 0;
+}
+
+.statusSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.statusMessage {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--font-sm);
+  color: var(--text-color);
+  min-height: 20px;
+}
+
+.outputPath {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  word-break: break-all;
+  padding: var(--space-2);
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-md);
+}
+
+:global([data-theme='dark']) .outputPath {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.outputLabel {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Completion Details */
+.completionDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.savingsBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: linear-gradient(135deg, rgba(var(--color-success-rgb, 34, 197, 94), 0.1), rgba(var(--color-success-rgb, 34, 197, 94), 0.05));
+  border: 1px solid rgba(var(--color-success-rgb, 34, 197, 94), 0.25);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--success-400, #22c55e);
+  line-height: 1.4;
+}
+
+.savingsBanner svg {
+  flex-shrink: 0;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-2) var(--space-1);
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: var(--radius-md);
+  transition: background 0.2s;
+}
+
+:global([data-theme='dark']) .statItem {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.statValue {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-color);
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.savingsBadge {
+  font-size: 10px;
+  padding: 1px 5px;
+  vertical-align: middle;
+}
+
+.modelTag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:global([data-theme='dark']) .modelTag {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.modelTag svg {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.tokenBreakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+:global([data-theme='dark']) .tokenBreakdown {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.tokenRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  font-size: 12px;
+}
+
+.tokenRow + .tokenRow {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+:global([data-theme='dark']) .tokenRow + .tokenRow {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.tokenLabel {
+  color: var(--text-muted);
+}
+
+.tokenValue {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-color);
+  font-variant-numeric: tabular-nums;
+}
+
+.leaveWarning {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: rgba(var(--color-primary-rgb), 0.08);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.2);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.leaveWarningIcon {
+  flex-shrink: 0;
+  color: var(--primary);
+}
+
+.errorMessage {
+  color: var(--error-400);
+  text-align: center;
+  font-size: var(--font-sm);
+}
+
+.successMessage {
+  color: var(--success-400);
+  text-align: center;
+  font-size: var(--font-sm);
+  font-weight: 500;
+}
+
+.footerButton {
+  width: 100%;
+}

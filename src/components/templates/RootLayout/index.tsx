@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Overlay } from '@/components/atoms';
-import { SideBar, Header } from '@/components/organisms';
+import { SideBar, Header, JobsSidePanel } from '@/components/organisms';
 import styles from './RootLayout.module.css';
 import { Outlet } from 'react-router-dom';
 
@@ -29,6 +29,8 @@ export const RootLayout = () => {
             <Outlet />
         </main>
       </div>
+
+      <JobsSidePanel />
     </div>
   );
 };

@@ -24,7 +24,97 @@
          "translate": {
             "title": "Traduzir",
             "selectFile": "Selecionar arquivo de legenda",
-            "translateDetails": "Detalhes da Tradução"
+            "translateDetails": "Detalhes da Tradução",
+            "selectSubtitle": "Selecione uma legenda ao lado para analisar.",
+            "metadataEditor": "Configurações de Tradução",
+            "metadataEditorDescription": "Aqui você pode fornecer informações adicionais sobre a mídia para ajudar a melhorar a qualidade da tradução. Além disso, para realizar a tradução você deverá escolher um modelo, preset e idioma alvo. ",
+            "searchTMDB": "Pesquisar mídia no TMDB",
+            "series": "Série",
+            "movie": "Filme",
+            "season": "Temporada",
+            "episode": "Episódio",
+            "unknownTitle": "Título Desconhecido",
+            "noOverview": "Sinopse não disponível.",
+            "selectSeasonEpisode": "Selecione a temporada e episódio",
+            "noEpisodeInfo": "Informações do episódio não disponíveis",
+            "noEpisodeOverview": "Sinopse do episódio não disponível.",
+            "customMetadata": "Metadados Personalizados",
+            "customMetadataDescription": "Adicione quaisquer metadados personalizados que possam ajudar a melhorar a tradução. Isso pode incluir informações como gírias específicas, termos técnicos ou expressões regionais que são relevantes para a mídia em questão. Quanto mais contexto você fornecer, melhor será a qualidade da tradução. Tente fornecer o contexto em Inglês, mesmo que a legenda original esteja em outro idioma, para melhores resultados.",
+            "customMetadataPlaceholder": "Ex: 'The protagonist is a cybersecurity specialist hacker.'",
+            "translationOptions": "Opções de Tradução",
+            "translationOptionsDescription": "Configure o modelo, preset e idioma alvo para este job de tradução.",
+            "modelLabel": "Modelo",
+            "presetLabel": "Preset",
+            "targetLanguage": "Idioma Alvo",
+            "selectModel": "Selecione um modelo...",
+            "selectPreset": "Selecione um preset...",
+            "removeSDH": "Remover SDH",
+            "removeSDHHelp": "Remove descrições para surdos/deficientes auditivos",
+            "useTmdbMetadata": "Usar Metadados do TMDB",
+            "useTmdbMetadataHelp": "Pesquisa e vincula automaticamente metadados de mídia do TMDB para melhorar o contexto da tradução",
+            "file": "Arquivo:",
+            "startTranslation": "Traduzir",
+            "translating": "Traduzindo...",
+            "translatingProgress": "Traduzindo {{percent}}%",
+            "translationCompleted": "Concluído!",
+            "translationStarted": "Tradução iniciada!",
+            "translationError": "Erro ao enviar tradução.",
+            "jobDialog": {
+                "title": "Tradução em Andamento",
+                "titleCompleted": "Tradução Concluída",
+                "titleFailed": "Tradução Falhou",
+                "starting": "Preparando tradução...",
+                "translatingBatch": "Traduzindo lote {{current}} de {{total}}",
+                "completed": "Tradução concluída com sucesso!",
+                "failed": "A tradução falhou. Verifique os logs para mais detalhes.",
+                "leaveWarning": "Você pode fechar este diálogo com segurança. A tradução continuará em segundo plano.",
+                "outputFile": "Arquivo de saída:",
+                "close": "Fechar",
+                "sideA": "LADO A",
+                "sideB": "LADO B",
+                "rewind": "Rebobinando...",
+                "playing": "Reproduzindo...",
+                "details": {
+                    "totalLines": "Total de linhas",
+                    "translatedByAI": "Traduzidas por IA",
+                    "fromMemory": "Da memória",
+                    "memorySavings": "{{percent}}% economizado com memória de tradução",
+                    "promptTokens": "Tokens de entrada",
+                    "completionTokens": "Tokens de saída",
+                    "totalTokens": "Total de tokens",
+                    "cost": "Custo",
+                    "model": "Modelo",
+                    "duration": "Duração",
+                    "free": "Grátis"
+                }
+            },
+            "mediaLinked": "\"{{title}}\" vinculado!",
+            "posterAlt": "Poster",
+            "stillAlt": "Cena",
+            "preflight": {
+                "title": "Análise Pré-voo",
+                "button": "Pré-voo",
+                "loading": "Analisando arquivo de legenda...",
+                "error": "Falha ao executar análise pré-voo. Tente novamente.",
+                "disclaimer": "Estes valores são estimativas e podem não refletir os resultados reais da tradução.",
+                "totalLines": "Total de Linhas",
+                "linesToTranslate": "A Traduzir",
+                "cachedLines": "Da Memória",
+                "batches": "Lotes",
+                "estimatedTokens": "Tokens Est.",
+                "estimatedCost": "Custo Est.",
+                "free": "Grátis",
+                "translationDetails": "Detalhes da Tradução",
+                "model": "Modelo",
+                "preset": "Preset",
+                "targetLanguage": "Idioma Alvo",
+                "sourceLanguage": "Idioma de Origem",
+                "batchSize": "Tamanho do Lote",
+                "chars": "caracteres",
+                "modelType": "Tipo de Modelo",
+                "mediaContext": "Contexto da Mídia",
+                "systemPrompt": "Prompt do Sistema"
+            }
         },
         "merge": {
             "title": "Mesclar"
@@ -85,17 +175,53 @@
             "addLanguage": "Adicionar Idioma",
             "langNamePlaceholder": "ex: Português (Brasil)",
             "addFavorite": "Adicionar aos favoritos",
-            "removeFavorite": "Remover dos favoritos"
+            "removeFavorite": "Remover dos favoritos",
+            "langSetDefault": "Definir como idioma padrão de tradução",
+            "langRemoveDefault": "Remover como idioma padrão",
+            "langDefaultSet": "{{lang}} definido como idioma padrão de tradução.",
+            "langDefaultRemoved": "Idioma padrão de tradução removido."
         },
         "logs": {
-            "title": "Registros",
+            "title": "Logs & Jobs",
             "error": "Erro ao carregar logs.",
+            "tabs": {
+                "logs": "Registros",
+                "jobs": "Histórico de Jobs"
+            },
             "columns": {
                 "date": "Data",
                 "level": "Nível",
                 "module": "Módulo",
                 "message": "Mensagem",
                 "expand": "Expandir"
+            },
+            "jobs": {
+                "error": "Erro ao carregar jobs.",
+                "free": "Grátis",
+                "columns": {
+                    "file": "Arquivo",
+                    "status": "Status",
+                    "language": "Idioma",
+                    "lines": "Linhas",
+                    "cost": "Custo",
+                    "date": "Data"
+                },
+                "status": {
+                    "pending": "Pendente",
+                    "processing": "Processando",
+                    "completed": "Concluído",
+                    "failed": "Falhou"
+                },
+                "details": {
+                    "model": "Modelo",
+                    "preset": "Preset",
+                    "totalLines": "Total de linhas",
+                    "translatedByAI": "Traduzidas por IA",
+                    "fromMemory": "Da memória",
+                    "tokens": "Tokens",
+                    "cost": "Custo",
+                    "duration": "Duração"
+                }
             }
         }
     },
@@ -128,6 +254,18 @@
             "noTracksFound": "Nenhuma trilha de legenda encontrada neste vídeo.",
             "language": "Idioma",
             "trackTitle": "Título Original"
+        },
+        "jobsPanel": {
+            "title": "Tarefas",
+            "active": "ativas",
+            "clear": "Limpar finalizadas",
+            "noJobs": "Nenhuma tarefa de tradução ainda.",
+            "pending": "Pendente",
+            "processing": "Processando",
+            "completed": "Concluído",
+            "failed": "Falhou",
+            "cost": "Custo",
+            "lines": "{{processed}}/{{total}} linhas"
         }
     },
     "common": {

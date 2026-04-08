@@ -1,0 +1,60 @@
+.tmdbToggle {
+    margin-bottom: var(--space-4);
+}
+
+.searchContainer {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-4);
+}
+
+.shortInputsRow {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    max-width: 250px;
+}
+
+.mediaCards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    animation: fadeIn 0.4s ease-out;
+}
+
+.searchResultItem {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.searchResultPoster {
+    width: 35px;
+    height: 50px;
+    border-radius: 4px;
+    object-fit: cover;
+    background-color: var(--surface-hover);
+}
+
+.searchResultInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.searchResultTitle {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.searchResultMeta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

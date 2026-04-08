@@ -7,7 +7,8 @@ export function useGlobalSSE() {
   const [currentEvent, setCurrentEvent] = useState<SSEEvent | null>(null);
 
   useEffect(() => {
-    const eventSource = new EventSource('http://localhost:8080/api/v1/events');
+    const apiBase = (import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1').replace(/\/$/, '');
+    const eventSource = new EventSource(`${apiBase}/events`);
 
     eventSource.onmessage = (event) => {
       try {

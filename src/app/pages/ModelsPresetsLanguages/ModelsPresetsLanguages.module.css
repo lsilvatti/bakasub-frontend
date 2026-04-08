@@ -188,6 +188,9 @@
 .deleteIcon:hover { color: var(--color-error-hover, #ff4444); }
 .addIconButton    { color: var(--color-primary); }
 
+.defaultActive    { color: var(--star-color); }
+.defaultRow td    { background-color: rgba(var(--color-primary-rgb, 99 102 241), 0.06); }
+
 .promptText {
   white-space: pre-wrap;
   line-height: 1.5;

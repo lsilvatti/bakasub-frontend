@@ -1,0 +1,33 @@
+.metadataEditor {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+}
+
+.customMetadataSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    background-color: rgba(var(--tmdb-card-rgb), 0.3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    flex: 1;
+}
+
+.modelAndOptionsSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    background-color: rgba(var(--tmdb-card-rgb), 0.3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    max-width: 500px;
+    flex: 1;
+}
+
+.sectionDescription {
+    /* inherits from Typography muted */
+}

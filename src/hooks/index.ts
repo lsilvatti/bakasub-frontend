@@ -3,6 +3,7 @@ export {
     useFavorites,
     useFolders,
     useGlobalSSE,
+    useJobs,
     useLanguages,
     useLogs,
     usePresets,

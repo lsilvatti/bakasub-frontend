@@ -1,0 +1,136 @@
+.cassette {
+  width: 280px;
+  margin: 0 auto;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+}
+
+.cassetteBody {
+  fill: var(--gray-600);
+  stroke: var(--gray-500);
+  stroke-width: 1.5;
+}
+
+:global([data-theme='light']) .cassetteBody {
+  fill: var(--gray-100);
+  stroke: var(--gray-200);
+}
+
+.cassetteInner {
+  fill: var(--gray-700);
+  stroke: var(--gray-500);
+  stroke-width: 0.5;
+}
+
+:global([data-theme='light']) .cassetteInner {
+  fill: var(--gray-50);
+  stroke: var(--gray-200);
+}
+
+.tapeWindow {
+  fill: rgba(0, 0, 0, 0.4);
+  stroke: var(--gray-500);
+  stroke-width: 0.5;
+}
+
+:global([data-theme='light']) .tapeWindow {
+  fill: rgba(0, 0, 0, 0.08);
+  stroke: var(--gray-200);
+}
+
+.reel {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 1;
+}
+
+.reelCenter {
+  fill: var(--text-muted);
+}
+
+.reelSpoke {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 0.8;
+}
+
+.tape {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 1.2;
+  opacity: 0.6;
+}
+
+.spinning {
+  animation: spin 2s linear infinite;
+  transform-origin: center;
+}
+
+.spinningFast {
+  animation: spin 0.8s linear infinite;
+  transform-origin: center;
+}
+
+.label {
+  fill: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 7px;
+  text-anchor: middle;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.labelSub {
+  fill: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 5px;
+  text-anchor: middle;
+  letter-spacing: 1px;
+}
+
+.screwHole {
+  fill: var(--gray-500);
+  r: 2;
+}
+
+:global([data-theme='light']) .screwHole {
+  fill: var(--gray-300);
+}
+
+.lineDetail {
+  stroke: var(--gray-500);
+  stroke-width: 0.3;
+  opacity: 0.5;
+}
+
+:global([data-theme='light']) .lineDetail {
+  stroke: var(--gray-200);
+}
+
+.completed .cassetteBody {
+  stroke: var(--success-400);
+}
+
+.completed .label {
+  fill: var(--success-400);
+}
+
+.completed .tape {
+  stroke: var(--success-400);
+}
+
+.error .cassetteBody {
+  stroke: var(--error-400);
+}
+
+.error .label {
+  fill: var(--error-400);
+}
+
+.error .tape {
+  stroke: var(--error-400);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

@@ -1,6 +1,7 @@
 export { 
     type SystemLog,
     type TranslationPreset,
+    type TranslationJob,
     type UserConfig,
     type Folder,
     type Language,
@@ -9,6 +10,8 @@ export {
     type GetLogsParams,
     type LogsResponse,
     type TranslatePayload,
+    type PreflightPayload,
+    type PreflightResult,
     type BakasubModel
 } from './api'
 

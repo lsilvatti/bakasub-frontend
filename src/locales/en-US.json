@@ -20,7 +20,97 @@
          "translate": {
             "title": "Translate",
             "selectFile": "Select a subtitle file to translate.",
-            "translateDetails": "Translation Details"
+            "translateDetails": "Translation Details",
+            "selectSubtitle": "Select a subtitle on the left to analyze.",
+            "metadataEditor": "Translation Settings",
+            "metadataEditorDescription": "Here you can provide additional information about the media to help improve translation quality. Additionally, to perform the translation, you must choose a model, preset, and target language.",
+            "searchTMDB": "Search media on TMDB",
+            "series": "Series",
+            "movie": "Movie",
+            "season": "Season",
+            "episode": "Episode",
+            "unknownTitle": "Unknown Title",
+            "noOverview": "Synopsis not available.",
+            "selectSeasonEpisode": "Select season and episode",
+            "noEpisodeInfo": "Episode information not available",
+            "noEpisodeOverview": "Episode synopsis not available.",
+            "customMetadata": "Custom Metadata",
+            "customMetadataDescription": "Add any custom metadata that may help improve the translation. This can include specific slang, technical terms, or regional expressions relevant to the media. The more context you provide, the better the translation quality will be. Try to provide the context in English, even if the original subtitle is in another language, for best results.",
+            "customMetadataPlaceholder": "Ex: 'The protagonist is a cybersecurity specialist hacker.'",
+            "translationOptions": "Translation Options",
+            "translationOptionsDescription": "Configure the model, preset, and target language for this translation job.",
+            "modelLabel": "Model",
+            "presetLabel": "Preset",
+            "targetLanguage": "Target Language",
+            "selectModel": "Select a model...",
+            "selectPreset": "Select a preset...",
+            "removeSDH": "Remove SDH",
+            "removeSDHHelp": "Remove descriptions for the deaf/hard of hearing",
+            "useTmdbMetadata": "Use TMDB Metadata",
+            "useTmdbMetadataHelp": "Automatically search and link media metadata from TMDB to improve translation context",
+            "file": "File:",
+            "startTranslation": "Translate",
+            "translating": "Translating...",
+            "translatingProgress": "Translating {{percent}}%",
+            "translationCompleted": "Completed!",
+            "translationStarted": "Translation started!",
+            "translationError": "Error submitting translation.",
+            "jobDialog": {
+                "title": "Translation in Progress",
+                "titleCompleted": "Translation Completed",
+                "titleFailed": "Translation Failed",
+                "starting": "Preparing translation...",
+                "translatingBatch": "Translating batch {{current}} of {{total}}",
+                "completed": "Translation completed successfully!",
+                "failed": "Translation failed. Check the logs for more details.",
+                "leaveWarning": "You can close this dialog safely. The translation will continue in the background.",
+                "outputFile": "Output file:",
+                "close": "Close",
+                "sideA": "SIDE A",
+                "sideB": "SIDE B",
+                "rewind": "Rewinding...",
+                "playing": "Playing...",
+                "details": {
+                    "totalLines": "Total lines",
+                    "translatedByAI": "Translated by AI",
+                    "fromMemory": "From memory",
+                    "memorySavings": "{{percent}}% saved from translation memory",
+                    "promptTokens": "Input tokens",
+                    "completionTokens": "Output tokens",
+                    "totalTokens": "Total tokens",
+                    "cost": "Cost",
+                    "model": "Model",
+                    "duration": "Duration",
+                    "free": "Free"
+                }
+            },
+            "mediaLinked": "\"{{title}}\" linked!",
+            "posterAlt": "Poster",
+            "stillAlt": "Scene",
+            "preflight": {
+                "title": "Pre-flight Analysis",
+                "button": "Pre-flight",
+                "loading": "Analyzing subtitle file...",
+                "error": "Failed to run pre-flight analysis. Please try again.",
+                "disclaimer": "These values are estimates and may not reflect the actual translation results.",
+                "totalLines": "Total Lines",
+                "linesToTranslate": "To Translate",
+                "cachedLines": "From Memory",
+                "batches": "Batches",
+                "estimatedTokens": "Est. Tokens",
+                "estimatedCost": "Est. Cost",
+                "free": "Free",
+                "translationDetails": "Translation Details",
+                "model": "Model",
+                "preset": "Preset",
+                "targetLanguage": "Target Language",
+                "sourceLanguage": "Source Language",
+                "batchSize": "Batch Size",
+                "chars": "chars",
+                "modelType": "Model Type",
+                "mediaContext": "Media Context",
+                "systemPrompt": "System Prompt"
+            }
         },
         "merge": {
             "title": "Merge"
@@ -29,14 +119,46 @@
             "title": "Settings"
         },
         "logs": {
-            "title": "Logs",
+            "title": "Logs & Jobs",
             "error": "Error loading logs.",
+            "tabs": {
+                "logs": "Logs",
+                "jobs": "Jobs History"
+            },
             "columns": {
                 "date": "Date",
                 "level": "Level",
                 "module": "Module",
                 "message": "Message",
                 "expand": "Expand"
+            },
+            "jobs": {
+                "error": "Error loading jobs.",
+                "free": "Free",
+                "columns": {
+                    "file": "File",
+                    "status": "Status",
+                    "language": "Language",
+                    "lines": "Lines",
+                    "cost": "Cost",
+                    "date": "Date"
+                },
+                "status": {
+                    "pending": "Pending",
+                    "processing": "Processing",
+                    "completed": "Completed",
+                    "failed": "Failed"
+                },
+                "details": {
+                    "model": "Model",
+                    "preset": "Preset",
+                    "totalLines": "Total lines",
+                    "translatedByAI": "Translated by AI",
+                    "fromMemory": "From memory",
+                    "tokens": "Tokens",
+                    "cost": "Cost",
+                    "duration": "Duration"
+                }
             }
         },
         "modelsPresetsLanguages": {
@@ -92,7 +214,11 @@
             "addLanguage": "Add Language",
             "langNamePlaceholder": "e.g. Portuguese (Brazil)",
             "addFavorite": "Add to favorites",
-            "removeFavorite": "Remove from favorites"
+            "removeFavorite": "Remove from favorites",
+            "langSetDefault": "Set as default translation language",
+            "langRemoveDefault": "Remove as default language",
+            "langDefaultSet": "{{lang}} set as default translation language.",
+            "langDefaultRemoved": "Default translation language removed."
         }
     },
 
@@ -119,6 +245,18 @@
             "noTracksFound": "No subtitle tracks found in this video.",
             "language": "Language",
             "trackTitle": "Original Title"
+        },
+        "jobsPanel": {
+            "title": "Jobs",
+            "active": "active",
+            "clear": "Clear finished",
+            "noJobs": "No translation jobs yet.",
+            "pending": "Pending",
+            "processing": "Processing",
+            "completed": "Completed",
+            "failed": "Failed",
+            "cost": "Cost",
+            "lines": "{{processed}}/{{total}} lines"
         }
         
     },

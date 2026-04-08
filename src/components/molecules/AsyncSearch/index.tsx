@@ -37,6 +37,7 @@ export function AsyncSearch<T>({
   fullWidth = true,
 }: AsyncSearchProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
 
@@ -44,7 +45,10 @@ export function AsyncSearch<T>({
 
   useEffect(() => {
     if (debouncedValue.trim()) {
+      setHasSearched(true);
       onSearch(debouncedValue);
+    } else {
+      setHasSearched(false);
     }
   }, [debouncedValue, onSearch]);
 
@@ -78,18 +82,22 @@ export function AsyncSearch<T>({
         value={value}
         onChange={(e) => {
           onChange(e.target.value);
-          setIsOpen(true);
+          if (e.target.value.trim()) {
+            setIsOpen(true);
+          } else {
+            setIsOpen(false);
+          }
         }}
         onFocus={() => {
-          if (value.trim() && results.length > 0) setIsOpen(true);
+          if (value.trim() && (isLoading || hasSearched)) setIsOpen(true);
         }}
         fullWidth={fullWidth}
         rightIcon={isLoading ? loadingIcon : undefined}
       />
 
-      {isOpen && (
+      {isOpen && (isLoading || hasSearched) && (
         <div className={styles.dropdown}>
-          {isLoading && results.length === 0 ? (
+          {isLoading ? (
             <div className={styles.loadingState}>{t('components.asyncSearch.loading', 'Carregando...')}</div>
           ) : results.length === 0 ? (
             <div className={styles.emptyState}>{t('components.asyncSearch.noResults', 'Sem resultados')}</div>
