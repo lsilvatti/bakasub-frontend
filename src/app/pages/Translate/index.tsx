@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Select, Typography, Card } from "@/components/atoms";
-import { FileBrowser, TranslationJobDialog, TMDBSearchPanel } from "@/components/organisms";
+import { FileBrowser, TranslationJobDialog, TMDBSearchPanel, PreflightDialog } from "@/components/organisms";
 import { TranslationOptions, TranslateFooter } from "@/components/molecules";
 import { SplitPageLayout } from "@/components/templates/SplitPageLayout";
 import { useFolders, useTMDB, useToast, usePresets, useLanguages, useTranslate, useConfig, useOpenRouter, useGlobalSSE } from "@/hooks";
@@ -33,6 +33,7 @@ export default function TranslatePage() {
     const [context, setContext] = useState<string>("");
 
     const [jobDialogOpen, setJobDialogOpen] = useState(false);
+    const [preflightDialogOpen, setPreflightDialogOpen] = useState(false);
     const [activeJobId, setActiveJobId] = useState<string | null>(null);
     const [activeOutputPath, setActiveOutputPath] = useState<string | undefined>();
     const [isJobRunning, setIsJobRunning] = useState(false);
@@ -50,7 +51,7 @@ export default function TranslatePage() {
     const { presets } = usePresets();
     const { languages } = useLanguages();
     const { config } = useConfig();
-    const { translate } = useTranslate();
+    const { translate, preflight } = useTranslate();
     const { currentEvent } = useGlobalSSE();
     const { favoriteModels, filteredModels, modelsQuery } = useOpenRouter();
 
@@ -182,6 +183,9 @@ export default function TranslatePage() {
         } else if (currentEvent.type === 'error') {
             setIsJobRunning(false);
             setTranslateButtonState({ variant: "error", label: t('pages.translate.translationError') });
+            setTimeout(() => {
+                setTranslateButtonState({ variant: "primary", label: t('pages.translate.startTranslation') });
+            }, 3000);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentEvent]);
@@ -190,6 +194,9 @@ export default function TranslatePage() {
         if (translate.isError) {
             setTranslateButtonState({ variant: "error", label: t('pages.translate.translationError') });
             toast.error(t('pages.translate.translationError'));
+            setTimeout(() => {
+                setTranslateButtonState({ variant: "primary", label: t('pages.translate.startTranslation') });
+            }, 3000);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [translate.isError]);
@@ -214,6 +221,19 @@ export default function TranslatePage() {
     const handleTranslate = () => {
         if (!selectedFile || !selectedModel || !selectedPreset || !selectedLanguage) return;
         translate.mutate({
+            filePath: selectedFile,
+            targetLang: selectedLanguage,
+            preset: selectedPreset,
+            model: selectedModel,
+            removeSDH,
+            context,
+        });
+    };
+
+    const handlePreflight = () => {
+        if (!selectedFile || !selectedModel || !selectedPreset || !selectedLanguage) return;
+        setPreflightDialogOpen(true);
+        preflight.mutate({
             filePath: selectedFile,
             targetLang: selectedLanguage,
             preset: selectedPreset,
@@ -326,6 +346,8 @@ export default function TranslatePage() {
             buttonVariant={translateButtonState.variant}
             buttonLabel={translateButtonState.label}
             onTranslate={handleTranslate}
+            onPreflight={handlePreflight}
+            isPreflightLoading={preflight.isPending}
         />
     );
 
@@ -342,6 +364,16 @@ export default function TranslatePage() {
             onClose={() => setJobDialogOpen(false)}
             jobId={activeJobId}
             outputPath={activeOutputPath}
+        />
+        <PreflightDialog
+            isOpen={preflightDialogOpen}
+            onClose={() => setPreflightDialogOpen(false)}
+            data={preflight.data ?? null}
+            isLoading={preflight.isPending}
+            isError={preflight.isError}
+            context={context}
+            modelName={selectedModelName}
+            onTranslate={handleTranslate}
         />
         </>
     );
