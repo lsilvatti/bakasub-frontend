@@ -1,12 +1,16 @@
 import axios from 'axios';
 import { BaseAPI } from './api';
 
-const tmdbAxios = axios.create({
-  baseURL: 'https://api.themoviedb.org/3',
-  headers: {
-    Authorization: `Bearer ${import.meta.env.VITE_TMDB_ACCESS_TOKEN}`,
-    accept: 'application/json'
-  }
-});
+export function createTmdbClient(token: string) {
+  const instance = axios.create({
+    baseURL: 'https://api.themoviedb.org/3',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
+    },
+  });
+  return BaseAPI(instance);
+}
 
-export const tmdbClient = BaseAPI(tmdbAxios);
+// Backward-compat singleton (no token).
+export const tmdbClient = createTmdbClient('');
