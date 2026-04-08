@@ -156,14 +156,46 @@
             "langDefaultRemoved": "Idioma padrão de tradução removido."
         },
         "logs": {
-            "title": "Registros",
+            "title": "Logs & Jobs",
             "error": "Erro ao carregar logs.",
+            "tabs": {
+                "logs": "Registros",
+                "jobs": "Histórico de Jobs"
+            },
             "columns": {
                 "date": "Data",
                 "level": "Nível",
                 "module": "Módulo",
                 "message": "Mensagem",
                 "expand": "Expandir"
+            },
+            "jobs": {
+                "error": "Erro ao carregar jobs.",
+                "free": "Grátis",
+                "columns": {
+                    "file": "Arquivo",
+                    "status": "Status",
+                    "language": "Idioma",
+                    "lines": "Linhas",
+                    "cost": "Custo",
+                    "date": "Data"
+                },
+                "status": {
+                    "pending": "Pendente",
+                    "processing": "Processando",
+                    "completed": "Concluído",
+                    "failed": "Falhou"
+                },
+                "details": {
+                    "model": "Modelo",
+                    "preset": "Preset",
+                    "totalLines": "Total de linhas",
+                    "translatedByAI": "Traduzidas por IA",
+                    "fromMemory": "Da memória",
+                    "tokens": "Tokens",
+                    "cost": "Custo",
+                    "duration": "Duração"
+                }
             }
         }
     },

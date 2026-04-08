@@ -93,14 +93,46 @@
             "title": "Settings"
         },
         "logs": {
-            "title": "Logs",
+            "title": "Logs & Jobs",
             "error": "Error loading logs.",
+            "tabs": {
+                "logs": "Logs",
+                "jobs": "Jobs History"
+            },
             "columns": {
                 "date": "Date",
                 "level": "Level",
                 "module": "Module",
                 "message": "Message",
                 "expand": "Expand"
+            },
+            "jobs": {
+                "error": "Error loading jobs.",
+                "free": "Free",
+                "columns": {
+                    "file": "File",
+                    "status": "Status",
+                    "language": "Language",
+                    "lines": "Lines",
+                    "cost": "Cost",
+                    "date": "Date"
+                },
+                "status": {
+                    "pending": "Pending",
+                    "processing": "Processing",
+                    "completed": "Completed",
+                    "failed": "Failed"
+                },
+                "details": {
+                    "model": "Model",
+                    "preset": "Preset",
+                    "totalLines": "Total lines",
+                    "translatedByAI": "Translated by AI",
+                    "fromMemory": "From memory",
+                    "tokens": "Tokens",
+                    "cost": "Cost",
+                    "duration": "Duration"
+                }
             }
         },
         "modelsPresetsLanguages": {
