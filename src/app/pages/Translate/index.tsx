@@ -11,6 +11,7 @@ import { ImagePlaceholder } from "@/components/atoms/ImagePlaceholder";
 import type { TMDBResult } from "@/types";
 
 import { parseMediaFilename } from "@/lib/mediaParser";
+import { addSessionJob } from "@/lib/sessionJobs";
 import clsx from "clsx";
 
 const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
@@ -84,6 +85,7 @@ export default function TranslatePage() {
         setEpisode(parsed.episode || "");
         setSelectedMedia(null);
         setEpisodeData(null);
+        setContext("");
         setTranslateButtonState({ variant: "primary", label: t('pages.translate.startTranslation') });
 
         if (!parsed.title) return;
@@ -123,12 +125,45 @@ export default function TranslatePage() {
     }, [selectedMedia, season, episode]);
 
     useEffect(() => {
+        if (!selectedMedia) return;
+        const isTV = selectedMedia.media_type === 'tv' || !!selectedMedia.name;
+        if (isTV) return;
+        const parts: string[] = [];
+        parts.push(`Title: ${selectedMedia.title || selectedMedia.name}`);
+        const year = (selectedMedia.release_date || '').split('-')[0];
+        if (year) parts.push(`Year: ${year}`);
+        if (selectedMedia.overview) parts.push(`Overview: ${selectedMedia.overview}`);
+        setContext(parts.join('\n'));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedMedia]);
+
+    useEffect(() => {
+        if (!episodeData || !selectedMedia) return;
+        const parts: string[] = [];
+        parts.push(`Series: ${selectedMedia.name || selectedMedia.title}`);
+        if (selectedMedia.overview) parts.push(`Series Overview: ${selectedMedia.overview}`);
+        const epCode = `S${String(episodeData.season_number).padStart(2, '0')}E${String(episodeData.episode_number).padStart(2, '0')}`;
+        parts.push(`Episode: ${epCode} - ${episodeData.name}`);
+        if (episodeData.overview) parts.push(`Episode Overview: ${episodeData.overview}`);
+        setContext(parts.join('\n'));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [episodeData]);
+
+    useEffect(() => {
         if (translate.isSuccess && translate.data) {
             setActiveJobId(translate.data.job_id);
             setActiveOutputPath(translate.data.output_path);
             setIsJobRunning(true);
             setTranslateButtonState({ variant: "primary", label: t('pages.translate.translatingProgress', { percent: 0 }) });
             setJobDialogOpen(true);
+            addSessionJob({
+                id: translate.data.job_id,
+                filePath: selectedFile!,
+                outputPath: translate.data.output_path,
+                targetLang: selectedLanguage,
+                model: selectedModel,
+                addedAt: Date.now(),
+            });
             toast.success(t('pages.translate.translationStarted'));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
