@@ -4,3 +4,4 @@ export { ErrorBoundary } from './ErrorBoundary';
 export { FileBrowser } from './FileBrowser';
 export { Dialog } from './Dialog';
 export { TrackSelector } from './TrackSelector';
+export { TranslationJobDialog } from './TranslationJobDialog';
