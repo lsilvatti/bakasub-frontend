@@ -9,7 +9,7 @@
   overflow: hidden;
 }
 
-.tableArea { flex: 1; overflow-y: auto; overflow-x: hidden; min-height: 0; min-width: 0; position: relative; }
+.tableArea { flex: 1; overflow-y: auto; overflow-x: auto; min-height: 0; min-width: 0; position: relative; }
 
 .table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
 
@@ -98,4 +98,12 @@
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .pagination {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }
