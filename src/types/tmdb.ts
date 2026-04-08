@@ -20,6 +20,7 @@ export interface TMDBEpisode {
   still_path: string | null;
   season_number: number;
   episode_number: number;
+  air_date?: string;
   enName?: string;
   enOverview?: string;
 }

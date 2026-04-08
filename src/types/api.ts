@@ -13,6 +13,7 @@ export interface UserConfig {
   log_retention_days: number;
   openrouter_api_key: string;
   tmdb_access_token: string;
+  tmdb_metadata_enabled: boolean;
   concurrent_translations: number;
   max_retries: number;
   base_retry_delay: number;
