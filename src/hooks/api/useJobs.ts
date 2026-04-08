@@ -2,12 +2,32 @@ import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '@/services';
 import type { TranslationJob } from '@/types';
 
-export function useJobs() {
-  const jobsQuery = useQuery({
-    queryKey: ['jobs'],
-    queryFn: () => apiClient.get<{ jobs: TranslationJob[]; total: number }>('/jobs?limit=50'),
-    refetchInterval: 10000,
-  });
+interface JobsParams {
+  page?: number;
+  limit?: number;
+}
 
-  return { jobsQuery };
+interface JobsResponse {
+  jobs: TranslationJob[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+export function useJobs(params: JobsParams = {}) {
+  return useQuery({
+    queryKey: ['jobs', params],
+    queryFn: async (): Promise<JobsResponse> => {
+      const searchParams = new URLSearchParams();
+
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          searchParams.append(key, String(value));
+        }
+      });
+
+      return apiClient.get<JobsResponse>(`/jobs?${searchParams.toString()}`);
+    },
+    placeholderData: (previousData) => previousData,
+  });
 }

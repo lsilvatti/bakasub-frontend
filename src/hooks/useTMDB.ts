@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-import { tmdbClient } from '@/services';
+import { createTmdbClient } from '@/services/api/tmdbClient';
 import { type TMDBResult, type TMDBEpisode } from '@/types';
 import { useTranslation } from 'react-i18next';
+import { useConfig } from '@/hooks/api/useConfig';
 
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
 
@@ -9,11 +10,14 @@ export function useTMDB() {
   const { i18n } = useTranslation();
   const lang = i18n.language === 'pt-BR' ? 'pt-BR' : 'en-US';
   const isEnglish = lang === 'en-US';
+  const { config } = useConfig();
+  const tmdbToken = config?.tmdb_access_token ?? '';
+  const tmdbClient = createTmdbClient(tmdbToken);
 
   const searchMedia = useMutation({
     mutationFn: async ({ query }: { query: string }) => {
-      if (!query || !import.meta.env.VITE_TMDB_ACCESS_TOKEN) {
-          throw new Error('Query ou Token do TMDB faltando.');
+      if (!query || !tmdbToken) {
+          throw new Error('Query ou Token do TMDB faltando. Configure o token na página de Configurações.');
       }
 
       const encodedQuery = encodeURIComponent(query);

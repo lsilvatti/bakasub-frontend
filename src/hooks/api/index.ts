@@ -2,6 +2,7 @@ export { useConfig } from './useConfig';
 export { useFavorites } from './useFavorites';
 export { useFolders } from './useFolders';
 export { useGlobalSSE } from './useGlobalSSE';
+export { useJobs } from './useJobs';
 export { useLanguages } from './useLanguages';
 export { usePresets } from './usePresets';
 export { useLogs } from './useLogs';

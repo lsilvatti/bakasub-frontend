@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { openRouterClient } from '@/services';
+import { createOpenRouterClient } from '@/services/api/openRouterClient';
 import { type OpenRouterModelRaw, type BakasubModel } from '@/types';
 import { useState, useMemo } from 'react';
 import { useFavorites } from '@/hooks/api/useFavorites';
+import { useConfig } from '@/hooks/api/useConfig';
 
 export type SortOption = 'name' | 'price_asc' | 'price_desc' | 'context';
 
@@ -12,11 +13,13 @@ export function useOpenRouter() {
   const [onlyFavorites, setOnlyFavorites] = useState(false);
 
   const { favorites: favoriteIds, toggleFavorite } = useFavorites();
+  const { config } = useConfig();
+  const apiKey = config?.openrouter_api_key ?? '';
 
 const modelsQuery = useQuery({
-    queryKey: ['openRouterModels'],
+    queryKey: ['openRouterModels', apiKey],
     queryFn: async () => {
-      const data = await openRouterClient.get<OpenRouterModelRaw[]>('/models');
+      const data = await createOpenRouterClient(apiKey).get<OpenRouterModelRaw[]>('/models');
       const rawModels = data ?? [];
 
       return rawModels.filter((m: any) => {
