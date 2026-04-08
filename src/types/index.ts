@@ -1,6 +1,7 @@
 export { 
     type SystemLog,
     type TranslationPreset,
+    type TranslationJob,
     type UserConfig,
     type Folder,
     type Language,
