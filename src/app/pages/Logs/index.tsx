@@ -21,13 +21,7 @@ function LogsTab() {
   const totalPages = logsData ? Math.ceil(logsData.total / limit) : 1;
 
   return (
-    <>
-      <div className={styles.tabHeader}>
-        <Table.LimitSelector
-          value={limit}
-          onChange={(newLimit) => { setLimit(newLimit); setPage(1); }}
-        />
-      </div>
+    <div className={styles.logContent}>
       <div className={styles.tableWrapper}>
         <Table>
           <Table.Header colWidths={[1, 1, 1, 1, undefined]}>
@@ -80,7 +74,7 @@ function LogsTab() {
         isFetching={isFetching}
         onPageChange={setPage}
       />
-    </>
+    </div>
   );
 }
 
@@ -125,13 +119,7 @@ function JobsTab() {
   };
 
   return (
-    <>
-      <div className={styles.tabHeader}>
-        <Table.LimitSelector
-          value={limit}
-          onChange={(newLimit) => { setLimit(newLimit); setPage(1); }}
-        />
-      </div>
+    <div className={styles.logContent}>
       <div className={styles.tableWrapper}>
         <Table>
           <Table.Header colWidths={[2, 1, 1, 1, 1, 1, undefined]}>
@@ -260,7 +248,7 @@ function JobsTab() {
         isFetching={isFetching}
         onPageChange={setPage}
       />
-    </>
+    </div>
   );
 }
 

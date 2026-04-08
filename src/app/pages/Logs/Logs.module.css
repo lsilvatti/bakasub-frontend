@@ -23,6 +23,14 @@
   margin-bottom: var(--space-2);
 }
 
+.logContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: var(--space-3);
+}
+
 .tableWrapper {
   min-height: 0;
   display: flex;
@@ -58,6 +66,12 @@
 @media (max-width: 900px) {
   .jobDetailsGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .jobDetailsGrid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -109,4 +123,17 @@
   border: 1px solid rgba(var(--color-error-rgb, 239, 68, 68), 0.2);
   border-radius: var(--radius-md);
   color: var(--error-400, #ef4444);
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 0 var(--space-3) var(--space-3) var(--space-3);
+    height: auto;
+    min-height: calc(100dvh - 120px);
+    overflow: visible;
+  }
+
+  .logContent {
+    flex: unset;
+  }
 }
