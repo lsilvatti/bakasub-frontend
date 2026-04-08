@@ -39,8 +39,8 @@
             "noEpisodeInfo": "Informações do episódio não disponíveis",
             "noEpisodeOverview": "Sinopse do episódio não disponível.",
             "customMetadata": "Metadados Personalizados",
-            "customMetadataDescription": "Adicione quaisquer metadados personalizados que possam ajudar a melhorar a tradução. Isso pode incluir informações como gírias específicas, termos técnicos ou expressões regionais que são relevantes para a mídia em questão.",
-            "customMetadataPlaceholder": "Ex: 'O protagonista é um hacker especializado em segurança cibernética.'",
+            "customMetadataDescription": "Adicione quaisquer metadados personalizados que possam ajudar a melhorar a tradução. Isso pode incluir informações como gírias específicas, termos técnicos ou expressões regionais que são relevantes para a mídia em questão. Quanto mais contexto você fornecer, melhor será a qualidade da tradução. Tente fornecer o contexto em Inglês, mesmo que a legenda original esteja em outro idioma, para melhores resultados.",
+            "customMetadataPlaceholder": "Ex: 'The protagonist is a cybersecurity specialist hacker.'",
             "translationOptions": "Opções de Tradução",
             "translationOptionsDescription": "Configure o modelo, preset e idioma alvo para este job de tradução.",
             "modelLabel": "Modelo",
@@ -71,7 +71,20 @@
                 "sideA": "LADO A",
                 "sideB": "LADO B",
                 "rewind": "Rebobinando...",
-                "playing": "Reproduzindo..."
+                "playing": "Reproduzindo...",
+                "details": {
+                    "totalLines": "Total de linhas",
+                    "translatedByAI": "Traduzidas por IA",
+                    "fromMemory": "Da memória",
+                    "memorySavings": "{{percent}}% economizado com memória de tradução",
+                    "promptTokens": "Tokens de entrada",
+                    "completionTokens": "Tokens de saída",
+                    "totalTokens": "Total de tokens",
+                    "cost": "Custo",
+                    "model": "Modelo",
+                    "duration": "Duração",
+                    "free": "Grátis"
+                }
             },
             "mediaLinked": "\"{{title}}\" vinculado!",
             "posterAlt": "Poster",
@@ -183,6 +196,18 @@
             "noTracksFound": "Nenhuma trilha de legenda encontrada neste vídeo.",
             "language": "Idioma",
             "trackTitle": "Título Original"
+        },
+        "jobsPanel": {
+            "title": "Tarefas",
+            "active": "ativas",
+            "clear": "Limpar finalizadas",
+            "noJobs": "Nenhuma tarefa de tradução ainda.",
+            "pending": "Pendente",
+            "processing": "Processando",
+            "completed": "Concluído",
+            "failed": "Falhou",
+            "cost": "Custo",
+            "lines": "{{processed}}/{{total}} linhas"
         }
     },
     "common": {

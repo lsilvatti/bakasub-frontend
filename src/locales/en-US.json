@@ -35,8 +35,8 @@
             "noEpisodeInfo": "Episode information not available",
             "noEpisodeOverview": "Episode synopsis not available.",
             "customMetadata": "Custom Metadata",
-            "customMetadataDescription": "Add any custom metadata that may help improve the translation. This can include specific slang, technical terms, or regional expressions relevant to the media.",
-            "customMetadataPlaceholder": "e.g. 'The protagonist is a cybersecurity specialist hacker.'",
+            "customMetadataDescription": "Add any custom metadata that may help improve the translation. This can include specific slang, technical terms, or regional expressions relevant to the media. The more context you provide, the better the translation quality will be. Try to provide the context in English, even if the original subtitle is in another language, for best results.",
+            "customMetadataPlaceholder": "Ex: 'The protagonist is a cybersecurity specialist hacker.'",
             "translationOptions": "Translation Options",
             "translationOptionsDescription": "Configure the model, preset, and target language for this translation job.",
             "modelLabel": "Model",
@@ -67,7 +67,20 @@
                 "sideA": "SIDE A",
                 "sideB": "SIDE B",
                 "rewind": "Rewinding...",
-                "playing": "Playing..."
+                "playing": "Playing...",
+                "details": {
+                    "totalLines": "Total lines",
+                    "translatedByAI": "Translated by AI",
+                    "fromMemory": "From memory",
+                    "memorySavings": "{{percent}}% saved from translation memory",
+                    "promptTokens": "Input tokens",
+                    "completionTokens": "Output tokens",
+                    "totalTokens": "Total tokens",
+                    "cost": "Cost",
+                    "model": "Model",
+                    "duration": "Duration",
+                    "free": "Free"
+                }
             },
             "mediaLinked": "\"{{title}}\" linked!",
             "posterAlt": "Poster",
@@ -174,6 +187,18 @@
             "noTracksFound": "No subtitle tracks found in this video.",
             "language": "Language",
             "trackTitle": "Original Title"
+        },
+        "jobsPanel": {
+            "title": "Jobs",
+            "active": "active",
+            "clear": "Clear finished",
+            "noJobs": "No translation jobs yet.",
+            "pending": "Pending",
+            "processing": "Processing",
+            "completed": "Completed",
+            "failed": "Failed",
+            "cost": "Cost",
+            "lines": "{{processed}}/{{total}} lines"
         }
         
     },
