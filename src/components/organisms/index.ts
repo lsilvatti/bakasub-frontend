@@ -7,3 +7,4 @@ export { TrackSelector } from './TrackSelector';
 export { TranslationJobDialog } from './TranslationJobDialog';
 export { JobsSidePanel } from './JobsSidePanel';
 export { TMDBSearchPanel } from './TMDBSearchPanel';
+export { PreflightDialog } from './PreflightDialog';
