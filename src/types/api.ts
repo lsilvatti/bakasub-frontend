@@ -83,6 +83,30 @@ export interface TranslatePayload {
   context?: string;
 }
 
+export interface PreflightPayload {
+  filePath: string;
+  model: string;
+  targetLang: string;
+  preset: string;
+  removeSDH: boolean;
+  context?: string;
+}
+
+export interface PreflightResult {
+  total_lines: number;
+  cached_lines: number;
+  lines_to_translate: number;
+  total_batches: number;
+  estimated_tokens: number;
+  estimated_cost_usd: number;
+  is_free_model: boolean;
+  system_prompt: string;
+  target_language: string;
+  source_language: string;
+  preset_name: string;
+  batch_size: number;
+}
+
 export interface FileNode {
   name: string;
   path: string;

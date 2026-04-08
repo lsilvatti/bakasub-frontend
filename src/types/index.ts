@@ -10,6 +10,8 @@ export {
     type GetLogsParams,
     type LogsResponse,
     type TranslatePayload,
+    type PreflightPayload,
+    type PreflightResult,
     type BakasubModel
 } from './api'
 

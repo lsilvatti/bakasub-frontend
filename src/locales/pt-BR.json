@@ -90,7 +90,31 @@
             },
             "mediaLinked": "\"{{title}}\" vinculado!",
             "posterAlt": "Poster",
-            "stillAlt": "Cena"
+            "stillAlt": "Cena",
+            "preflight": {
+                "title": "Análise Pré-voo",
+                "button": "Pré-voo",
+                "loading": "Analisando arquivo de legenda...",
+                "error": "Falha ao executar análise pré-voo. Tente novamente.",
+                "disclaimer": "Estes valores são estimativas e podem não refletir os resultados reais da tradução.",
+                "totalLines": "Total de Linhas",
+                "linesToTranslate": "A Traduzir",
+                "cachedLines": "Da Memória",
+                "batches": "Lotes",
+                "estimatedTokens": "Tokens Est.",
+                "estimatedCost": "Custo Est.",
+                "free": "Grátis",
+                "translationDetails": "Detalhes da Tradução",
+                "model": "Modelo",
+                "preset": "Preset",
+                "targetLanguage": "Idioma Alvo",
+                "sourceLanguage": "Idioma de Origem",
+                "batchSize": "Tamanho do Lote",
+                "chars": "caracteres",
+                "modelType": "Tipo de Modelo",
+                "mediaContext": "Contexto da Mídia",
+                "systemPrompt": "Prompt do Sistema"
+            }
         },
         "merge": {
             "title": "Mesclar"

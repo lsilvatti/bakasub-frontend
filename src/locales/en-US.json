@@ -86,7 +86,31 @@
             },
             "mediaLinked": "\"{{title}}\" linked!",
             "posterAlt": "Poster",
-            "stillAlt": "Scene"
+            "stillAlt": "Scene",
+            "preflight": {
+                "title": "Pre-flight Analysis",
+                "button": "Pre-flight",
+                "loading": "Analyzing subtitle file...",
+                "error": "Failed to run pre-flight analysis. Please try again.",
+                "disclaimer": "These values are estimates and may not reflect the actual translation results.",
+                "totalLines": "Total Lines",
+                "linesToTranslate": "To Translate",
+                "cachedLines": "From Memory",
+                "batches": "Batches",
+                "estimatedTokens": "Est. Tokens",
+                "estimatedCost": "Est. Cost",
+                "free": "Free",
+                "translationDetails": "Translation Details",
+                "model": "Model",
+                "preset": "Preset",
+                "targetLanguage": "Target Language",
+                "sourceLanguage": "Source Language",
+                "batchSize": "Batch Size",
+                "chars": "chars",
+                "modelType": "Model Type",
+                "mediaContext": "Media Context",
+                "systemPrompt": "System Prompt"
+            }
         },
         "merge": {
             "title": "Merge"
