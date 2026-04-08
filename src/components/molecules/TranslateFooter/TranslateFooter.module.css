@@ -33,6 +33,12 @@
     /* used by Badge */
 }
 
+.actions {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+}
+
 @media (min-width: 1024px) {
     .selectedInfo {
         display: flex;

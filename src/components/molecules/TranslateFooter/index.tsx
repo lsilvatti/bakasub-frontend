@@ -14,6 +14,8 @@ export interface TranslateFooterProps {
     buttonVariant: 'primary' | 'success' | 'error';
     buttonLabel: string;
     onTranslate: () => void;
+    onPreflight?: () => void;
+    isPreflightLoading?: boolean;
 }
 
 export function TranslateFooter({
@@ -27,6 +29,8 @@ export function TranslateFooter({
     buttonVariant,
     buttonLabel,
     onTranslate,
+    onPreflight,
+    isPreflightLoading,
 }: TranslateFooterProps) {
     const { t } = useTranslation();
 
@@ -53,14 +57,26 @@ export function TranslateFooter({
                     </div>
                 </div>
             )}
-            <Button
-                onClick={onTranslate}
-                disabled={!canTranslate}
-                loading={isPending}
-                variant={buttonVariant}
-            >
-                {isPending ? t('pages.translate.translating') : buttonLabel}
-            </Button>
+            <div className={styles.actions}>
+                {onPreflight && (
+                    <Button
+                        onClick={onPreflight}
+                        disabled={!canTranslate}
+                        loading={isPreflightLoading}
+                        variant="ghost"
+                    >
+                        {t('pages.translate.preflight.button')}
+                    </Button>
+                )}
+                <Button
+                    onClick={onTranslate}
+                    disabled={!canTranslate}
+                    loading={isPending}
+                    variant={buttonVariant}
+                >
+                    {isPending ? t('pages.translate.translating') : buttonLabel}
+                </Button>
+            </div>
         </div>
     );
 }
