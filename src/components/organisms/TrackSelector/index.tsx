@@ -30,7 +30,7 @@ export const TrackSelector: React.FC<TrackSelectorProps> = ({
 
     return (
         <div className={styles.container}>
-            <Table density="compact">
+            <Table>
                 <Table.Header>
                     <Table.Column>ID</Table.Column>
                     <Table.Column>{t('components.trackSelector.language', 'Idioma')}</Table.Column>

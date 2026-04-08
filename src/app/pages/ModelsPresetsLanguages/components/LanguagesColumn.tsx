@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { Button, Card, IconButton, Input, Table, Tooltip, Typography, Spinner } from '@/components/atoms';
 import { Dialog } from '@/components/organisms';
-import { useLanguages, useToast } from '@/hooks';
+import { useLanguages, useToast, useConfig } from '@/hooks';
 import { type Language } from '@/types';
-import { Pencil, Trash2, Plus } from 'lucide-react';
+import { Pencil, Trash2, Plus, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import styles from '../ModelsPresetsLanguages.module.css';
 
 export const LanguagesColumn = () => {
   const { t } = useTranslation();
   const { languages, isLoading, addLanguage, updateLanguage, deleteLanguage } = useLanguages();
+  const { config, updateConfig } = useConfig();
   const toast = useToast();
 
   const [addDialogOpen, setAddDialogOpen] = useState(false);
@@ -18,6 +19,26 @@ export const LanguagesColumn = () => {
   const [editingLang, setEditingLang] = useState<Language | null>(null);
   const [editForm, setEditForm] = useState({ code: '', name: '' });
   const [confirmDeleteCode, setConfirmDeleteCode] = useState<string | null>(null);
+
+  const defaultLanguage = config?.default_language ?? '';
+
+  const handleSetDefault = (code: string) => {
+    if (!config) return;
+    const isAlreadyDefault = defaultLanguage === code;
+    const newDefault = isAlreadyDefault ? '' : code;
+    updateConfig.mutate(
+      { ...config, default_language: newDefault },
+      {
+        onSuccess: () =>
+          toast.success(
+            isAlreadyDefault
+              ? t('pages.modelsPresetsLanguages.langDefaultRemoved')
+              : t('pages.modelsPresetsLanguages.langDefaultSet', { lang: code })
+          ),
+        onError: () => toast.error(t('pages.modelsPresetsLanguages.langError')),
+      }
+    );
+  };
 
   const openAddDialog = () => {
     setNewCode('');
@@ -105,13 +126,22 @@ export const LanguagesColumn = () => {
 
                 <Table.Body>
                   {languages.map((lang) => (
-                    <Table.Row key={lang.code}>
+                    <Table.Row key={lang.code} className={defaultLanguage === lang.code ? styles.defaultRow : undefined}>
                       <Table.Cell>
                         <Typography variant="monospace">{lang.code}</Typography>
                       </Table.Cell>
                       <Table.Cell>{lang.name}</Table.Cell>
                       <Table.Cell>
                         <div className={styles.actionButtons}>
+                          <Tooltip text={defaultLanguage === lang.code ? t('pages.modelsPresetsLanguages.langRemoveDefault') : t('pages.modelsPresetsLanguages.langSetDefault')}>
+                            <IconButton
+                              onClick={() => handleSetDefault(lang.code)}
+                              className={defaultLanguage === lang.code ? styles.defaultActive : undefined}
+                              disabled={updateConfig.isPending}
+                            >
+                              <Star size={16} fill={defaultLanguage === lang.code ? 'currentColor' : 'none'} />
+                            </IconButton>
+                          </Tooltip>
                           <Tooltip text={t('common.edit')}>
                             <IconButton onClick={() => openEdit(lang)}>
                               <Pencil size={16} />
