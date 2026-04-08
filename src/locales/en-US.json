@@ -20,7 +20,40 @@
          "translate": {
             "title": "Translate",
             "selectFile": "Select a subtitle file to translate.",
-            "translateDetails": "Translation Details"
+            "translateDetails": "Translation Details",
+            "selectSubtitle": "Select a subtitle on the left to analyze.",
+            "metadataEditor": "Metadata Editor",
+            "metadataEditorDescription": "Here you can review and adjust the metadata linked to the selected subtitle before starting the translation. Adding metadata can help improve translation accuracy, especially for slang, regional expressions, or media-specific technical terms.",
+            "searchTMDB": "Search media on TMDB",
+            "series": "Series",
+            "movie": "Movie",
+            "season": "Season",
+            "episode": "Episode",
+            "unknownTitle": "Unknown Title",
+            "noOverview": "Synopsis not available.",
+            "selectSeasonEpisode": "Select season and episode",
+            "noEpisodeInfo": "Episode information not available",
+            "noEpisodeOverview": "Episode synopsis not available.",
+            "customMetadata": "Custom Metadata",
+            "customMetadataDescription": "Add any custom metadata that may help improve the translation. This can include specific slang, technical terms, or regional expressions relevant to the media.",
+            "customMetadataPlaceholder": "e.g. 'The protagonist is a cybersecurity specialist hacker.'",
+            "translationOptions": "Translation Options",
+            "translationOptionsDescription": "Configure the model, preset, and target language for this translation job.",
+            "modelLabel": "Model",
+            "presetLabel": "Preset",
+            "targetLanguage": "Target Language",
+            "selectModel": "Select a model...",
+            "selectPreset": "Select a preset...",
+            "removeSDH": "Remove SDH",
+            "removeSDHHelp": "Remove descriptions for the deaf/hard of hearing",
+            "file": "File:",
+            "startTranslation": "Translate",
+            "translating": "Translating...",
+            "translationStarted": "Translation started!",
+            "translationError": "Error submitting translation.",
+            "mediaLinked": "\"{{title}}\" linked!",
+            "posterAlt": "Poster",
+            "stillAlt": "Scene"
         },
         "merge": {
             "title": "Merge"
@@ -92,7 +125,11 @@
             "addLanguage": "Add Language",
             "langNamePlaceholder": "e.g. Portuguese (Brazil)",
             "addFavorite": "Add to favorites",
-            "removeFavorite": "Remove from favorites"
+            "removeFavorite": "Remove from favorites",
+            "langSetDefault": "Set as default translation language",
+            "langRemoveDefault": "Remove as default language",
+            "langDefaultSet": "{{lang}} set as default translation language.",
+            "langDefaultRemoved": "Default translation language removed."
         }
     },
 
