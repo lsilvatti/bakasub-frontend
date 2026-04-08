@@ -24,3 +24,4 @@ export { PentagramLoader } from './PentagramLoader';
 export { Spinner } from './Spinner';
 export { ToastItem } from './Toast';
 export { Card } from './Card';
+export { CassetteTape } from './CassetteTape';

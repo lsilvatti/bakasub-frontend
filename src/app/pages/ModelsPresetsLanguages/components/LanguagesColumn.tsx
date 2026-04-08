@@ -136,7 +136,7 @@ export const LanguagesColumn = () => {
                           <Tooltip text={defaultLanguage === lang.code ? t('pages.modelsPresetsLanguages.langRemoveDefault') : t('pages.modelsPresetsLanguages.langSetDefault')}>
                             <IconButton
                               onClick={() => handleSetDefault(lang.code)}
-                              className={defaultLanguage === lang.code ? styles.defaultActive : undefined}
+                              className={defaultLanguage === lang.code ? styles.starActive : styles.starInactive}
                               disabled={updateConfig.isPending}
                             >
                               <Star size={16} fill={defaultLanguage === lang.code ? 'currentColor' : 'none'} />

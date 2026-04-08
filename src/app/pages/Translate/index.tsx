@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Select, Typography, Card, Input, Button, Checkbox, Badge } from "@/components/atoms";
 import { Textarea } from "@/components/atoms";
-import { FileBrowser } from "@/components/organisms";
+import { FileBrowser, TranslationJobDialog } from "@/components/organisms";
 import { SplitPageLayout } from "@/components/templates/SplitPageLayout";
-import { useFolders, useTMDB, useToast, usePresets, useLanguages, useTranslate, useConfig, useOpenRouter } from "@/hooks";
+import { useFolders, useTMDB, useToast, usePresets, useLanguages, useTranslate, useConfig, useOpenRouter, useGlobalSSE } from "@/hooks";
 import styles from "./Translate.module.css";
 import { useTranslation } from "react-i18next";
 import { AsyncSearch } from "@/components/molecules";
@@ -35,6 +35,11 @@ export default function TranslatePage() {
     const [removeSDH, setRemoveSDH] = useState<boolean>(false);
     const [context, setContext] = useState<string>("");
 
+    const [jobDialogOpen, setJobDialogOpen] = useState(false);
+    const [activeJobId, setActiveJobId] = useState<string | null>(null);
+    const [activeOutputPath, setActiveOutputPath] = useState<string | undefined>();
+    const [isJobRunning, setIsJobRunning] = useState(false);
+
     const [translateButtonState, setTranslateButtonState] = useState<{
         variant: "primary" | "success" | "error";
         label: string;
@@ -49,6 +54,7 @@ export default function TranslatePage() {
     const { languages } = useLanguages();
     const { config } = useConfig();
     const { translate } = useTranslate();
+    const { currentEvent } = useGlobalSSE();
     const { favoriteModels, filteredModels, modelsQuery } = useOpenRouter();
 
     const modelOptions = favoriteModels.length > 0 ? favoriteModels : filteredModels;
@@ -117,12 +123,36 @@ export default function TranslatePage() {
     }, [selectedMedia, season, episode]);
 
     useEffect(() => {
-        if (translate.isSuccess) {
-            setTranslateButtonState({ variant: "success", label: t('pages.translate.translationStarted') });
+        if (translate.isSuccess && translate.data) {
+            setActiveJobId(translate.data.job_id);
+            setActiveOutputPath(translate.data.output_path);
+            setIsJobRunning(true);
+            setTranslateButtonState({ variant: "primary", label: t('pages.translate.translatingProgress', { percent: 0 }) });
+            setJobDialogOpen(true);
             toast.success(t('pages.translate.translationStarted'));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [translate.isSuccess]);
+
+    useEffect(() => {
+        if (!currentEvent || currentEvent.module !== 'translate') return;
+        if (currentEvent.data?.job_id && currentEvent.data.job_id !== activeJobId) return;
+
+        if (currentEvent.type === 'progress' && currentEvent.data?.percent !== undefined) {
+            setTranslateButtonState({ variant: "primary", label: t('pages.translate.translatingProgress', { percent: currentEvent.data.percent }) });
+        } else if (currentEvent.type === 'success') {
+            setIsJobRunning(false);
+            setTranslateButtonState({ variant: "success", label: t('pages.translate.translationCompleted') });
+            setTimeout(() => {
+                setTranslateButtonState({ variant: "primary", label: t('pages.translate.startTranslation') });
+                setActiveJobId(null);
+            }, 3000);
+        } else if (currentEvent.type === 'error') {
+            setIsJobRunning(false);
+            setTranslateButtonState({ variant: "error", label: t('pages.translate.translationError') });
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentEvent]);
 
     useEffect(() => {
         if (translate.isError) {
@@ -153,7 +183,7 @@ export default function TranslatePage() {
     const selectedPresetLabel = presets.find(p => p.alias === selectedPreset)?.alias || selectedPreset;
     const selectedLanguageName = languages.find(l => l.code === selectedLanguage)?.name || selectedLanguage;
 
-    const canTranslate = !!selectedFile && !!selectedModel && !!selectedPreset && !!selectedLanguage && !translate.isPending;
+    const canTranslate = !!selectedFile && !!selectedModel && !!selectedPreset && !!selectedLanguage && !translate.isPending && !isJobRunning;
 
     const renderLeft = () => (
         <Card variant="primary" className={styles.fullHeightCard}>
@@ -386,11 +416,19 @@ export default function TranslatePage() {
     );
 
     return (
+        <>
         <SplitPageLayout
             titleKey="pages.translate.title"
             leftContent={renderLeft()}
             rightContent={renderRight()}
             footerContent={renderFooter()}
         />
+        <TranslationJobDialog
+            isOpen={jobDialogOpen}
+            onClose={() => setJobDialogOpen(false)}
+            jobId={activeJobId}
+            outputPath={activeOutputPath}
+        />
+        </>
     );
 }
