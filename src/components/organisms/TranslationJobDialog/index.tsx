@@ -146,7 +146,7 @@ export function TranslationJobDialog({ isOpen, onClose, jobId, outputPath, initi
             : t('pages.translate.jobDialog.starting')
       );
     }
-  }, [isOpen, jobId, initialJobStatus, t]);
+  }, [isOpen, initialJobStatus, t]);
 
   const memorySavingsPercent = useMemo(() => {
     if (!jobDetails || jobDetails.total_lines === 0) return 0;
