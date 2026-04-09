@@ -4,8 +4,8 @@ import { Menu, Settings } from 'lucide-react';
 import { useAppRoute } from '@/hooks/useAppRoute';
 import clsx from 'clsx';
 import { Tooltip } from '@/components/atoms';
-import { useTranslation } from 'react-i18next';
-import type { ParseKeys } from 'node_modules/i18next/typescript/t';
+import { useTranslation  } from 'react-i18next';
+import { type ParseKeys } from 'i18next';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -23,13 +23,7 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
       </Typography>
 
       <div className={styles.iconButtons}>
-        <Link to={'/config'}>
-          <Tooltip position='bottom' text={t('pages.settings.title' as ParseKeys)}>
-            <IconButton className={clsx({ [styles.active]: checkIsActive('/config') }, styles.configButton)} aria-label={t('pages.settings.title' as ParseKeys)}>
-              <Settings />
-            </IconButton>
-          </Tooltip>
-        </Link>
+        <LanguageSwitcher />
         <ThemeToggle />
       </div>
     </header>
