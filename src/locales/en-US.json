@@ -7,7 +7,7 @@
             "title": "Extract",
             "extractTrack": "Extract Track {{id}} ({{language}})",
             "unknown": "Unknown",
-            "selectFile": "Select a video file to extract subtitles.",
+            "selectFile": "Select a video file",
             "selectFavoriteFolder": "Select a favorite folder...",
             "selectSubtitleTrack": "Select Subtitle Track",
             "loadingTracks": "Analyzing the file with FFmpeg... please be patient!",
@@ -15,7 +15,11 @@
             "extractTrackInitial": "Select a track to extract",
             "extractTrackSuccess": "Track extracted successfully! File saved at: {{srtPath}}",
             "errorExtractingTrack": "Error extracting track.",
-            "errorLoadingTracks": "Unable to read subtitles from this file."
+            "errorLoadingTracks": "Unable to read subtitles from this file.",
+            "file": "File:",
+            "noFileSelected": "No file selected",
+            "track": "Track:",
+            "noTrackSelected": "No track selected"
         },
          "translate": {
             "title": "Translate",
@@ -116,7 +120,45 @@
             "title": "Merge"
         },
         "settings": {
-            "title": "Settings"
+            "title": "Settings",
+            "saved": "Settings saved successfully.",
+            "error": "Failed to save settings.",
+            "unsavedTitle": "Unsaved Changes",
+            "unsavedMessage": "You have unsaved changes. Are you sure you want to leave? All changes will be lost.",
+            "discardChanges": "Discard Changes",
+            "apiKeys": {
+                "title": "API Keys",
+                "description": "Configure your API keys for external services.",
+                "openrouter": "OpenRouter API Key",
+                "tmdb": "TMDB Access Token"
+            },
+            "defaults": {
+                "title": "Translation Defaults",
+                "description": "Set default values for new translations.",
+                "model": "Default Model",
+                "preset": "Default Preset",
+                "language": "Default Language",
+                "removeSDH": "Remove SDH by default",
+                "removeSDHHelp": "Automatically remove hearing-impaired descriptions",
+                "tmdbMetadata": "TMDB Metadata",
+                "tmdbMetadataHelp": "Automatically fetch media metadata from TMDB"
+            },
+            "performance": {
+                "title": "Performance",
+                "description": "Tune concurrency, retries, and timeouts.",
+                "concurrent": "Concurrent Translations",
+                "maxRetries": "Max Retries",
+                "retryDelay": "Base Retry Delay (s)",
+                "retryDelayHelp": "Seconds before the first retry",
+                "videoTimeout": "Video Timeout (min)",
+                "videoTimeoutHelp": "Max minutes to process a video"
+            },
+            "maintenance": {
+                "title": "Maintenance",
+                "description": "Configure log retention and cleanup.",
+                "logRetention": "Log Retention (days)",
+                "logRetentionHelp": "Logs older than this will be deleted automatically"
+            }
         },
         "logs": {
             "title": "Logs & Jobs",
@@ -231,6 +273,12 @@
         "fileBrowser": {
             "up": "Go up one level",
             "empty": "Empty folder"
+        },
+        "fileSelectCard": {
+            "selectFavoriteFolder": "Select a favorite folder..."
+        },
+        "fileViewer": {
+            "noFiles": "No media files found in this folder."
         },
         "table": {
             "syncing": "Syncing...",
