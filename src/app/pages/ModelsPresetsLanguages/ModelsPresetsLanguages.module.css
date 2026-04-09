@@ -6,52 +6,54 @@
   gap: 1.5rem;
   min-height: 0;
   min-width: 0;
-  height: 100%;
 }
 
 .modelsStack>*:first-child {
-  flex: 3;
   min-height: 420px;
   min-width: 0;
 }
 
 .modelsStack>*:last-child {
-  flex: 1;
   min-height: 320px;
   min-width: 0;
 }
 
 .presetsStack>*:first-child {
-  flex: 3;
   min-height: 380px;
   min-width: 0;
 }
 
 .presetsStack>*:last-child {
-  flex: 1;
-  height: 100%;
   min-height: 320px;
   min-width: 0;
 }
 
-@media (min-width: 768px) {
-  .modelsStack>*:first-child,
-  .presetsStack>*:first-child {
+@media (min-width: 1024px) {
+  .modelsStack,
+  .presetsStack {
+    height: 100%;
+  }
+
+  .modelsStack>*:first-child {
+    flex: 3;
     min-height: 0;
   }
 
   .modelsStack>*:last-child {
-    min-height: 180px;
+    flex: 1;
+    min-height: 520px;
+  }
+
+  .presetsStack>*:first-child {
+    flex: 3;
+    min-height: 0;
   }
 
   .presetsStack>*:last-child {
-    min-height: 0;
+    flex: 1;
+    height: 100%;
+    min-height: 420pxW;
   }
-}
-
-@media (min-width: 1024px) {
-  .modelsStack>*:first-child  { max-height: 60vh; }
-  .presetsStack>*:first-child { max-height: 50vh; }
 }
 
 /* --- Cards --- */
