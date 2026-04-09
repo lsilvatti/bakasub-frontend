@@ -20,9 +20,6 @@ export function useGlobalSSE() {
              queryClient.invalidateQueries({ queryKey: ['scanned-videos'] });
              queryClient.invalidateQueries({ queryKey: ['scanned-subtitles'] });
           }
-          if (parsedData.module === 'video') {
-             queryClient.invalidateQueries({ queryKey: ['tracks'] });
-          }
           setTimeout(() => setCurrentEvent(null), 3000);
         }
       } catch (err) {
