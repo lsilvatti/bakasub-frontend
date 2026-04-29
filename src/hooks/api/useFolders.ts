@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/services';
 import { type Folder } from '@/types';
-import type { FileNode } from '@/types/api';
+import type { ExploreResponse, RootEntry } from '@/types/api';
 
 export function useFolders() {
   const queryClient = useQueryClient();
@@ -33,10 +33,16 @@ export function useFolders() {
     enabled: !!path,
   });
 
-  const exploreFolder = (path: string | null) => useQuery<FileNode[]>({
+  const exploreFolder = (path: string | null) => useQuery<ExploreResponse>({
     queryKey: ['explore-folder', path],
     queryFn: () => apiClient.get(`/folders/explore?path=${encodeURIComponent(path!)}`),
     enabled: !!path,
+  });
+
+  const getRoots = useQuery<RootEntry[]>({
+    queryKey: ['folder-roots'],
+    queryFn: () => apiClient.get('/folders/roots'),
+    staleTime: Infinity,
   });
 
   return {
@@ -47,5 +53,6 @@ export function useFolders() {
     scanVideos,
     scanSubtitles,
     exploreFolder,
+    getRoots,
   };
 }

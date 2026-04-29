@@ -7,7 +7,7 @@
             "title": "Extrair",
             "extractTrack": "Extrair Trilha {{id}} ({{language}})",
             "unknown": "Desconhecido",
-            "selectFile": "Selecione um arquivo de vídeo para extrair as legendas.",
+            "selectFile": "Selecione um arquivo de vídeo",
             "selectFavoriteFolder": "Selecione uma pasta favorita...",
             "selectSubtitleTrack": "Selecione a Trilha de Legenda",
             "loadingTracks": "Analisando o arquivo com FFmpeg... não seja impaciente!",
@@ -23,11 +23,11 @@
         },
          "translate": {
             "title": "Traduzir",
-            "selectFile": "Selecionar arquivo de legenda",
+            "selectFile": "Selecione um arquivo de legenda para traduzir.",
             "translateDetails": "Detalhes da Tradução",
             "selectSubtitle": "Selecione uma legenda ao lado para analisar.",
             "metadataEditor": "Configurações de Tradução",
-            "metadataEditorDescription": "Aqui você pode fornecer informações adicionais sobre a mídia para ajudar a melhorar a qualidade da tradução. Além disso, para realizar a tradução você deverá escolher um modelo, preset e idioma alvo. ",
+            "metadataEditorDescription": "Aqui você pode fornecer informações adicionais sobre a mídia para ajudar a melhorar a qualidade da tradução. Além disso, para realizar a tradução você deverá escolher um modelo, preset e idioma alvo.",
             "searchTMDB": "Pesquisar mídia no TMDB",
             "series": "Série",
             "movie": "Filme",
@@ -120,7 +120,45 @@
             "title": "Mesclar"
         },
         "settings": {
-            "title": "Configurações"
+            "title": "Configurações",
+            "saved": "Configurações salvas com sucesso.",
+            "error": "Falha ao salvar configurações.",
+            "unsavedTitle": "Alterações não salvas",
+            "unsavedMessage": "Você tem alterações não salvas. Tem certeza que deseja sair? Todas as alterações serão perdidas.",
+            "discardChanges": "Descartar Alterações",
+            "apiKeys": {
+                "title": "Chaves de API",
+                "description": "Configure suas chaves de API para serviços externos.",
+                "openrouter": "Chave da API OpenRouter",
+                "tmdb": "Token de Acesso TMDB"
+            },
+            "defaults": {
+                "title": "Padrões de Tradução",
+                "description": "Defina valores padrão para novas traduções.",
+                "model": "Modelo Padrão",
+                "preset": "Preset Padrão",
+                "language": "Idioma Padrão",
+                "removeSDH": "Remover SDH por padrão",
+                "removeSDHHelp": "Remove automaticamente descrições para deficientes auditivos",
+                "tmdbMetadata": "Metadados do TMDB",
+                "tmdbMetadataHelp": "Busca automaticamente metadados de mídia no TMDB"
+            },
+            "performance": {
+                "title": "Desempenho",
+                "description": "Ajuste concorrência, tentativas e timeouts.",
+                "concurrent": "Traduções Simultâneas",
+                "maxRetries": "Máximo de Tentativas",
+                "retryDelay": "Atraso Base (s)",
+                "retryDelayHelp": "Segundos antes da primeira tentativa",
+                "videoTimeout": "Timeout de Vídeo (min)",
+                "videoTimeoutHelp": "Minutos máximos para processar um vídeo"
+            },
+            "maintenance": {
+                "title": "Manutenção",
+                "description": "Configure retenção e limpeza de logs.",
+                "logRetention": "Retenção de Logs (dias)",
+                "logRetentionHelp": "Logs mais antigos serão excluídos automaticamente"
+            }
         },
         "modelsPresetsLanguages": {
             "title": "Modelos e Presets",
@@ -153,7 +191,7 @@
             "actions": "Ações",
             "default": "Padrão",
             "clone": "Clonar",
-            "copy": "Cópia",
+            "copy": "Copiar",
             "addPreset": "Adicionar Preset",
             "editPreset": "Editar Preset",
             "presetAdded": "Preset adicionado com sucesso.",
@@ -182,11 +220,11 @@
             "langDefaultRemoved": "Idioma padrão de tradução removido."
         },
         "logs": {
-            "title": "Logs & Jobs",
+            "title": "Registros",
             "error": "Erro ao carregar logs.",
             "tabs": {
                 "logs": "Registros",
-                "jobs": "Histórico de Jobs"
+                "jobs": "Histórico de Tarefas"
             },
             "columns": {
                 "date": "Data",
@@ -196,7 +234,7 @@
                 "expand": "Expandir"
             },
             "jobs": {
-                "error": "Erro ao carregar jobs.",
+                "error": "Erro ao carregar tarefas.",
                 "free": "Grátis",
                 "columns": {
                     "file": "Arquivo",
@@ -235,6 +273,9 @@
         "fileBrowser": {
             "up": "Subir um nível",
             "empty": "Pasta vazia"
+        },
+        "fileSelectCard": {
+            "selectFavoriteFolder": "Selecione uma pasta favorita..."
         },
 
         "fileViewer": {

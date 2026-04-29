@@ -1,9 +1,7 @@
-import { IconButton, Link, ThemeToggle, Typography } from '@/components/atoms';
+import { IconButton, ThemeToggle, Typography } from '@/components/atoms';
 import styles from './Header.module.css';
-import { Menu, Settings } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useAppRoute } from '@/hooks/useAppRoute';
-import clsx from 'clsx';
-import { Tooltip } from '@/components/atoms';
 import { useTranslation } from 'react-i18next';
 import type { ParseKeys } from 'i18next';
 
@@ -12,7 +10,7 @@ interface HeaderProps {
 }
 
 export const Header = ({ onMenuClick }: HeaderProps) => {
-  const { title, checkIsActive } = useAppRoute();
+  const { title } = useAppRoute();
   const { t } = useTranslation();
 
   return (
@@ -23,13 +21,6 @@ export const Header = ({ onMenuClick }: HeaderProps) => {
       </Typography>
 
       <div className={styles.iconButtons}>
-        <Link to={'/config'}>
-          <Tooltip position='bottom' text={t('pages.settings.title' as ParseKeys)}>
-            <IconButton className={clsx({ [styles.active]: checkIsActive('/config') }, styles.configButton)} aria-label={t('pages.settings.title' as ParseKeys)}>
-              <Settings />
-            </IconButton>
-          </Tooltip>
-        </Link>
         <ThemeToggle />
       </div>
     </header>

@@ -4,3 +4,4 @@ export { AsyncSearch } from './AsyncSearch';
 export { MediaCard } from './MediaCard';
 export { TranslationOptions } from './TranslationOptions';
 export { TranslateFooter } from './TranslateFooter';
+export { FileSelectCard } from './FileSelectCard';

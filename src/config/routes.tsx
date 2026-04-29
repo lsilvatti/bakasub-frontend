@@ -1,5 +1,5 @@
 
-import { BookOpenText, HomeIcon, Languages, PackageOpen, Merge as MergeIcon, Bot } from 'lucide-react';
+import { BookOpenText, HomeIcon, Languages, PackageOpen, Merge as MergeIcon, Bot, Settings } from 'lucide-react';
 import { lazy } from 'react';
 
 const Home = lazy(() => import('@/app/pages/Home'));
@@ -20,7 +20,17 @@ export interface AppRoute {
   icon?: React.ElementType;
 }
 
-export const APP_ROUTES: AppRoute[] = [
+export interface NavSeparator {
+  type: 'separator';
+}
+
+export type RouteEntry = AppRoute | NavSeparator;
+
+export function isSeparator(entry: RouteEntry): entry is NavSeparator {
+  return 'type' in entry && entry.type === 'separator';
+}
+
+export const APP_ROUTES: RouteEntry[] = [
   {
     path: '/',
     title: 'pages.home.title',
@@ -56,11 +66,13 @@ export const APP_ROUTES: AppRoute[] = [
     showInSidebar: true,
     icon: Bot
   },
+  { type: 'separator' },
   {
     path: '/config',
     title: 'pages.settings.title',
     element: <Config />,
-    showInSidebar: false,
+    showInSidebar: true,
+    icon: Settings,
   },
   {
     path: '/logs',

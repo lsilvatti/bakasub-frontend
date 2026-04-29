@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Select, Typography, Card } from "@/components/atoms";
-import { FileBrowser, TranslationJobDialog, TMDBSearchPanel, PreflightDialog } from "@/components/organisms";
-import { TranslationOptions, TranslateFooter } from "@/components/molecules";
+import { Typography, Card } from "@/components/atoms";
+import { TranslationJobDialog, TMDBSearchPanel, PreflightDialog } from "@/components/organisms";
+import { TranslationOptions, TranslateFooter, FileSelectCard } from "@/components/molecules";
 import { SplitPageLayout } from "@/components/templates/SplitPageLayout";
-import { useFolders, useTMDB, useToast, usePresets, useLanguages, useTranslate, useConfig, useOpenRouter, useGlobalSSE } from "@/hooks";
+import { useTMDB, useToast, usePresets, useLanguages, useTranslate, useConfig, useOpenRouter, useGlobalSSE } from "@/hooks";
 import styles from "./Translate.module.css";
 import { useTranslation } from "react-i18next";
 import type { TMDBResult } from "@/types";
@@ -15,7 +15,6 @@ export default function TranslatePage() {
     const { t } = useTranslation();
     const toast = useToast();
 
-    const [currentPath, setCurrentPath] = useState<string>("/");
     const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
     const [searchQuery, setSearchQuery] = useState("");
@@ -31,10 +30,12 @@ export default function TranslatePage() {
     const [removeSDH, setRemoveSDH] = useState<boolean>(false);
     const [useTmdbMetadata, setUseTmdbMetadata] = useState<boolean>(true);
     const [context, setContext] = useState<string>("");
+    const [tmdbContext, setTmdbContext] = useState<string>("");
 
     const [jobDialogOpen, setJobDialogOpen] = useState(false);
     const [preflightDialogOpen, setPreflightDialogOpen] = useState(false);
     const [activeJobId, setActiveJobId] = useState<string | null>(null);
+    const activeJobIdRef = useRef<string | null>(null);
     const [activeOutputPath, setActiveOutputPath] = useState<string | undefined>();
     const [isJobRunning, setIsJobRunning] = useState(false);
 
@@ -45,8 +46,6 @@ export default function TranslatePage() {
 
     const configInitRef = useRef(false);
 
-    const { folders, exploreFolder } = useFolders();
-    const { data: exploreEntries } = exploreFolder(currentPath);
     const { searchMedia, getEpisode } = useTMDB();
     const { presets } = usePresets();
     const { languages } = useLanguages();
@@ -83,7 +82,7 @@ export default function TranslatePage() {
         setEpisode(parsed.episode || "");
         setSelectedMedia(null);
         setEpisodeData(null);
-        setContext("");
+        setTmdbContext("");
         setTranslateButtonState({ variant: "primary", label: t('pages.translate.startTranslation') });
 
         if (!parsed.title || !useTmdbMetadata) return;
@@ -127,29 +126,33 @@ export default function TranslatePage() {
         const isTV = selectedMedia.media_type === 'tv' || !!selectedMedia.name;
         if (isTV) return;
         const parts: string[] = [];
-        parts.push(`Title: ${selectedMedia.title || selectedMedia.name}`);
+        parts.push(`Title: ${selectedMedia.enTitle || selectedMedia.enName || selectedMedia.title || selectedMedia.name}`);
         const year = (selectedMedia.release_date || '').split('-')[0];
         if (year) parts.push(`Year: ${year}`);
-        if (selectedMedia.overview) parts.push(`Overview: ${selectedMedia.overview}`);
-        setContext(parts.join('\n'));
+        const overview = selectedMedia.enOverview || selectedMedia.overview;
+        if (overview) parts.push(`Overview: ${overview}`);
+        setTmdbContext(parts.join('\n'));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedMedia]);
 
     useEffect(() => {
         if (!episodeData || !selectedMedia) return;
         const parts: string[] = [];
-        parts.push(`Series: ${selectedMedia.name || selectedMedia.title}`);
-        if (selectedMedia.overview) parts.push(`Series Overview: ${selectedMedia.overview}`);
+        parts.push(`Series: ${selectedMedia.enName || selectedMedia.enTitle || selectedMedia.name || selectedMedia.title}`);
+        const seriesOverview = selectedMedia.enOverview || selectedMedia.overview;
+        if (seriesOverview) parts.push(`Series Overview: ${seriesOverview}`);
         const epCode = `S${String(episodeData.season_number).padStart(2, '0')}E${String(episodeData.episode_number).padStart(2, '0')}`;
-        parts.push(`Episode: ${epCode} - ${episodeData.name}`);
-        if (episodeData.overview) parts.push(`Episode Overview: ${episodeData.overview}`);
-        setContext(parts.join('\n'));
+        parts.push(`Episode: ${epCode} - ${episodeData.enName || episodeData.name}`);
+        const epOverview = episodeData.enOverview || episodeData.overview;
+        if (epOverview) parts.push(`Episode Overview: ${epOverview}`);
+        setTmdbContext(parts.join('\n'));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [episodeData]);
 
     useEffect(() => {
         if (translate.isSuccess && translate.data) {
             setActiveJobId(translate.data.job_id);
+            activeJobIdRef.current = translate.data.job_id;
             setActiveOutputPath(translate.data.output_path);
             setIsJobRunning(true);
             setTranslateButtonState({ variant: "primary", label: t('pages.translate.translatingProgress', { percent: 0 }) });
@@ -169,7 +172,7 @@ export default function TranslatePage() {
 
     useEffect(() => {
         if (!currentEvent || currentEvent.module !== 'translate') return;
-        if (currentEvent.data?.job_id && currentEvent.data.job_id !== activeJobId) return;
+        if (currentEvent.data?.job_id && currentEvent.data.job_id !== activeJobIdRef.current) return;
 
         if (currentEvent.type === 'progress' && currentEvent.data?.percent !== undefined) {
             setTranslateButtonState({ variant: "primary", label: t('pages.translate.translatingProgress', { percent: currentEvent.data.percent }) });
@@ -178,7 +181,6 @@ export default function TranslatePage() {
             setTranslateButtonState({ variant: "success", label: t('pages.translate.translationCompleted') });
             setTimeout(() => {
                 setTranslateButtonState({ variant: "primary", label: t('pages.translate.startTranslation') });
-                setActiveJobId(null);
             }, 3000);
         } else if (currentEvent.type === 'error') {
             setIsJobRunning(false);
@@ -201,6 +203,13 @@ export default function TranslatePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [translate.isError]);
 
+    const handleJobDialogClose = () => {
+        setJobDialogOpen(false);
+        setActiveJobId(null);
+        activeJobIdRef.current = null;
+        setActiveOutputPath(undefined);
+    };
+
     const handleSelectMedia = (media: TMDBResult) => {
         setSelectedMedia(media);
         setSearchQuery(media.name || media.title || "");
@@ -214,8 +223,12 @@ export default function TranslatePage() {
             setSearchQuery("");
             setSeason("");
             setEpisode("");
-            setContext("");
+            setTmdbContext("");
         }
+    };
+
+    const buildContext = () => {
+        return [tmdbContext, context].filter(Boolean).join('\n\n');
     };
 
     const handleTranslate = () => {
@@ -226,7 +239,7 @@ export default function TranslatePage() {
             preset: selectedPreset,
             model: selectedModel,
             removeSDH,
-            context,
+            context: buildContext(),
         });
     };
 
@@ -239,7 +252,7 @@ export default function TranslatePage() {
             preset: selectedPreset,
             model: selectedModel,
             removeSDH,
-            context,
+            context: buildContext(),
         });
     };
 
@@ -250,29 +263,12 @@ export default function TranslatePage() {
     const canTranslate = !!selectedFile && !!selectedModel && !!selectedPreset && !!selectedLanguage && !translate.isPending && !isJobRunning;
 
     const renderLeft = () => (
-        <Card variant="primary" className={styles.fullHeightCard}>
-            <Card.Header>
-                <Typography variant="h3" as="p">{t('pages.translate.selectFile')}</Typography>
-            </Card.Header>
-            <Card.Content className={styles.scrollableContent}>
-                <div className={styles.selectWrapper}>
-                    <Select
-                        placeholder={t('pages.extract.selectFavoriteFolder')}
-                        onChange={(e) => { setCurrentPath(e.target.value); setSelectedFile(null); }}
-                        value={folders.some(f => f.path === currentPath) ? currentPath : ""}
-                        options={folders.map(f => ({ value: f.path, label: `${f.alias} (${f.path})` }))}
-                    />
-                </div>
-                <FileBrowser
-                    currentPath={currentPath}
-                    items={exploreEntries || []}
-                    onNavigate={(path) => { setCurrentPath(path); setSelectedFile(null); }}
-                    fileFilter="subtitle"
-                    selectedFile={selectedFile}
-                    onSelectFile={setSelectedFile}
-                />
-            </Card.Content>
-        </Card>
+        <FileSelectCard
+            title={t('pages.translate.selectFile')}
+            fileFilter="subtitle"
+            selectedFile={selectedFile}
+            onSelectFile={setSelectedFile}
+        />
     );
 
     const renderRight = () => {
@@ -361,7 +357,7 @@ export default function TranslatePage() {
         />
         <TranslationJobDialog
             isOpen={jobDialogOpen}
-            onClose={() => setJobDialogOpen(false)}
+            onClose={handleJobDialogClose}
             jobId={activeJobId}
             outputPath={activeOutputPath}
         />
@@ -371,7 +367,7 @@ export default function TranslatePage() {
             data={preflight.data ?? null}
             isLoading={preflight.isPending}
             isError={preflight.isError}
-            context={context}
+            context={buildContext()}
             modelName={selectedModelName}
             onTranslate={handleTranslate}
         />

@@ -113,6 +113,17 @@ export interface FileNode {
   isDirectory: boolean;
 }
 
+export interface ExploreResponse {
+  items: FileNode[];
+  parentPath: string | null;
+  folderName: string;
+}
+
+export interface RootEntry {
+  name: string;
+  path: string;
+}
+
 export interface BakasubModel {
   id: string;
   name: string;

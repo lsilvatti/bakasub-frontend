@@ -8,6 +8,8 @@ import { useToast } from '@/hooks/useToast';
 
 export interface FileBrowserProps {
   currentPath: string;
+  parentPath: string | null;
+  folderName: string;
   items: FileNode[];
   onNavigate: (newPath: string) => void;
   onPathSubmit?: (manualPath: string) => void;
@@ -23,7 +25,9 @@ const VIDEO_EXTS = ['.mp4', '.mkv', '.avi', '.webm', '.mov', '.flv'];
 const SUB_EXTS = ['.srt', '.ass', '.vtt', '.ssa', '.sub'];
 
 export function FileBrowser({ 
-  currentPath, 
+  currentPath,
+  parentPath,
+  folderName,
   items, 
   onNavigate, 
   onPathSubmit, 
@@ -44,10 +48,9 @@ export function FileBrowser({
   }, [currentPath]);
 
   const handleGoUp = () => {
-    const parts = currentPath.split(/[/\\]/).filter(Boolean);
-    parts.pop();
-    const newPath = currentPath.startsWith('/') ? '/' + parts.join('/') : parts.join('\\');
-    onNavigate(newPath || '/');
+    if (parentPath) {
+      onNavigate(parentPath);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -76,17 +79,14 @@ export function FileBrowser({
   const isFavorite = !!currentFavorite;
 
   const handleToggleFavorite = () => {
-    if (!currentPath || currentPath === '/') return;
+    if (!currentPath || !parentPath) return;
 
     if (isFavorite) {
       removeFolder.mutate(currentFavorite.id, {
         onSuccess: () => toast.success(t('components.fileBrowser.removeFavorite', 'Removido dos favoritos'))
       });
     } else {
-      const parts = currentPath.split(/[/\\]/).filter(Boolean);
-      const alias = parts.length > 0 ? parts[parts.length - 1] : currentPath;
-
-      addFolder.mutate({ alias, path: currentPath }, {
+      addFolder.mutate({ alias: folderName, path: currentPath }, {
         onSuccess: () => toast.success(t('components.fileBrowser.saveFavorite', 'Salvo nos favoritos!'))
       });
     }
@@ -132,7 +132,7 @@ export function FileBrowser({
         <button 
           className={styles.upButton} 
           onClick={handleGoUp}
-          disabled={currentPath === '/' || currentPath === '' || currentPath.match(/^[A-Z]:\\$/i) !== null}
+          disabled={!parentPath}
           title={t('components.fileBrowser.up', 'Subir um nível')}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -152,7 +152,7 @@ export function FileBrowser({
           <button
             className={clsx(styles.starButton, isFavorite && styles.activeStar)}
             onClick={handleToggleFavorite}
-            disabled={!currentPath || currentPath === '/' || isLoadingFolders}
+            disabled={!currentPath || !parentPath || isLoadingFolders}
             title={isFavorite ? t('components.fileBrowser.unfav', 'Remover dos Favoritos') : t('components.fileBrowser.fav', 'Salvar nos Favoritos')}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill={isFavorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

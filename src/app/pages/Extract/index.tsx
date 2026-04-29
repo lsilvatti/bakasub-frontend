@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { Select, Typography, Button, Card, Badge } from "@/components/atoms";
-import { FileBrowser, TrackSelector } from "@/components/organisms";
+import { Typography, Button, Card, Badge } from "@/components/atoms";
+import { TrackSelector } from "@/components/organisms";
+import { FileSelectCard } from "@/components/molecules";
 import { SplitPageLayout } from "@/components/templates/SplitPageLayout";
-import { useFolders, useVideo, useToast } from "@/hooks";
+import { useVideo, useToast } from "@/hooks";
 import styles from "./Extract.module.css";
 import type { SubtitleTrack } from "@/types";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
 export default function Extract() {
-    const [currentPath, setCurrentPath] = useState<string>("/");
     const [selectedFile, setSelectedFile] = useState<string | null>(null);
     const [selectedTrackIndex, setSelectedTrackIndex] = useState<number | null>(null);
     const { t } = useTranslation();
@@ -17,10 +17,7 @@ export default function Extract() {
     const [extractButtonState, setExtractButtonState] = useState<{ variant: "primary" | "success" | "error", label: string }>({ variant: "primary", label: t('pages.extract.extractTrackInitial') });
 
     const toast = useToast();
-    const { folders, exploreFolder } = useFolders();
     const { getTracks, extractTrack } = useVideo();
-
-    const { data: exploreEntries } = exploreFolder(currentPath);
 
     const handleSelectTrack = (track: SubtitleTrack) => {
         setSelectedTrackIndex(track.id);
@@ -36,24 +33,6 @@ export default function Extract() {
         }
     }, [selectedFile, isTracksError, toast, t]);
 
-    const handleChangeFavoriteFolder = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const newPath = event.target.value;
-        if (newPath) {
-            setCurrentPath(newPath);
-            setSelectedFile(null);
-        }
-    }
-
-    const handleNavigate = (newPath: string) => {
-        setCurrentPath(newPath);
-        setSelectedFile(null);
-    };
-
-    const onPathSubmit = (manualPath: string) => {
-        setCurrentPath(manualPath);
-        setSelectedFile(null);
-    }
-
     const handleExtract = () => {
         if (!selectedFile || selectedTrackIndex === null) return;
 
@@ -68,42 +47,21 @@ export default function Extract() {
                 onError: () => {
                     toast.error(t('pages.extract.errorExtractingTrack'));
                     setExtractButtonState({ variant: "error", label: t('pages.extract.errorExtractingTrack') });
+                    setTimeout(() => {
+                        setExtractButtonState({ variant: "primary", label: t('pages.extract.extractTrackInitial') });
+                    }, 3000);
                 }
             }
         );
     };
 
-    const isFavorite = folders.some(f => f.path === currentPath);
-
     const renderLeft = () => (
-        <Card variant="primary" className={styles.fullHeightCard}>
-            <Card.Header>
-                <Typography variant="h3" as="p">{t('pages.extract.selectFile')}</Typography>
-            </Card.Header>
-            <Card.Content className={styles.scrollableContent}>
-                <div className={styles.selectWrapper}>
-                    <Select
-                        placeholder={t('pages.extract.selectFavoriteFolder')}
-                        onChange={handleChangeFavoriteFolder}
-                        value={isFavorite ? currentPath : ""}
-                        options={folders.map(folder => ({
-                            value: folder.path,
-                            label: `${folder.alias} (${folder.path})`
-                        }))}
-                    />
-                </div>
-                <FileBrowser
-                    currentPath={currentPath}
-                    items={exploreEntries || []}
-                    onNavigate={handleNavigate}
-                    onPathSubmit={onPathSubmit}
-                    showFavorites={true}
-                    fileFilter="video"
-                    selectedFile={selectedFile}
-                    onSelectFile={setSelectedFile}
-                />
-            </Card.Content>
-        </Card>
+        <FileSelectCard
+            title={t('pages.extract.selectFile')}
+            fileFilter="video"
+            selectedFile={selectedFile}
+            onSelectFile={setSelectedFile}
+        />
     );
 
     const renderRight = () => {

@@ -19,10 +19,8 @@
   overflow: auto;
 }
 
-@media (min-width: 1366px) {
+@media (min-width: 1024px) {
   .content {
-    flex: 1;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    overflow: hidden;
   }
 }
