@@ -1,8 +1,8 @@
 import { type ReactNode } from 'react';
+import type { ParseKeys } from 'i18next';
 import clsx from 'clsx';
 import { PageTitle } from '@/components/atoms';
 import styles from './SplitPageLayout.module.css';
-import type { ParseKeys } from 'node_modules/i18next/typescript/t';
 
 export interface SplitPageLayoutProps {
   titleKey: ParseKeys;

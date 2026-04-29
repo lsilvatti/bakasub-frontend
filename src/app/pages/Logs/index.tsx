@@ -10,7 +10,7 @@ import { BookOpenText, BriefcaseBusiness } from "lucide-react";
 function LogsTab() {
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(50);
+  const limit = 50;
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
   const { data: logsData, isFetching, isLoading, isError } = useLogs({ page, limit });
@@ -99,7 +99,7 @@ function formatCost(cost: number): string {
 function JobsTab() {
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(20);
+  const limit = 20;
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const { data: jobsData, isFetching, isLoading, isError } = useJobs({ page, limit });

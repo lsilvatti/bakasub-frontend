@@ -1,11 +1,11 @@
-import { IconButton, LanguageSwitcher, Link, ThemeToggle, Typography } from '@/components/atoms';
+import { IconButton, Link, ThemeToggle, Typography } from '@/components/atoms';
 import styles from './Header.module.css';
 import { Menu, Settings } from 'lucide-react';
 import { useAppRoute } from '@/hooks/useAppRoute';
 import clsx from 'clsx';
 import { Tooltip } from '@/components/atoms';
 import { useTranslation } from 'react-i18next';
-import type { ParseKeys } from 'node_modules/i18next/typescript/t';
+import type { ParseKeys } from 'i18next';
 
 interface HeaderProps {
   onMenuClick: () => void;

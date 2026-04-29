@@ -19,7 +19,7 @@ function ThemeProvider({ children} : ThemeProviderProps) {
 
     const { getItem, setItem } = LocalStorage();
 
-    const storageTheme = getItem('theme') || 'light';
+    const storageTheme = getItem<themes>('theme') ?? 'light';
 
     const [theme, setTheme] = useState<themes>(storageTheme);
 

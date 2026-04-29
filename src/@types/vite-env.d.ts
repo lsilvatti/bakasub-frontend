@@ -6,3 +6,9 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+interface Window {
+  BAKASUB_RUNTIME_CONFIG?: {
+    apiUrl?: string;
+  };
+}

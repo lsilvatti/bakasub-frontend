@@ -29,8 +29,16 @@ npm install
 Crie um arquivo `.env` na raiz do projeto pra eu saber onde o meu cérebro (backend) está rodando e também com a sua Key do TMDB (prometo que vou cuidar bem dela).
 ```env
 VITE_API_URL=http://localhost:8080/api/v1
-VITE_TMDB_API_KEY=sua_chave_aqui
+VITE_TMDB_ACCESS_TOKEN=seu_token_aqui
 ```
+
+Quando o Bakasub rodar dentro do Electron, o shell pode sobrescrever a URL do backend em runtime sem rebuild definindo `window.BAKASUB_RUNTIME_CONFIG = { apiUrl: 'http://127.0.0.1:8080/api/v1' }` antes do React iniciar.
+
+Agora existe um shell de referência em `electron/main.cjs` e `electron/preload.cjs`. O preload injeta `window.BAKASUB_RUNTIME_CONFIG`, e o `index.html` carrega `public/runtime-config.js` antes do bundle React para que o mesmo mecanismo também funcione em empacotamentos estáticos.
+
+Para desenvolvimento, você ainda pode mandar o Electron subir o backend a partir do código-fonte definindo `BAKASUB_BACKEND_COMMAND`. Exemplo: `BAKASUB_BACKEND_COMMAND="go run ./cmd/server" BAKASUB_BACKEND_CWD="../bakasub-backend" npm run desktop:run`.
+
+Para builds desktop empacotadas, o Electron agora prefere um binário do backend incluído em `electron/resources/backend/<platform>-<arch>/`. Quando ele sobe esse backend empacotado, o banco SQLite fica dentro do diretório de dados do app e a API faz bind em `127.0.0.1:8080` por padrão, a menos que `LISTEN_ADDR`, `DATABASE_URL` ou `BAKASUB_API_URL` sejam sobrescritos.
 
 ### 3. Me Rode!
 Inicie o servidor de desenvolvimento.
@@ -45,3 +53,21 @@ Quando você finalmente terminar de brincar e quiser me colocar em produção de
 npm run build
 ```
 Eu vou gerar arquivos estáticos altamente otimizados na pasta `/dist`, prontos para serem servidos pelo Nginx ou qualquer servidor estático que você preferir.
+
+## 🖥️ Distribuição Desktop
+Se você quiser o app Electron com o backend já embutido, estes são os comandos principais:
+
+```bash
+npm run desktop:backend:build
+npm run desktop:pack:dir
+npm run desktop:dist:linux
+npm run desktop:dist:win
+```
+
+`desktop:backend:build` compila o backend Go para a plataforma atual e o coloca na pasta de resources do Electron.
+
+`desktop:pack:dir` gera um app desktop desempacotado da plataforma atual dentro de `/release`.
+
+`desktop:dist:linux` gera os artefatos Linux (`AppImage` e `tar.gz`).
+
+`desktop:dist:win` prepara o binário Windows do backend e pede ao `electron-builder` os alvos portable e NSIS. Em hosts Linux, o empacotamento Windows completo ainda pode exigir a cadeia usual com Wine.
