@@ -2,16 +2,65 @@
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
+  "description": "BakaSub frontend and desktop shell",
+  "author": "BakaSub Contributors",
+  "main": "electron/main.cjs",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "desktop:backend:build": "node electron/build-backend.mjs",
+    "desktop:backend:build:linux": "node electron/build-backend.mjs linux x64",
+    "desktop:backend:build:win": "node electron/build-backend.mjs win32 x64",
+    "desktop:dev": "node electron/dev-runner.mjs",
+    "desktop:pack:dir": "npm run build && npm run desktop:backend:build && electron-builder --dir",
+    "desktop:dist:linux": "npm run build && npm run desktop:backend:build:linux && electron-builder --linux AppImage tar.gz --x64",
+    "desktop:dist:win": "npm run build && npm run desktop:backend:build:win && electron-builder --win portable nsis --x64",
+    "desktop:run": "electron electron/main.cjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "build": {
+    "appId": "com.bakasub.desktop",
+    "productName": "BakaSub",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*.cjs",
+      "electron/**/*.mjs",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "electron/resources/backend/",
+        "to": "backend",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "linux": {
+      "icon": "public/web-app-manifest-512x512.png",
+      "target": [
+        "AppImage",
+        "tar.gz"
+      ],
+      "category": "Utility"
+    },
+    "win": {
+      "icon": "public/favicon.ico",
+      "target": [
+        "portable",
+        "nsis"
+      ]
+    }
+  },
   "dependencies": {
     "@tanstack/react-query": "^5.95.2",
-    "axios": "^1.13.6",
+    "axios": "^1.15.2",
     "clsx": "^2.1.1",
     "i18next": "^25.10.9",
     "i18next-browser-languagedetector": "^8.2.1",
@@ -29,12 +78,14 @@
     "@types/react-dom": "^19.2.3",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^6.0.0",
+    "electron": "^41.3.0",
+    "electron-builder": "^26.8.1",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.56.1",
-    "vite": "^8.0.0"
+    "vite": "^8.0.10"
   }
 }

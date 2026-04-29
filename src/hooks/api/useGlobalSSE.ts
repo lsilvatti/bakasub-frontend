@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { type SSEEvent } from '@/types/api';
+import { getSSEUrl } from '@/lib/runtimeConfig';
 
 export function useGlobalSSE() {
   const queryClient = useQueryClient();
   const [currentEvent, setCurrentEvent] = useState<SSEEvent | null>(null);
 
   useEffect(() => {
-    const apiBase = (import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1').replace(/\/$/, '');
-    const eventSource = new EventSource(`${apiBase}/events`);
+    const eventSource = new EventSource(getSSEUrl());
 
     eventSource.onmessage = (event) => {
       try {

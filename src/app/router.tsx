@@ -1,11 +1,13 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter } from 'react-router-dom';
 import { RootLayout } from '@/components/templates';
 import { ErrorBoundary } from '@/components/organisms';
 import { APP_ROUTES, isSeparator } from '@/config/routes';
 import { Suspense } from 'react';
 import Loading from './pages/Loading';
 
-export const router = createBrowserRouter([
+const routerFactory = shouldUseHashRouter() ? createHashRouter : createBrowserRouter;
+
+export const router = routerFactory([
     {
         path: '/',
         element: <RootLayout />,
@@ -18,3 +20,11 @@ export const router = createBrowserRouter([
         ],
     },
 ]);
+
+function shouldUseHashRouter() {
+    if (typeof window === 'undefined') {
+        return false;
+    }
+
+    return !window.location.protocol.startsWith('http');
+}

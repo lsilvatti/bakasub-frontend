@@ -29,8 +29,16 @@ npm install
 Create a `.env` file in the project root so I know where my backend brain is located and also with your TMDB Key (I promise I'll take good care of it).
 ```env
 VITE_API_URL=http://localhost:8080/api/v1
-VITE_TMDB_API_KEY=your_key_here
+VITE_TMDB_ACCESS_TOKEN=your_token_here
 ```
+
+When Bakasub runs inside Electron, the shell can override the backend URL at runtime without rebuilding the frontend by setting `window.BAKASUB_RUNTIME_CONFIG = { apiUrl: 'http://127.0.0.1:8080/api/v1' }` before React boots.
+
+There is now a reference shell under `electron/main.cjs` and `electron/preload.cjs`. The preload injects `window.BAKASUB_RUNTIME_CONFIG`, and `index.html` loads `public/runtime-config.js` before the React bundle so the same mechanism also works in static deployments.
+
+For development, you can still ask Electron to launch the backend from source by setting `BAKASUB_BACKEND_COMMAND`. Example: `BAKASUB_BACKEND_COMMAND="go run ./cmd/server" BAKASUB_BACKEND_CWD="../bakasub-backend" npm run desktop:run`.
+
+For packaged desktop builds, Electron now prefers a backend binary bundled under `electron/resources/backend/<platform>-<arch>/`. When it launches that bundled backend, it stores the SQLite database under the app user-data directory and binds the API to `127.0.0.1:8080` unless `LISTEN_ADDR`, `DATABASE_URL`, or `BAKASUB_API_URL` are overridden.
 
 
 ### 3. Run Me!
@@ -46,3 +54,21 @@ When you're finally done messing around and want to serve me properly:
 npm run build
 ```
 I'll generate highly optimized static files in the `/dist` folder, ready to be hosted by Nginx or whatever static server you prefer.
+
+## 🖥️ Desktop Distribution
+If you want the Electron app with the backend already embedded, here are the commands that matter:
+
+```bash
+npm run desktop:backend:build
+npm run desktop:pack:dir
+npm run desktop:dist:linux
+npm run desktop:dist:win
+```
+
+`desktop:backend:build` compiles the Go backend for the current platform and drops it into the Electron resources folder.
+
+`desktop:pack:dir` produces an unpacked desktop app for the current platform in `/release`.
+
+`desktop:dist:linux` builds Linux artifacts (`AppImage` and `tar.gz`).
+
+`desktop:dist:win` prepares the Windows backend binary and asks `electron-builder` for portable and NSIS targets. On Linux hosts, full Windows packaging may still require the usual Wine-based toolchain.
