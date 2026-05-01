@@ -10,6 +10,7 @@ interface SelectOption {
 
 export interface TranslationOptionsProps {
     context: string;
+    disabled?: boolean;
     onContextChange: (value: string) => void;
     selectedModel: string;
     onModelChange: (value: string) => void;
@@ -27,6 +28,7 @@ export interface TranslationOptionsProps {
 
 export function TranslationOptions({
     context,
+    disabled = false,
     onContextChange,
     selectedModel,
     onModelChange,
@@ -56,6 +58,7 @@ export function TranslationOptions({
                     placeholder={t('pages.translate.customMetadataPlaceholder')}
                     fullWidth
                     rows={4}
+                    disabled={disabled}
                     value={context}
                     onChange={(e) => onContextChange(e.target.value)}
                 />
@@ -73,7 +76,7 @@ export function TranslationOptions({
                     value={selectedModel}
                     onChange={(e) => onModelChange(e.target.value)}
                     options={modelOptions}
-                    disabled={modelsLoading}
+                    disabled={modelsLoading || disabled}
                     fullWidth
                 />
                 <Select
@@ -82,6 +85,7 @@ export function TranslationOptions({
                     value={selectedPreset}
                     onChange={(e) => onPresetChange(e.target.value)}
                     options={presetOptions}
+                    disabled={disabled}
                     fullWidth
                 />
                 <Select
@@ -90,12 +94,14 @@ export function TranslationOptions({
                     value={selectedLanguage}
                     onChange={(e) => onLanguageChange(e.target.value)}
                     options={languageOptions}
+                    disabled={disabled}
                     fullWidth
                 />
                 <Checkbox
                     label={t('pages.translate.removeSDH')}
                     helperText={t('pages.translate.removeSDHHelp')}
                     checked={removeSDH}
+                    disabled={disabled}
                     onChange={(e) => onRemoveSDHChange(e.target.checked)}
                 />
             </div>

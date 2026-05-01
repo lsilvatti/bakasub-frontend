@@ -1,4 +1,5 @@
 const fs = require('node:fs');
+const crypto = require('node:crypto');
 const { spawn } = require('node:child_process');
 const path = require('node:path');
 const { app, BrowserWindow } = require('electron');
@@ -46,6 +47,25 @@ function getBundledBackendBinary() {
   }
 
   return null;
+}
+
+function ensureLocalSecretKey(secretDir) {
+  const configuredSecret = process.env.SECRET_KEY?.trim();
+  if (configuredSecret) {
+    return configuredSecret;
+  }
+
+  const secretPath = path.join(secretDir, 'secret.key');
+  if (fs.existsSync(secretPath)) {
+    const persistedSecret = fs.readFileSync(secretPath, 'utf8').trim();
+    if (persistedSecret) {
+      return persistedSecret;
+    }
+  }
+
+  const generatedSecret = crypto.randomUUID();
+  fs.writeFileSync(secretPath, generatedSecret, { mode: 0o600 });
+  return generatedSecret;
 }
 
 async function waitForBackendHealth(apiBaseUrl, timeoutMs = 30000) {
@@ -108,36 +128,38 @@ function startBackendIfConfigured() {
   const backendCommand = process.env.BAKASUB_BACKEND_COMMAND?.trim();
   const bundledBackendBinary = getBundledBackendBinary();
   if (!backendCommand && !bundledBackendBinary) {
-	return false;
+    return false;
   }
 
   const databasePath = process.env.DATABASE_URL || path.join(app.getPath('userData'), 'backend', 'bakasub.db');
   const apiBaseUrl = getApiBaseUrl();
+  const dataDir = path.dirname(databasePath);
 
-  fs.mkdirSync(path.dirname(databasePath), { recursive: true });
+  fs.mkdirSync(dataDir, { recursive: true });
 
   process.env.DATABASE_URL = databasePath;
   process.env.LISTEN_ADDR = getListenAddr();
   process.env.BAKASUB_API_URL = apiBaseUrl;
+  process.env.SECRET_KEY = ensureLocalSecretKey(dataDir);
 
   if (backendCommand) {
-	  backendProcess = spawn(backendCommand, {
-	    cwd: process.env.BAKASUB_BACKEND_CWD || path.join(__dirname, '..'),
-	    env: {
-	      ...process.env,
-	    },
-	    shell: true,
-	    stdio: 'inherit',
-	  });
-	} else {
-	  backendProcess = spawn(bundledBackendBinary, [], {
-	    cwd: path.dirname(bundledBackendBinary),
-	    env: {
-	      ...process.env,
-	    },
-	    stdio: 'inherit',
-	  });
-	}
+    backendProcess = spawn(backendCommand, {
+      cwd: process.env.BAKASUB_BACKEND_CWD || path.join(__dirname, '..'),
+      env: {
+        ...process.env,
+      },
+      shell: true,
+      stdio: 'inherit',
+    });
+  } else {
+    backendProcess = spawn(bundledBackendBinary, [], {
+      cwd: path.dirname(bundledBackendBinary),
+      env: {
+        ...process.env,
+      },
+      stdio: 'inherit',
+    });
+  }
 
   backendProcess.once('exit', (code) => {
     backendProcess = undefined;

@@ -1,12 +1,14 @@
 import { useLocation } from "react-router-dom";
-import { APP_ROUTES } from "@/config/routes";
+import { APP_ROUTES, isSeparator, type AppRoute } from "@/config/routes";
 
 export function useAppRoute() {
   const { pathname } = useLocation();
 
   const baseRoute = `/${pathname.split("/")[1]}`; 
 
-  const currentRoute = APP_ROUTES.find(r => r.path === pathname || r.path === baseRoute);
+  const navigableRoutes = APP_ROUTES.filter((entry): entry is AppRoute => !isSeparator(entry));
+
+  const currentRoute = navigableRoutes.find(route => route.path === pathname || route.path === baseRoute);
   
   const title = currentRoute?.title || "BakaSub";
 

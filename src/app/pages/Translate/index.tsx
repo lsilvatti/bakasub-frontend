@@ -3,10 +3,11 @@ import { Typography, Card } from "@/components/atoms";
 import { TranslationJobDialog, TMDBSearchPanel, PreflightDialog } from "@/components/organisms";
 import { TranslationOptions, TranslateFooter, FileSelectCard } from "@/components/molecules";
 import { SplitPageLayout } from "@/components/templates/SplitPageLayout";
-import { useTMDB, useToast, usePresets, useLanguages, useTranslate, useConfig, useOpenRouter, useGlobalSSE } from "@/hooks";
+import { useTMDB, useToast, usePresets, useLanguages, useTranslate, useConfig, useOpenRouter, useGlobalSSE, useApiKeyRequirements } from "@/hooks";
 import styles from "./Translate.module.css";
 import { useTranslation } from "react-i18next";
 import type { TMDBResult } from "@/types";
+import type { RequiredApiKey } from "@/hooks/useApiKeyRequirements";
 
 import { parseMediaFilename } from "@/lib/mediaParser";
 import { addSessionJob } from "@/lib/sessionJobs";
@@ -14,6 +15,14 @@ import { addSessionJob } from "@/lib/sessionJobs";
 export default function TranslatePage() {
     const { t } = useTranslation();
     const toast = useToast();
+
+    const getApiKeyLabel = useCallback((key: RequiredApiKey) => {
+        if (key === 'openrouter') {
+            return t('pages.settings.apiKeys.openrouter');
+        }
+
+        return t('pages.settings.apiKeys.tmdb');
+    }, [t]);
 
     const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
@@ -50,11 +59,14 @@ export default function TranslatePage() {
     const { presets } = usePresets();
     const { languages } = useLanguages();
     const { config } = useConfig();
+    const { hasRequiredTranslationKeys, missingTranslationKeys } = useApiKeyRequirements();
     const { translate, preflight } = useTranslate();
     const { currentEvent } = useGlobalSSE();
     const { favoriteModels, filteredModels, modelsQuery } = useOpenRouter();
 
     const modelOptions = favoriteModels.length > 0 ? favoriteModels : filteredModels;
+    const missingKeysLabel = missingTranslationKeys.map(getApiKeyLabel).join(', ');
+    const translationLocked = !hasRequiredTranslationKeys;
 
     // Initialize defaults from config (only once)
     useEffect(() => {
@@ -69,8 +81,12 @@ export default function TranslatePage() {
     }, [config]);
 
     const handleSearch = useCallback((query: string) => {
+        if (translationLocked || !query.trim()) {
+            return;
+        }
+
         searchMedia.mutate({ query });
-    }, [searchMedia.mutate]);
+    }, [searchMedia.mutate, translationLocked]);
 
     useEffect(() => {
         if (!selectedFile) return;
@@ -85,7 +101,7 @@ export default function TranslatePage() {
         setTmdbContext("");
         setTranslateButtonState({ variant: "primary", label: t('pages.translate.startTranslation') });
 
-        if (!parsed.title || !useTmdbMetadata) return;
+        if (!parsed.title || !useTmdbMetadata || translationLocked) return;
 
         let cancelled = false;
         searchMedia.mutateAsync({ query: parsed.title })
@@ -102,11 +118,11 @@ export default function TranslatePage() {
 
         return () => { cancelled = true; };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedFile]);
+    }, [selectedFile, t, toast, searchMedia, useTmdbMetadata, translationLocked]);
 
     useEffect(() => {
         const isTV = selectedMedia?.media_type === 'tv' || !!selectedMedia?.name;
-        if (!selectedMedia || !isTV || !season || !episode) return;
+        if (!selectedMedia || !isTV || !season || !episode || translationLocked) return;
 
         let cancelled = false;
         getEpisode.mutateAsync({
@@ -119,7 +135,7 @@ export default function TranslatePage() {
 
         return () => { cancelled = true; };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedMedia, season, episode]);
+    }, [selectedMedia, season, episode, getEpisode, translationLocked]);
 
     useEffect(() => {
         if (!selectedMedia) return;
@@ -216,6 +232,10 @@ export default function TranslatePage() {
     };
 
     const handleToggleTmdbMetadata = (enabled: boolean) => {
+        if (translationLocked) {
+            return;
+        }
+
         setUseTmdbMetadata(enabled);
         if (!enabled) {
             setSelectedMedia(null);
@@ -232,6 +252,14 @@ export default function TranslatePage() {
     };
 
     const handleTranslate = () => {
+        if (translationLocked) {
+            toast.warning(
+                t('pages.translate.apiKeysRequiredToast', { keys: missingKeysLabel }),
+                t('pages.translate.apiKeysRequiredTitle')
+            );
+            return;
+        }
+
         if (!selectedFile || !selectedModel || !selectedPreset || !selectedLanguage) return;
         translate.mutate({
             filePath: selectedFile,
@@ -244,6 +272,14 @@ export default function TranslatePage() {
     };
 
     const handlePreflight = () => {
+        if (translationLocked) {
+            toast.warning(
+                t('pages.translate.apiKeysRequiredToast', { keys: missingKeysLabel }),
+                t('pages.translate.apiKeysRequiredTitle')
+            );
+            return;
+        }
+
         if (!selectedFile || !selectedModel || !selectedPreset || !selectedLanguage) return;
         setPreflightDialogOpen(true);
         preflight.mutate({
@@ -260,7 +296,26 @@ export default function TranslatePage() {
     const selectedPresetLabel = presets.find(p => p.alias === selectedPreset)?.alias || selectedPreset;
     const selectedLanguageName = languages.find(l => l.code === selectedLanguage)?.name || selectedLanguage;
 
-    const canTranslate = !!selectedFile && !!selectedModel && !!selectedPreset && !!selectedLanguage && !translate.isPending && !isJobRunning;
+    const canTranslate = hasRequiredTranslationKeys && !!selectedFile && !!selectedModel && !!selectedPreset && !!selectedLanguage && !translate.isPending && !isJobRunning;
+
+    const renderApiKeysNotice = () => {
+        if (!translationLocked) {
+            return null;
+        }
+
+        return (
+            <Card className={styles.apiKeysNotice}>
+                <Card.Header>
+                    <Typography variant="h3" as="p">{t('pages.translate.apiKeysRequiredTitle')}</Typography>
+                </Card.Header>
+                <Card.Description>
+                    <Typography variant="muted">
+                        {t('pages.translate.apiKeysRequiredDescription', { keys: missingKeysLabel })}
+                    </Typography>
+                </Card.Description>
+            </Card>
+        );
+    };
 
     const renderLeft = () => (
         <FileSelectCard
@@ -274,59 +329,67 @@ export default function TranslatePage() {
     const renderRight = () => {
         if (!selectedFile) {
             return (
-                <div className={styles.emptyState}>
-                    <Typography variant="muted">{t('pages.translate.selectSubtitle')}</Typography>
+                <div className={styles.rightColumnStack}>
+                    {renderApiKeysNotice()}
+                    <div className={styles.emptyState}>
+                        <Typography variant="muted">{t('pages.translate.selectSubtitle')}</Typography>
+                    </div>
                 </div>
             );
         }
 
         return (
-            <Card variant="secondary" className={styles.fullHeightCard}>
-                <Card.Header>
-                    <Typography variant="h3" as="p">{t('pages.translate.metadataEditor')}</Typography>
-                </Card.Header>
-                <Card.Description>
-                    <Typography variant="muted">
-                        {t('pages.translate.metadataEditorDescription')}
-                    </Typography>
-                </Card.Description>
+            <div className={styles.rightColumnStack}>
+                {renderApiKeysNotice()}
+                <Card variant="secondary" className={styles.fullHeightCard}>
+                    <Card.Header>
+                        <Typography variant="h3" as="p">{t('pages.translate.metadataEditor')}</Typography>
+                    </Card.Header>
+                    <Card.Description>
+                        <Typography variant="muted">
+                            {t('pages.translate.metadataEditorDescription')}
+                        </Typography>
+                    </Card.Description>
 
-                <Card.Content className={styles.scrollableContent}>
-                    <TMDBSearchPanel
-                        enabled={useTmdbMetadata}
-                        onToggle={handleToggleTmdbMetadata}
-                        searchQuery={searchQuery}
-                        onSearchQueryChange={setSearchQuery}
-                        onSearch={handleSearch}
-                        isSearching={searchMedia.isPending}
-                        searchResults={searchMedia.data?.results || []}
-                        selectedMedia={selectedMedia}
-                        onSelectMedia={handleSelectMedia}
-                        season={season}
-                        onSeasonChange={setSeason}
-                        episode={episode}
-                        onEpisodeChange={setEpisode}
-                        episodeData={episodeData}
-                    />
+                    <Card.Content className={styles.scrollableContent}>
+                        <TMDBSearchPanel
+                            enabled={useTmdbMetadata}
+                            disabled={translationLocked}
+                            onToggle={handleToggleTmdbMetadata}
+                            searchQuery={searchQuery}
+                            onSearchQueryChange={setSearchQuery}
+                            onSearch={handleSearch}
+                            isSearching={searchMedia.isPending}
+                            searchResults={searchMedia.data?.results || []}
+                            selectedMedia={selectedMedia}
+                            onSelectMedia={handleSelectMedia}
+                            season={season}
+                            onSeasonChange={setSeason}
+                            episode={episode}
+                            onEpisodeChange={setEpisode}
+                            episodeData={episodeData}
+                        />
 
-                    <TranslationOptions
-                        context={context}
-                        onContextChange={setContext}
-                        selectedModel={selectedModel}
-                        onModelChange={setSelectedModel}
-                        modelOptions={modelOptions.map(m => ({ value: m.id, label: m.name }))}
-                        modelsLoading={modelsQuery.isLoading}
-                        selectedPreset={selectedPreset}
-                        onPresetChange={setSelectedPreset}
-                        presetOptions={presets.map(p => ({ value: p.alias, label: p.name }))}
-                        selectedLanguage={selectedLanguage}
-                        onLanguageChange={setSelectedLanguage}
-                        languageOptions={languages.map(l => ({ value: l.code, label: l.name }))}
-                        removeSDH={removeSDH}
-                        onRemoveSDHChange={setRemoveSDH}
-                    />
-                </Card.Content>
-            </Card>
+                        <TranslationOptions
+                            context={context}
+                            disabled={translationLocked}
+                            onContextChange={setContext}
+                            selectedModel={selectedModel}
+                            onModelChange={setSelectedModel}
+                            modelOptions={modelOptions.map(m => ({ value: m.id, label: m.name }))}
+                            modelsLoading={modelsQuery.isLoading}
+                            selectedPreset={selectedPreset}
+                            onPresetChange={setSelectedPreset}
+                            presetOptions={presets.map(p => ({ value: p.alias, label: p.name }))}
+                            selectedLanguage={selectedLanguage}
+                            onLanguageChange={setSelectedLanguage}
+                            languageOptions={languages.map(l => ({ value: l.code, label: l.name }))}
+                            removeSDH={removeSDH}
+                            onRemoveSDHChange={setRemoveSDH}
+                        />
+                    </Card.Content>
+                </Card>
+            </div>
         );
     };
 

@@ -34,7 +34,7 @@ VITE_TMDB_ACCESS_TOKEN=your_token_here
 
 When Bakasub runs inside Electron, the shell can override the backend URL at runtime without rebuilding the frontend by setting `window.BAKASUB_RUNTIME_CONFIG = { apiUrl: 'http://127.0.0.1:8080/api/v1' }` before React boots.
 
-There is now a reference shell under `electron/main.cjs` and `electron/preload.cjs`. The preload injects `window.BAKASUB_RUNTIME_CONFIG`, and `index.html` loads `public/runtime-config.js` before the React bundle so the same mechanism also works in static deployments.
+There is now a reference shell under `electron/main.cjs` and `electron/preload.cjs`. The preload injects `window.BAKASUB_RUNTIME_CONFIG`, and `index.html` initializes that global before the React bundle so the same mechanism also works in static deployments.
 
 For development, you can still ask Electron to launch the backend from source by setting `BAKASUB_BACKEND_COMMAND`. Example: `BAKASUB_BACKEND_COMMAND="go run ./cmd/server" BAKASUB_BACKEND_CWD="../bakasub-backend" npm run desktop:run`.
 
@@ -56,19 +56,24 @@ npm run build
 I'll generate highly optimized static files in the `/dist` folder, ready to be hosted by Nginx or whatever static server you prefer.
 
 ## 🖥️ Desktop Distribution
-If you want the Electron app with the backend already embedded, here are the commands that matter:
+If you want a single Electron app with the backend already embedded, this is the main command:
 
 ```bash
-npm run desktop:backend:build
+npm run desktop:dist
+```
+
+Optional commands for debugging or cross-platform packaging:
+
+```bash
 npm run desktop:pack:dir
 npm run desktop:dist:linux
 npm run desktop:dist:win
 ```
 
-`desktop:backend:build` compiles the Go backend for the current platform and drops it into the Electron resources folder.
+`desktop:dist` builds the frontend, compiles the Go backend for the current platform, runs `electron-builder`, and prunes auxiliary packaging files so `/release` keeps only a single distributable desktop artifact.
 
 `desktop:pack:dir` produces an unpacked desktop app for the current platform in `/release`.
 
-`desktop:dist:linux` builds Linux artifacts (`AppImage` and `tar.gz`).
+`desktop:dist:linux` produces a single Linux `AppImage`.
 
-`desktop:dist:win` prepares the Windows backend binary and asks `electron-builder` for portable and NSIS targets. On Linux hosts, full Windows packaging may still require the usual Wine-based toolchain.
+`desktop:dist:win` produces a single Windows NSIS installer executable. On Linux hosts, full Windows packaging may still require the usual Wine-based toolchain.

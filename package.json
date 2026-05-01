@@ -1,21 +1,23 @@
 {
-  "name": "frontend",
+  "name": "bakasub",
   "private": true,
-  "version": "0.0.0",
-  "description": "BakaSub frontend and desktop shell",
-  "author": "BakaSub Contributors",
+  "version": "1.0.0",
+  "description": "AI Subtitle Translator tool",
+  "author": "Leonardo Silvatti - Grimwynn",
   "main": "electron/main.cjs",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "desktop:clean": "node -e \"require('node:fs').rmSync('release', { recursive: true, force: true })\"",
     "desktop:backend:build": "node electron/build-backend.mjs",
     "desktop:backend:build:linux": "node electron/build-backend.mjs linux x64",
     "desktop:backend:build:win": "node electron/build-backend.mjs win32 x64",
     "desktop:dev": "node electron/dev-runner.mjs",
-    "desktop:pack:dir": "npm run build && npm run desktop:backend:build && electron-builder --dir",
-    "desktop:dist:linux": "npm run build && npm run desktop:backend:build:linux && electron-builder --linux AppImage tar.gz --x64",
-    "desktop:dist:win": "npm run build && npm run desktop:backend:build:win && electron-builder --win portable nsis --x64",
+    "desktop:dist": "node electron/desktop-dist.mjs",
+    "desktop:pack:dir": "npm run desktop:clean && npm run build && npm run desktop:backend:build && electron-builder --dir",
+    "desktop:dist:linux": "node electron/desktop-dist.mjs linux x64",
+    "desktop:dist:win": "node electron/desktop-dist.mjs win32 x64",
     "desktop:run": "electron electron/main.cjs",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -23,6 +25,8 @@
   "build": {
     "appId": "com.bakasub.desktop",
     "productName": "BakaSub",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "executableName": "BakaSub",
     "asar": true,
     "directories": {
       "output": "release"
@@ -44,18 +48,12 @@
     ],
     "linux": {
       "icon": "public/web-app-manifest-512x512.png",
-      "target": [
-        "AppImage",
-        "tar.gz"
-      ],
+      "target": "AppImage",
       "category": "Utility"
     },
     "win": {
       "icon": "public/favicon.ico",
-      "target": [
-        "portable",
-        "nsis"
-      ]
+      "target": "nsis"
     }
   },
   "dependencies": {

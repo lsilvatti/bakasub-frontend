@@ -10,6 +10,7 @@ export interface AsyncSearchProps<T> {
   placeholder?: string;
   delay?: number;
   isLoading?: boolean;
+  disabled?: boolean;
   results: T[];
   value: string;
   onChange: (value: string) => void;
@@ -26,6 +27,7 @@ export function AsyncSearch<T>({
   placeholder = 'Buscar...',
   delay = 500,
   isLoading = false,
+  disabled = false,
   results,
   value,
   onChange,
@@ -44,13 +46,19 @@ export function AsyncSearch<T>({
   const debouncedValue = useDebounce(value, delay);
 
   useEffect(() => {
+    if (disabled) {
+      setHasSearched(false);
+      setIsOpen(false);
+      return;
+    }
+
     if (debouncedValue.trim()) {
       setHasSearched(true);
       onSearch(debouncedValue);
     } else {
       setHasSearched(false);
     }
-  }, [debouncedValue, onSearch]);
+  }, [debouncedValue, disabled, onSearch]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -80,7 +88,12 @@ export function AsyncSearch<T>({
         label={label}
         placeholder={placeholder}
         value={value}
+        disabled={disabled}
         onChange={(e) => {
+          if (disabled) {
+            return;
+          }
+
           onChange(e.target.value);
           if (e.target.value.trim()) {
             setIsOpen(true);
@@ -89,13 +102,17 @@ export function AsyncSearch<T>({
           }
         }}
         onFocus={() => {
+          if (disabled) {
+            return;
+          }
+
           if (value.trim() && (isLoading || hasSearched)) setIsOpen(true);
         }}
         fullWidth={fullWidth}
         rightIcon={isLoading ? loadingIcon : undefined}
       />
 
-      {isOpen && (isLoading || hasSearched) && (
+      {!disabled && isOpen && (isLoading || hasSearched) && (
         <div className={styles.dropdown}>
           {isLoading ? (
             <div className={styles.loadingState}>{t('components.asyncSearch.loading', 'Carregando...')}</div>

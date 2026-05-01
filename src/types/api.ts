@@ -43,6 +43,25 @@ export interface SubtitleTrack {
   isForced: boolean;
 }
 
+export interface ExternalToolStatus {
+  available: boolean;
+  path?: string;
+  error?: string;
+}
+
+export interface VideoToolsStatus {
+  ffmpeg: ExternalToolStatus;
+  mkvmerge: ExternalToolStatus;
+  mkvextract: ExternalToolStatus;
+  videoProcessingAvailable: boolean;
+  missingTools: string[];
+}
+
+export interface HealthStatus {
+  ok: boolean;
+  videoTools: VideoToolsStatus;
+}
+
 export interface SystemLog {
   id: number;
   level: string;

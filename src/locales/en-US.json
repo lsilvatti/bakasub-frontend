@@ -16,6 +16,10 @@
             "extractTrackSuccess": "Track extracted successfully! File saved at: {{srtPath}}",
             "errorExtractingTrack": "Error extracting track.",
             "errorLoadingTracks": "Unable to read subtitles from this file.",
+            "videoToolsRequiredToast": "Install {{tools}} in Settings before using Extract.",
+            "videoToolsRequiredDescription": "This file depends on {{tools}} before Bakasub can extract subtitles.",
+            "videoToolsRequiredHint": "Extract is locked until {{tools}} are available.",
+            "viewInstructions": "View install instructions",
             "file": "File:",
             "noFileSelected": "No file selected",
             "track": "Track:",
@@ -59,6 +63,10 @@
             "translationCompleted": "Completed!",
             "translationStarted": "Translation started!",
             "translationError": "Error submitting translation.",
+            "apiKeysRequiredTitle": "Configuration required",
+            "apiKeysRequiredDescription": "Configure and save {{keys}} in Settings to unlock translation.",
+            "apiKeysRequiredToast": "Configure {{keys}} in Settings before opening Translate.",
+            "apiKeysRequiredHint": "Translate is locked until {{keys}} are configured.",
             "jobDialog": {
                 "title": "Translation in Progress",
                 "titleCompleted": "Translation Completed",
@@ -117,7 +125,9 @@
             }
         },
         "merge": {
-            "title": "Merge"
+            "title": "Merge",
+            "videoToolsRequiredToast": "Install {{tools}} in Settings before using Merge.",
+            "videoToolsRequiredHint": "Merge is locked until {{tools}} are available."
         },
         "settings": {
             "title": "Settings",
@@ -126,11 +136,51 @@
             "unsavedTitle": "Unsaved Changes",
             "unsavedMessage": "You have unsaved changes. Are you sure you want to leave? All changes will be lost.",
             "discardChanges": "Discard Changes",
+            "videoTools": {
+                "title": "Video Tools",
+                "description": "Bakasub depends on FFmpeg and MKVToolNix installed on your system to inspect tracks, extract subtitles, and merge translated files.",
+                "ready": "Ready",
+                "readyDescription": "All required video tools are available.",
+                "missing": "Attention needed",
+                "missingShort": "Missing",
+                "available": "Available",
+                "installHint": "Install the missing tools on the host system and restart Bakasub to enable video features.",
+                "detectedAt": "Detected at {{path}}",
+                "toast": "Video features are unavailable because these tools are missing: {{tools}}.",
+                "ffmpegMissingHelp": "Required to extract subtitles from non-MKV containers.",
+                "mkvmergeMissingHelp": "Required to inspect tracks and mux translated subtitles back into MKV files.",
+                "mkvextractMissingHelp": "Required to extract subtitle tracks directly from MKV files.",
+                "instructions": {
+                    "title": "Install missing tools",
+                    "description": "Use one of these host-level setups, then restart Bakasub so the health check can detect the binaries.",
+                    "recommended": "Recommended",
+                    "linuxTitle": "Linux",
+                    "linuxCommand": "sudo apt update && sudo apt install -y ffmpeg mkvtoolnix",
+                    "linuxStep1": "Install FFmpeg and MKVToolNix from your distribution packages.",
+                    "linuxStep2": "Restart Bakasub after the installation completes.",
+                    "windowsTitle": "Windows",
+                    "windowsStep1": "Download FFmpeg and MKVToolNix from their official websites.",
+                    "windowsStep2": "Add the folders containing ffmpeg.exe, mkvmerge.exe, and mkvextract.exe to PATH.",
+                    "windowsStep3": "Restart Bakasub and confirm the tools appear as available here."
+                }
+            },
             "apiKeys": {
                 "title": "API Keys",
-                "description": "Configure your API keys for external services.",
+                "description": "Configure your API keys for external services. OpenRouter and TMDB are required for translation.",
                 "openrouter": "OpenRouter API Key",
-                "tmdb": "TMDB Access Token"
+                "tmdb": "TMDB Access Token",
+                "requiredBannerTitle": "Required keys pending",
+                "requiredBannerDescription": "Translation stays locked until {{keys}} are configured and saved.",
+                "requiredBannerPendingSave": "Save the new keys to unlock translation.",
+                "validation": {
+                    "required": "{{service}} is required to unlock translation.",
+                    "configured": "Configured. Edit the value to validate it again.",
+                    "pending": "Waiting to validate this key...",
+                    "validating": "Validating key...",
+                    "valid": "Valid key.",
+                    "invalidOpenRouter": "Could not validate the OpenRouter key.",
+                    "invalidTmdb": "Could not validate the TMDB token."
+                }
             },
             "defaults": {
                 "title": "Translation Defaults",

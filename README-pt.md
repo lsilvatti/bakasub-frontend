@@ -34,7 +34,7 @@ VITE_TMDB_ACCESS_TOKEN=seu_token_aqui
 
 Quando o Bakasub rodar dentro do Electron, o shell pode sobrescrever a URL do backend em runtime sem rebuild definindo `window.BAKASUB_RUNTIME_CONFIG = { apiUrl: 'http://127.0.0.1:8080/api/v1' }` antes do React iniciar.
 
-Agora existe um shell de referência em `electron/main.cjs` e `electron/preload.cjs`. O preload injeta `window.BAKASUB_RUNTIME_CONFIG`, e o `index.html` carrega `public/runtime-config.js` antes do bundle React para que o mesmo mecanismo também funcione em empacotamentos estáticos.
+Agora existe um shell de referência em `electron/main.cjs` e `electron/preload.cjs`. O preload injeta `window.BAKASUB_RUNTIME_CONFIG`, e o `index.html` inicializa esse global antes do bundle React para que o mesmo mecanismo também funcione em empacotamentos estáticos.
 
 Para desenvolvimento, você ainda pode mandar o Electron subir o backend a partir do código-fonte definindo `BAKASUB_BACKEND_COMMAND`. Exemplo: `BAKASUB_BACKEND_COMMAND="go run ./cmd/server" BAKASUB_BACKEND_CWD="../bakasub-backend" npm run desktop:run`.
 
@@ -55,19 +55,24 @@ npm run build
 Eu vou gerar arquivos estáticos altamente otimizados na pasta `/dist`, prontos para serem servidos pelo Nginx ou qualquer servidor estático que você preferir.
 
 ## 🖥️ Distribuição Desktop
-Se você quiser o app Electron com o backend já embutido, estes são os comandos principais:
+Se você quiser um único app Electron com o backend já embutido, este é o comando principal:
 
 ```bash
-npm run desktop:backend:build
+npm run desktop:dist
+```
+
+Comandos opcionais para debug ou empacotamento por plataforma:
+
+```bash
 npm run desktop:pack:dir
 npm run desktop:dist:linux
 npm run desktop:dist:win
 ```
 
-`desktop:backend:build` compila o backend Go para a plataforma atual e o coloca na pasta de resources do Electron.
+`desktop:dist` gera o frontend, compila o backend Go para a plataforma atual, roda o `electron-builder` e remove arquivos auxiliares de empacotamento para que `/release` fique com apenas um artefato desktop distribuível.
 
 `desktop:pack:dir` gera um app desktop desempacotado da plataforma atual dentro de `/release`.
 
-`desktop:dist:linux` gera os artefatos Linux (`AppImage` e `tar.gz`).
+`desktop:dist:linux` gera um único `AppImage` Linux.
 
-`desktop:dist:win` prepara o binário Windows do backend e pede ao `electron-builder` os alvos portable e NSIS. Em hosts Linux, o empacotamento Windows completo ainda pode exigir a cadeia usual com Wine.
+`desktop:dist:win` gera um único instalador NSIS para Windows. Em hosts Linux, o empacotamento Windows completo ainda pode exigir a cadeia usual com Wine.

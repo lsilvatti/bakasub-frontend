@@ -16,6 +16,10 @@
             "extractTrackSuccess": "Trilha extraída com sucesso! Arquivo salvo em: {{srtPath}}",
             "errorExtractingTrack": "Erro ao extrair a trilha.",
             "errorLoadingTracks": "Não foi possível ler as legendas deste arquivo.",
+            "videoToolsRequiredToast": "Instale {{tools}} em Configurações antes de usar Extrair.",
+            "videoToolsRequiredDescription": "Este arquivo depende de {{tools}} antes que o Bakasub consiga extrair as legendas.",
+            "videoToolsRequiredHint": "Extrair fica bloqueado até {{tools}} estarem disponíveis.",
+            "viewInstructions": "Ver instruções de instalação",
             "file": "Arquivo:",
             "noFileSelected": "Nenhum arquivo selecionado",
             "track": "Trilha:",
@@ -59,6 +63,10 @@
             "translationCompleted": "Concluído!",
             "translationStarted": "Tradução iniciada!",
             "translationError": "Erro ao enviar tradução.",
+            "apiKeysRequiredTitle": "Configuração obrigatória",
+            "apiKeysRequiredDescription": "Configure e salve {{keys}} em Configurações para liberar a tradução.",
+            "apiKeysRequiredToast": "Configure {{keys}} em Configurações antes de abrir Traduzir.",
+            "apiKeysRequiredHint": "Traduzir fica bloqueado até {{keys}} serem configuradas.",
             "jobDialog": {
                 "title": "Tradução em Andamento",
                 "titleCompleted": "Tradução Concluída",
@@ -117,7 +125,9 @@
             }
         },
         "merge": {
-            "title": "Mesclar"
+            "title": "Mesclar",
+            "videoToolsRequiredToast": "Instale {{tools}} em Configurações antes de usar Mesclar.",
+            "videoToolsRequiredHint": "Mesclar fica bloqueado até {{tools}} estarem disponíveis."
         },
         "settings": {
             "title": "Configurações",
@@ -126,11 +136,51 @@
             "unsavedTitle": "Alterações não salvas",
             "unsavedMessage": "Você tem alterações não salvas. Tem certeza que deseja sair? Todas as alterações serão perdidas.",
             "discardChanges": "Descartar Alterações",
+            "videoTools": {
+                "title": "Ferramentas de Vídeo",
+                "description": "O Bakasub depende de FFmpeg e MKVToolNix instalados no sistema para inspecionar trilhas, extrair legendas e mesclar arquivos traduzidos.",
+                "ready": "Pronto",
+                "readyDescription": "Todas as ferramentas de vídeo obrigatórias estão disponíveis.",
+                "missing": "Atenção necessária",
+                "missingShort": "Ausente",
+                "available": "Disponível",
+                "installHint": "Instale as ferramentas ausentes no sistema e reinicie o Bakasub para habilitar os recursos de vídeo.",
+                "detectedAt": "Detectado em {{path}}",
+                "toast": "Os recursos de vídeo estão indisponíveis porque estas ferramentas estão ausentes: {{tools}}.",
+                "ffmpegMissingHelp": "Necessário para extrair legendas de contêineres que não são MKV.",
+                "mkvmergeMissingHelp": "Necessário para inspecionar trilhas e remuxar a legenda traduzida de volta em arquivos MKV.",
+                "mkvextractMissingHelp": "Necessário para extrair trilhas de legenda diretamente de arquivos MKV.",
+                "instructions": {
+                    "title": "Instalar ferramentas ausentes",
+                    "description": "Use uma destas configurações no sistema host e depois reinicie o Bakasub para que a checagem detecte os binários.",
+                    "recommended": "Recomendado",
+                    "linuxTitle": "Linux",
+                    "linuxCommand": "sudo apt update && sudo apt install -y ffmpeg mkvtoolnix",
+                    "linuxStep1": "Instale FFmpeg e MKVToolNix pelos pacotes da sua distribuição.",
+                    "linuxStep2": "Reinicie o Bakasub após a instalação terminar.",
+                    "windowsTitle": "Windows",
+                    "windowsStep1": "Baixe FFmpeg e MKVToolNix nos sites oficiais.",
+                    "windowsStep2": "Adicione as pastas com ffmpeg.exe, mkvmerge.exe e mkvextract.exe ao PATH.",
+                    "windowsStep3": "Reinicie o Bakasub e confirme aqui que as ferramentas aparecem como disponíveis."
+                }
+            },
             "apiKeys": {
                 "title": "Chaves de API",
-                "description": "Configure suas chaves de API para serviços externos.",
+                "description": "Configure suas chaves de API para serviços externos. OpenRouter e TMDB são obrigatórios para traduzir.",
                 "openrouter": "Chave da API OpenRouter",
-                "tmdb": "Token de Acesso TMDB"
+                "tmdb": "Token de Acesso TMDB",
+                "requiredBannerTitle": "Chaves obrigatórias pendentes",
+                "requiredBannerDescription": "A tradução continua bloqueada até {{keys}} serem configuradas e salvas.",
+                "requiredBannerPendingSave": "Salve as novas chaves para liberar a tradução.",
+                "validation": {
+                    "required": "{{service}} é obrigatória para liberar a tradução.",
+                    "configured": "Configurada. Edite o valor para validar novamente.",
+                    "pending": "Aguardando validar esta chave...",
+                    "validating": "Validando chave...",
+                    "valid": "Chave válida.",
+                    "invalidOpenRouter": "Não foi possível validar a chave do OpenRouter.",
+                    "invalidTmdb": "Não foi possível validar o token do TMDB."
+                }
             },
             "defaults": {
                 "title": "Padrões de Tradução",

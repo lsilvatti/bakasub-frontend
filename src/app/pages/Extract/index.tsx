@@ -3,21 +3,39 @@ import { Typography, Button, Card, Badge } from "@/components/atoms";
 import { TrackSelector } from "@/components/organisms";
 import { FileSelectCard } from "@/components/molecules";
 import { SplitPageLayout } from "@/components/templates/SplitPageLayout";
-import { useVideo, useToast } from "@/hooks";
+import { VIDEO_TOOLS_INSTRUCTIONS_PATH, useVideo, useToast, useVideoToolRequirements } from "@/hooks";
 import styles from "./Extract.module.css";
 import type { SubtitleTrack } from "@/types";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
+import { useNavigate } from "react-router-dom";
+
+function formatMissingTools(tools: string[]) {
+    return tools.map((tool) => tool === 'ffmpeg' ? 'FFmpeg' : tool).join(', ');
+}
 
 export default function Extract() {
     const [selectedFile, setSelectedFile] = useState<string | null>(null);
     const [selectedTrackIndex, setSelectedTrackIndex] = useState<number | null>(null);
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     const [extractButtonState, setExtractButtonState] = useState<{ variant: "primary" | "success" | "error", label: string }>({ variant: "primary", label: t('pages.extract.extractTrackInitial') });
 
     const toast = useToast();
     const { getTracks, extractTrack } = useVideo();
+    const {
+        hasRequiredToolsForFeature,
+        hasRequiredToolsForExtractFile,
+        getMissingToolsForFeature,
+        getMissingToolsForExtractFile,
+        isLoading: isVideoToolsLoading,
+    } = useVideoToolRequirements();
+
+    const extractRouteLocked = !isVideoToolsLoading && !hasRequiredToolsForFeature('extract');
+    const missingRouteToolsLabel = formatMissingTools(getMissingToolsForFeature('extract'));
+    const extractActionLocked = Boolean(selectedFile) && !hasRequiredToolsForExtractFile(selectedFile);
+    const missingActionToolsLabel = formatMissingTools(getMissingToolsForExtractFile(selectedFile));
 
     const handleSelectTrack = (track: SubtitleTrack) => {
         setSelectedTrackIndex(track.id);
@@ -33,7 +51,30 @@ export default function Extract() {
         }
     }, [selectedFile, isTracksError, toast, t]);
 
+    useEffect(() => {
+        if (!extractRouteLocked) {
+            return;
+        }
+
+        toast.warning(
+            t('pages.extract.videoToolsRequiredToast', { tools: missingRouteToolsLabel }),
+            t('pages.settings.videoTools.title')
+        );
+        navigate(VIDEO_TOOLS_INSTRUCTIONS_PATH, { replace: true });
+    }, [extractRouteLocked, missingRouteToolsLabel, navigate, t, toast]);
+
     const handleExtract = () => {
+        if (extractRouteLocked || extractActionLocked) {
+            toast.warning(
+                t('pages.extract.videoToolsRequiredToast', {
+                    tools: extractActionLocked ? missingActionToolsLabel : missingRouteToolsLabel,
+                }),
+                t('pages.settings.videoTools.title')
+            );
+            navigate(VIDEO_TOOLS_INSTRUCTIONS_PATH);
+            return;
+        }
+
         if (!selectedFile || selectedTrackIndex === null) return;
 
         extractTrack.mutate(
@@ -78,6 +119,11 @@ export default function Extract() {
                 <Card.Header>
                     <Typography variant="h3" as="p">{t('pages.extract.selectSubtitleTrack')}</Typography>
                 </Card.Header>
+                {selectedFile && extractActionLocked && (
+                    <Card.Description>
+                        {t('pages.extract.videoToolsRequiredDescription', { tools: missingActionToolsLabel })}
+                    </Card.Description>
+                )}
                 <Card.Content className={styles.scrollableContent}>
                     {isLoadingTracks ? (
                         <div className={styles.loadingState}>
@@ -122,11 +168,11 @@ export default function Extract() {
             )}
             <Button
                 onClick={handleExtract}
-                disabled={selectedTrackIndex === null || extractTrack.isPending}
+                disabled={(!extractActionLocked && selectedTrackIndex === null) || extractTrack.isPending}
                 loading={extractTrack.isPending}
-                variant={extractButtonState.variant}
+                variant={extractActionLocked ? 'outline' : extractButtonState.variant}
             >
-                {extractButtonState.label}
+                {extractActionLocked ? t('pages.extract.viewInstructions') : extractButtonState.label}
             </Button>
         </div>
     );

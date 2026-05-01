@@ -3,13 +3,18 @@
     align-items: center;
     gap: 10px;
     padding: 10px 16px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+    font: inherit;
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
     transition: all 0.2s ease-in-out;
     color: var(--text-color);
     position: relative;
-    
+    cursor: pointer;
 }
 
 .navItem:before {
@@ -39,4 +44,30 @@
     border-left: 4px solid var(--primary);
     font-weight: 600;
     color: var(--primary);
+}
+.navItem[data-disabled="true"] {
+    opacity: 0.58;
+    cursor: not-allowed;
+}
+
+.navItem[data-disabled="true"]:hover {
+    color: var(--text-color);
+}
+
+.navItem[data-disabled="true"]:before {
+    width: 0;
+}
+
+.navItem[data-disabled="true"] {
+    cursor: not-allowed;
+    color: var(--color-text-secondary);
+    opacity: 0.72;
+}
+
+.navItem[data-disabled="true"]:before {
+    width: 0;
+}
+
+.navItem[data-disabled="true"]:hover {
+    color: var(--color-text-secondary);
 }

@@ -1,6 +1,8 @@
 
 import { BookOpenText, HomeIcon, Languages, PackageOpen, Merge as MergeIcon, Bot, Settings } from 'lucide-react';
 import { lazy } from 'react';
+import type { RequiredApiKey } from '@/hooks/useApiKeyRequirements';
+import type { VideoFeature } from '@/hooks/useVideoToolRequirements';
 
 const Home = lazy(() => import('@/app/pages/Home'));
 const Logs = lazy(() => import('@/app/pages/Logs'));
@@ -18,6 +20,8 @@ export interface AppRoute {
   element: React.ReactNode;
   showInSidebar: boolean;
   icon?: React.ElementType;
+  requiredApiKeys?: RequiredApiKey[];
+  videoFeature?: VideoFeature;
 }
 
 export interface NavSeparator {
@@ -43,21 +47,24 @@ export const APP_ROUTES: RouteEntry[] = [
     title: 'pages.extract.title',
     element: <Extract />,
     showInSidebar: true,
-    icon: PackageOpen
+    icon: PackageOpen,
+    videoFeature: 'extract'
   },
   {
     path: '/translate',
     title: 'pages.translate.title',
     element: <Translate />,
     showInSidebar: true,
-    icon: Languages
+    icon: Languages,
+    requiredApiKeys: ['openrouter']
   },
   {
     path: '/merge',
     title: 'pages.merge.title',
     element: <Merge />,
     showInSidebar: true,
-    icon: MergeIcon
+    icon: MergeIcon,
+    videoFeature: 'merge'
   },
   {
     path: '/models',

@@ -19,7 +19,9 @@
 
 <body>
   <div id="root"></div>
-  <script src="%BASE_URL%runtime-config.js"></script>
+  <script>
+    window.BAKASUB_RUNTIME_CONFIG = window.BAKASUB_RUNTIME_CONFIG || {};
+  </script>
   <script type="module" src="%BASE_URL%src/main.tsx"></script>
 </body>
 

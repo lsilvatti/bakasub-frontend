@@ -10,6 +10,7 @@ const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
 
 export interface TMDBSearchPanelProps {
     enabled: boolean;
+    disabled?: boolean;
     onToggle: (enabled: boolean) => void;
     searchQuery: string;
     onSearchQueryChange: (query: string) => void;
@@ -27,6 +28,7 @@ export interface TMDBSearchPanelProps {
 
 export function TMDBSearchPanel({
     enabled,
+    disabled = false,
     onToggle,
     searchQuery,
     onSearchQueryChange,
@@ -71,6 +73,7 @@ export function TMDBSearchPanel({
                     label={t('pages.translate.useTmdbMetadata')}
                     helperText={t('pages.translate.useTmdbMetadataHelp')}
                     checked={enabled}
+                    disabled={disabled}
                     onChange={(e) => onToggle(e.target.checked)}
                 />
             </div>
@@ -81,6 +84,7 @@ export function TMDBSearchPanel({
                         <AsyncSearch<TMDBResult>
                             label={t('pages.translate.searchTMDB')}
                             value={searchQuery}
+                            disabled={disabled}
                             onChange={onSearchQueryChange}
                             onSearch={onSearch}
                             isLoading={isSearching}
@@ -93,8 +97,8 @@ export function TMDBSearchPanel({
 
                         {isTV && (
                             <div className={styles.shortInputsRow}>
-                                <Input label={t('pages.translate.season')} value={season} onChange={(e) => onSeasonChange(e.target.value)} type="number" fullWidth />
-                                <Input label={t('pages.translate.episode')} value={episode} onChange={(e) => onEpisodeChange(e.target.value)} type="number" fullWidth />
+                                <Input label={t('pages.translate.season')} value={season} onChange={(e) => onSeasonChange(e.target.value)} type="number" disabled={disabled} fullWidth />
+                                <Input label={t('pages.translate.episode')} value={episode} onChange={(e) => onEpisodeChange(e.target.value)} type="number" disabled={disabled} fullWidth />
                             </div>
                         )}
                     </div>

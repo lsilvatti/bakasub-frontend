@@ -1,4 +1,7 @@
 export { 
+    type HealthStatus,
+    type VideoToolsStatus,
+    type ExternalToolStatus,
     type SystemLog,
     type TranslationPreset,
     type TranslationJob,
