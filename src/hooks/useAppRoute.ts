@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
-import { APP_ROUTES, isSeparator, type AppRoute } from "@/config/routes";
+import { APP_ROUTES } from "@/config/routes";
+import { isSeparator, type AppRoute } from "@/config/routeTypes";
 
 export function useAppRoute() {
   const { pathname } = useLocation();

@@ -1,51 +1,20 @@
 
 import { BookOpenText, HomeIcon, Languages, PackageOpen, Merge as MergeIcon, Bot, Settings } from 'lucide-react';
-import { lazy } from 'react';
-import type { RequiredApiKey } from '@/hooks/useApiKeyRequirements';
-import type { VideoFeature } from '@/hooks/useVideoToolRequirements';
-
-const Home = lazy(() => import('@/app/pages/Home'));
-const Logs = lazy(() => import('@/app/pages/Logs'));
-const Merge = lazy(() => import('@/app/pages/Merge/Merge'));
-const Translate = lazy(() => import('@/app/pages/Translate'));
-const Config = lazy(() => import('@/app/pages/Configs/Config'));
-const Extract = lazy(() => import('@/app/pages/Extract'));
-const ModelsPresetsLanguages = lazy(() => import('@/app/pages/ModelsPresetsLanguages'));
-
-
-
-export interface AppRoute {
-  path: string;
-  title: string;
-  element: React.ReactNode;
-  showInSidebar: boolean;
-  icon?: React.ElementType;
-  requiredApiKeys?: RequiredApiKey[];
-  videoFeature?: VideoFeature;
-}
-
-export interface NavSeparator {
-  type: 'separator';
-}
-
-export type RouteEntry = AppRoute | NavSeparator;
-
-export function isSeparator(entry: RouteEntry): entry is NavSeparator {
-  return 'type' in entry && entry.type === 'separator';
-}
+import { lazy, createElement } from 'react';
+import type { RouteEntry } from './routeTypes';
 
 export const APP_ROUTES: RouteEntry[] = [
   {
     path: '/',
     title: 'pages.home.title',
-    element: <Home />,
+    element: createElement(lazy(() => import('@/app/pages/Home'))),
     showInSidebar: true,
     icon: HomeIcon
   },
   {
     path: '/extract',
     title: 'pages.extract.title',
-    element: <Extract />,
+    element: createElement(lazy(() => import('@/app/pages/Extract'))),
     showInSidebar: true,
     icon: PackageOpen,
     videoFeature: 'extract'
@@ -53,7 +22,7 @@ export const APP_ROUTES: RouteEntry[] = [
   {
     path: '/translate',
     title: 'pages.translate.title',
-    element: <Translate />,
+    element: createElement(lazy(() => import('@/app/pages/Translate'))),
     showInSidebar: true,
     icon: Languages,
     requiredApiKeys: ['openrouter']
@@ -61,7 +30,7 @@ export const APP_ROUTES: RouteEntry[] = [
   {
     path: '/merge',
     title: 'pages.merge.title',
-    element: <Merge />,
+    element: createElement(lazy(() => import('@/app/pages/Merge/Merge'))),
     showInSidebar: true,
     icon: MergeIcon,
     videoFeature: 'merge'
@@ -69,7 +38,7 @@ export const APP_ROUTES: RouteEntry[] = [
   {
     path: '/models',
     title: 'pages.modelsPresetsLanguages.title',
-    element: <ModelsPresetsLanguages />,
+    element: createElement(lazy(() => import('@/app/pages/ModelsPresetsLanguages'))),
     showInSidebar: true,
     icon: Bot
   },
@@ -77,14 +46,14 @@ export const APP_ROUTES: RouteEntry[] = [
   {
     path: '/config',
     title: 'pages.settings.title',
-    element: <Config />,
+    element: createElement(lazy(() => import('@/app/pages/Configs/Config'))),
     showInSidebar: true,
     icon: Settings,
   },
   {
     path: '/logs',
     title: 'pages.logs.title',
-    element: <Logs />,
+    element: createElement(lazy(() => import('@/app/pages/Logs'))),
     showInSidebar: true,
     icon: BookOpenText
   }

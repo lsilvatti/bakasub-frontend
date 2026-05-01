@@ -1,7 +1,8 @@
 import { NavItem } from '@/components/atoms';
 import { useApiKeyRequirements, useToast, useVideoToolRequirements } from '@/hooks';
 import { useAppRoute } from '@/hooks/useAppRoute';
-import { APP_ROUTES, isSeparator } from '@/config/routes';
+import { APP_ROUTES } from '@/config/routes';
+import { isSeparator } from '@/config/routeTypes';
 import styles from './Navigation.module.css';
 import { useTranslation } from 'react-i18next';
 import type { ParseKeys } from 'i18next';
@@ -41,16 +42,6 @@ export function Navigation() {
 
                 const missingKeysLabel = missingKeys.map((key) => getApiKeyLabel(key, t)).join(', ');
                 const missingToolsLabel = formatMissingTools(missingTools);
-
-                const hintMessage = missingKeys.length > 0
-                    ? t('pages.translate.apiKeysRequiredHint', { keys: missingKeysLabel })
-                    : t(
-                        entry.videoFeature === 'merge'
-                            ? 'pages.merge.videoToolsRequiredHint'
-                            : 'pages.extract.videoToolsRequiredHint',
-                        { tools: missingToolsLabel }
-                      );
-
                 return (
                     <div key={entry.path} className={styles.navItemGroup}>
                         <NavItem
@@ -77,12 +68,6 @@ export function Navigation() {
                             {entry.icon && <entry.icon />}
                             {t(entry.title as ParseKeys)}
                         </NavItem>
-
-                        {isLocked && (
-                            <p className={styles.routeHint}>
-                                {hintMessage}
-                            </p>
-                        )}
                     </div>
                 );
             })}

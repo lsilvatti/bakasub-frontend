@@ -1,7 +1,9 @@
 import { createBrowserRouter, createHashRouter } from 'react-router-dom';
 import { RootLayout } from '@/components/templates';
 import { ErrorBoundary } from '@/components/organisms';
-import { APP_ROUTES, isSeparator } from '@/config/routes';
+import { APP_ROUTES } from '@/config/routes';
+import { isSeparator } from '@/config/routeTypes';
+import type { AppRoute } from '@/config/routeTypes';
 import { Suspense } from 'react';
 import Loading from './pages/Loading';
 
@@ -13,10 +15,13 @@ export const router = routerFactory([
         element: <RootLayout />,
         errorElement: <ErrorBoundary />,
         children: [
-            ...APP_ROUTES.filter(r => !isSeparator(r)).map(route => ({
-                path: (route as any).path,
-                element: <Suspense fallback={<Loading />}>{(route as any).element}</Suspense>,
-            }))
+            ...APP_ROUTES.filter(r => !isSeparator(r)).map(route => {
+                const { path, element } = route as AppRoute;
+                return {
+                    path,
+                    element: <Suspense fallback={<Loading />}>{element}</Suspense>,
+                };
+            })
         ],
     },
 ]);

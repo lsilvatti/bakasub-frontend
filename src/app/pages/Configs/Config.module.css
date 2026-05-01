@@ -161,6 +161,21 @@
   background: rgba(var(--color-surface-rgb, 255, 255, 255), 0.45);
 }
 
+.instructionCardRecommended {
+  border-color: rgba(var(--color-primary-rgb), 0.35);
+}
+
+.distroTabs {
+  /* Remove the default tab panel padding so our own list/code spacing applies */
+}
+
+.distroTabs :global(.tabContent) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+}
+
 .instructionHeader {
   display: flex;
   align-items: center;

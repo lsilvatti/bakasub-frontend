@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
-import { PageTitle, Card, Input, Select, Switch, Button, Badge } from "@/components/atoms";
+import { PageTitle, Card, Input, Select, Switch, Button, Badge, Tabs } from "@/components/atoms";
 import { Dialog } from "@/components/organisms";
 import { useConfig, useHealthStatus, useOpenRouter, usePresets, useLanguages, useToast, useDebounce } from "@/hooks";
 import { useTranslation } from "react-i18next";
@@ -77,6 +77,7 @@ export default function Settings() {
     const tmdbRequestRef = useRef(0);
     const videoToolsRef = useRef<HTMLDivElement>(null);
     const clientPlatform = useMemo(() => detectClientPlatform(), []);
+    const [activeLinuxTab, setActiveLinuxTab] = useState("debian");
     const isVideoToolsSectionRequested = new URLSearchParams(location.search).get("section") === "video-tools";
 
     useEffect(() => {
@@ -315,53 +316,26 @@ export default function Settings() {
             },
         ]
         : [];
-    const installationInstructions = clientPlatform === "windows"
-        ? [
-            {
-                key: "windows",
-                title: t("pages.settings.videoTools.instructions.windowsTitle"),
-                command: "",
-                steps: [
-                    t("pages.settings.videoTools.instructions.windowsStep1"),
-                    t("pages.settings.videoTools.instructions.windowsStep2"),
-                    t("pages.settings.videoTools.instructions.windowsStep3"),
-                ],
-                recommended: true,
-            },
-            {
-                key: "linux",
-                title: t("pages.settings.videoTools.instructions.linuxTitle"),
-                command: t("pages.settings.videoTools.instructions.linuxCommand"),
-                steps: [
-                    t("pages.settings.videoTools.instructions.linuxStep1"),
-                    t("pages.settings.videoTools.instructions.linuxStep2"),
-                ],
-                recommended: false,
-            },
-        ]
-        : [
-            {
-                key: "linux",
-                title: t("pages.settings.videoTools.instructions.linuxTitle"),
-                command: t("pages.settings.videoTools.instructions.linuxCommand"),
-                steps: [
-                    t("pages.settings.videoTools.instructions.linuxStep1"),
-                    t("pages.settings.videoTools.instructions.linuxStep2"),
-                ],
-                recommended: clientPlatform === "linux",
-            },
-            {
-                key: "windows",
-                title: t("pages.settings.videoTools.instructions.windowsTitle"),
-                command: "",
-                steps: [
-                    t("pages.settings.videoTools.instructions.windowsStep1"),
-                    t("pages.settings.videoTools.instructions.windowsStep2"),
-                    t("pages.settings.videoTools.instructions.windowsStep3"),
-                ],
-                recommended: false,
-            },
-        ];
+    const linuxDistros = [
+        {
+            id: "debian",
+            label: "Debian / Ubuntu",
+            command: t("pages.settings.videoTools.instructions.linuxCommand"),
+        },
+        {
+            id: "fedora",
+            label: "Fedora / RHEL",
+            command: t("pages.settings.videoTools.instructions.fedoraCommand"),
+        },
+        {
+            id: "arch",
+            label: "Arch",
+            command: t("pages.settings.videoTools.instructions.archCommand"),
+        },
+    ];
+    const activeDistro = linuxDistros.find(d => d.id === activeLinuxTab) ?? linuxDistros[0];
+    const isLinux = clientPlatform === "linux";
+    const isWindows = clientPlatform === "windows";
 
     return (
         <div className={styles.container}>
@@ -446,24 +420,42 @@ export default function Settings() {
                                     </div>
 
                                     <div className={styles.instructionsGrid}>
-                                        {installationInstructions.map((instruction) => (
-                                            <div key={instruction.key} className={styles.instructionCard}>
-                                                <div className={styles.instructionHeader}>
-                                                    <span className={styles.switchLabel}>{instruction.title}</span>
-                                                    {instruction.recommended && (
-                                                        <Badge variant="info">{t("pages.settings.videoTools.instructions.recommended")}</Badge>
-                                                    )}
-                                                </div>
-                                                <ul className={styles.instructionList}>
-                                                    {instruction.steps.map((step) => (
-                                                        <li key={step}>{step}</li>
-                                                    ))}
-                                                </ul>
-                                                {instruction.command && (
-                                                    <code className={styles.codeBlock}>{instruction.command}</code>
+                                        {/* Linux card */}
+                                        <div className={clsx(styles.instructionCard, isLinux && styles.instructionCardRecommended)}>
+                                            <div className={styles.instructionHeader}>
+                                                <span className={styles.switchLabel}>{t("pages.settings.videoTools.instructions.linuxCardTitle")}</span>
+                                                {isLinux && (
+                                                    <Badge variant="info">{t("pages.settings.videoTools.instructions.recommended")}</Badge>
                                                 )}
                                             </div>
-                                        ))}
+                                            <Tabs
+                                                tabs={linuxDistros.map(d => ({ id: d.id, label: d.label }))}
+                                                activeTab={activeLinuxTab}
+                                                onTabChange={setActiveLinuxTab}
+                                                className={styles.distroTabs}
+                                            >
+                                                <ul className={styles.instructionList}>
+                                                    <li>{t("pages.settings.videoTools.instructions.linuxStep1")}</li>
+                                                    <li>{t("pages.settings.videoTools.instructions.linuxStep2")}</li>
+                                                </ul>
+                                                <code className={styles.codeBlock}>{activeDistro.command}</code>
+                                            </Tabs>
+                                        </div>
+
+                                        {/* Windows card */}
+                                        <div className={clsx(styles.instructionCard, isWindows && styles.instructionCardRecommended)}>
+                                            <div className={styles.instructionHeader}>
+                                                <span className={styles.switchLabel}>{t("pages.settings.videoTools.instructions.windowsTitle")}</span>
+                                                {isWindows && (
+                                                    <Badge variant="info">{t("pages.settings.videoTools.instructions.recommended")}</Badge>
+                                                )}
+                                            </div>
+                                            <ul className={styles.instructionList}>
+                                                <li>{t("pages.settings.videoTools.instructions.windowsStep1")}</li>
+                                                <li>{t("pages.settings.videoTools.instructions.windowsStep2")}</li>
+                                                <li>{t("pages.settings.videoTools.instructions.windowsStep3")}</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
