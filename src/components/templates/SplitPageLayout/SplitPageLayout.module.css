@@ -8,51 +8,43 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  flex: 1;
-  min-height: 0;
   padding: var(--space-4);
 }
 
 .leftColumn {
   display: flex;
   flex-direction: column;
-  min-height: 0;
   min-width: 0;
 }
 
 .rightColumn {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 0;
   min-width: 0;
 }
 
+/* Side-by-side from 1024px; natural page scroll still applies */
 @media (min-width: 1024px) {
-  .pageContainer {
-    height: 100%;
-    overflow: hidden;
-  }
-
   .splitLayout {
     flex-direction: row;
-    overflow: hidden;
   }
+
   .leftColumn {
     flex: 0 0 350px;
     max-width: 350px;
-    overflow: hidden;
+  }
+
+  .rightColumn {
+    flex: 1;
   }
 
   .halfLayout .leftColumn {
     flex: 1;
     max-width: none;
-    overflow: hidden;
   }
 
   .halfLayout .rightColumn {
     flex: 1;
-    overflow: hidden;
   }
 }
 
@@ -68,7 +60,39 @@
   }
 }
 
-.footer { 
+/* Full-viewport internal-scroll only when sidebar is in the layout flow */
+@media (min-width: 1600px) {
+  .pageContainer {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .splitLayout {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .leftColumn {
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .rightColumn {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .halfLayout .leftColumn {
+    flex: 1;
+    max-width: none;
+  }
+}
+
+.footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -76,8 +100,12 @@
   padding: var(--space-3) var(--space-4);
   background: var(--dropdown-bg, var(--background-color));
   border-top: 2px solid var(--color-border);
+  /* Stays visible while the content area scrolls on smaller screens */
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
 }
 
-.footerCentered { 
+.footerCentered {
   justify-content: center;
 }

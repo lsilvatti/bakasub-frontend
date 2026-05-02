@@ -8,18 +8,20 @@
 
 .mainWrapper {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.content { 
+.content {
   flex: 1;
-  height: 100%;
-  overflow: auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
-@media (min-width: 1024px) {
+/* Only use full-viewport internal-scroll when the sidebar is in the layout flow */
+@media (min-width: 1600px) {
   .content {
     overflow: hidden;
   }

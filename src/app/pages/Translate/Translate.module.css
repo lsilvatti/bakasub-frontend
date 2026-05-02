@@ -18,7 +18,7 @@
   background: rgba(var(--color-primary-rgb), 0.08);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1600px) {
   .fullHeightCard {
     height: 100%;
     min-height: 0;
